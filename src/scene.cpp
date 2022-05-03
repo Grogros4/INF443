@@ -6,6 +6,10 @@
 using namespace cgp;
 
 
+struct scene_environment_player_head : public scene_environment_camera_head {
+	cgp::vec3 speed;
+	}
+
 // The main function implementing the Flying Mode
 void scene_structure::update_camera()
 {
@@ -58,6 +62,7 @@ void scene_structure::display()
 {	
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
+	environment.speed = speed;
 
 	// The standard frame
 	if (gui.display_frame)

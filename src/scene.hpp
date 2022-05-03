@@ -21,7 +21,7 @@ struct scene_structure {
 	// Elements and shapes of the scene
 	// ****************************** //
 
-	scene_environment_camera_head environment; // The specific scene environment that contains a "head camera" (*)
+	scene_environment_player_head environment; // The specific scene environment that contains a "head camera" (*)
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
 	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
