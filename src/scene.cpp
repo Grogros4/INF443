@@ -15,21 +15,21 @@ void scene_structure::update_camera()
 	// The camera moves forward all the time
 	//   We consider in this example a constant velocity, so the displacement is: velocity * dt * front-camera-vector
 	float const dt = timer.update();
-	vec3 const forward_displacement = gui.speed * 0.1f * dt * camera.front();
-	camera.position_camera += forward_displacement;
+	vec3 const forward_displacement = gui.speed * 0.5f * dt * camera.front();
 
 	// The camera rotates if we press on the arrow keys
 	//  The rotation is only applied to the roll and pitch degrees of freedom.
 	float const pitch = 0.5f; // speed of the pitch
 	float const roll  = 0.7f; // speed of the roll
+	float const yaw = 0.7f; // speed of the yaw
 	if (keyboard.up)
-		camera.manipulator_rotate_roll_pitch_yaw(0, -pitch * dt, 0); 
+		camera.position_camera += forward_displacement; 
 	if (keyboard.down)
-		camera.manipulator_rotate_roll_pitch_yaw(0,  pitch * dt, 0); 
+		camera.position_camera -= forward_displacement;
 	if (keyboard.right)
-		camera.manipulator_rotate_roll_pitch_yaw( roll * dt, 0, 0);
+		camera.manipulator_rotate_roll_pitch_yaw( 0, 0, -yaw * dt);
 	if (keyboard.left)
-		camera.manipulator_rotate_roll_pitch_yaw(-roll * dt, 0, 0);
+		camera.manipulator_rotate_roll_pitch_yaw( 0, 0, yaw * dt);
 }
 
 void scene_structure::initialize()
