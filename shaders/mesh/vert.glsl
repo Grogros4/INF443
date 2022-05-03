@@ -8,6 +8,7 @@ layout (location = 1) in vec3 normal;    // vertex normal in local space   (nx,n
 layout (location = 2) in vec3 color;     // vertex color      (r,g,b)
 layout (location = 3) in vec2 uv;        // vertex uv-texture (u,v)
 
+
 // Output variables sent to the fragment shader
 out struct fragment_data
 {
@@ -21,19 +22,19 @@ out struct fragment_data
 uniform mat4 model;      // Model affine transform matrix associated to the current shape
 uniform mat4 view;       // View matrix (rigid transform) of the camera
 uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the camera
-
+uniform vec3 speed;      // Player speed
 
 void main()
 {
 
-    // The position of the vertex in the world space
-	vec4 p = model * vec4(position, 1.0);
+    // The position of the vertex in the world space relative to camera
+	vec4 p = view * model * vec4(position, 1.0);
 
 	// The normal of the vertex in the world space
 	vec4 n = model * vec4(normal, 0.0);
 
 	// The projected position of the vertex in the normalized device coordinates:
-	vec4 p_proj = projection * view * p;
+	vec4 p_proj = projection * p;
 
 
 	// Fill the parameters sent to the fragment shader

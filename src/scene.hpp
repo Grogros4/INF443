@@ -13,6 +13,10 @@ struct gui_parameters {
 	float speed = 1.0f;       // The velocity of the camera displacement
 };
 
+struct scene_environment_player_head : public scene_environment_camera_head {
+	cgp::vec3 speed;
+};
+
 
 // The structure of the custom scene
 struct scene_structure {
