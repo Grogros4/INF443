@@ -31,7 +31,8 @@ struct scene_structure {
 	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
-	
+	cgp::vec3 pos;
+	cgp::vec3 speed;
 
 	
 	// ****************************** //

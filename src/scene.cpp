@@ -19,7 +19,7 @@ void scene_structure::update_camera()
 	// The camera moves forward all the time
 	//   We consider in this example a constant velocity, so the displacement is: velocity * dt * front-camera-vector
 	float const dt = timer.update();
-	vec3 const forward_displacement = gui.speed * 0.5f * dt * camera.front();
+	vec3 const forward_displacement = gui.speed * dt * camera.front();
 
 	// The camera rotates if we press on the arrow keys
 	//  The rotation is only applied to the roll and pitch degrees of freedom.
@@ -34,6 +34,9 @@ void scene_structure::update_camera()
 		camera.manipulator_rotate_roll_pitch_yaw( 0, 0, -yaw * dt);
 	if (keyboard.left)
 		camera.manipulator_rotate_roll_pitch_yaw( 0, 0, yaw * dt);
+
+	pos = camera.position();
+	speed = gui.speed * camera.front();
 }
 
 void scene_structure::initialize()
@@ -43,17 +46,18 @@ void scene_structure::initialize()
 
 	// Load the terrain (display a debug message as the loading can take some time)
 	std::cout << " \nLoad terrain file ..." << std::endl;
-	terrain.initialize(mesh_load_file_obj("assets/mountain.obj"), "Terrain");
+	mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, -2 }, { 10, -10, -2 }, { 10, 10, -2 }, { -10, 10, -2 });
+	terrain.initialize(terrain_mesh, "Terrain");
 	std::cout << " [OK] Terrain loaded\n" << std::endl;
 
 	// Load the texture of the terrain
 	std::cout << " \nLoad terrain texture ..." << std::endl;
-	terrain.texture = opengl_load_texture_image("assets/mountain.jpg");
+	//terrain.texture = opengl_load_texture_image("assets/mountain.jpg");
 	std::cout << " [OK] Texture loaded\n" << std::endl;
 	
 	// Initial placement of the camera
-	environment.camera.position_camera = { 0.5f, 0.5f, -2.0f };
-	environment.camera.manipulator_rotate_roll_pitch_yaw(0, 0, Pi / 2.0f);
+	//environment.camera.position_camera = { 0.5f, 0.5f, -2.0f };
+	//environment.camera.manipulator_rotate_roll_pitch_yaw(0, 0, Pi / 2.0f);
 }
 
 
