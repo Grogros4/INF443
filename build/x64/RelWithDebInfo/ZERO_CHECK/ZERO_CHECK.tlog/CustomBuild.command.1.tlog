@@ -1,0 +1,10 @@
+^C:\CODE_INF443\SCENES\PROJECT\PROJECT\BUILD\CMAKEFILES\4A96E8C4466321318C8ABC7CABB511DC\GENERATE.STAMP.RULE
+setlocal
+"C:\Program Files\CMake\bin\cmake.exe" -SC:/code_inf443/scenes/Project/Project -BC:/code_inf443/scenes/Project/Project/build --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file C:/code_inf443/scenes/Project/Project/build/Project.sln
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
