@@ -23,6 +23,7 @@ uniform mat4 model;      // Model affine transform matrix associated to the curr
 uniform mat4 view;       // View matrix (rigid transform) of the camera
 uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the camera
 uniform vec3 speed;      // Player speed
+uniform float c;   				 // Speed of light
 
 void main()
 {
@@ -32,6 +33,9 @@ void main()
 
 	// The normal of the vertex in the world space
 	vec4 n = model * vec4(normal, 0.0);
+
+	float b = sqrt(speed.x*speed.x + speed.y*speed.y + speed.z*speed.z)/c;
+	p.x = p.x + sqrt(p.x*p.x + p.y*p.y);
 
 	// The projected position of the vertex in the normalized device coordinates:
 	vec4 p_proj = projection * p;
