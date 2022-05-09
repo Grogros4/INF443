@@ -1,6 +1,5 @@
-# Fly mode
+# Relativity Effect Viewer
 
-This code shows the possibility to navigate in a "fly-mode" using the key arrows: left/right/up/down.
+The purpose of this code is to visualize the effects of relativity by lowering the speed of light.
 
-
-<img src="pic.jpg" alt="" width="500px"/>
+ <img src="assets/AVT_Albert-Einstein_9884.jpeg " alt="" width="500px"/> 

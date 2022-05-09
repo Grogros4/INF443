@@ -54,8 +54,8 @@ void scene_structure::initialize()
 	std::cout << " [OK] Texture loaded\n" << std::endl;
 	
 	// Initial placement of the camera
-	//environment.camera.position_camera = { 0.5f, 0.5f, -2.0f };
-	//environment.camera.manipulator_rotate_roll_pitch_yaw(0, 0, Pi / 2.0f);
+	environment.camera.position_camera = { 0.0f, 0.0f, 0.0f };
+	environment.camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 }
 
 
