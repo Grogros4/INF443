@@ -1,0 +1,5 @@
+﻿  scene.cpp
+C:\code_inf443\scenes\Project\Project\src\scene.cpp(10,54): warning C4100: 'ypos': unreferenced formal parameter
+C:\code_inf443\scenes\Project\Project\src\scene.cpp(10,42): warning C4100: 'xpos': unreferenced formal parameter
+C:\code_inf443\scenes\Project\Project\src\scene.cpp(33,14): warning C4189: 'roll': local variable is initialized but not referenced
+  Project.vcxproj -> C:\code_inf443\scenes\Project\Project\Project.exe

@@ -5,12 +5,13 @@
 
 #include "cgp/cgp.hpp"
 #include "environment_camera_head/environment_camera_head.hpp"
+#include <iostream>
 
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
 	bool display_frame = false;
-	float speed = 1.0f;       // The velocity of the camera displacement
+	float speed = 10.0f;       // The velocity of the camera displacement
 };
 
 struct scene_environment_player_head : public scene_environment_camera_head {
@@ -25,10 +26,11 @@ struct scene_structure {
 	// Elements and shapes of the scene
 	// ****************************** //
 
-	scene_environment_camera_head environment; // The specific scene environment that contains a "head camera" (*)
+	scene_environment_player_head environment; // The specific scene environment that contains a "head camera" (*)
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
 	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
+	cgp::mesh_drawable demilune;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
@@ -38,6 +40,9 @@ struct scene_structure {
 	cgp::vec3 pos;
 	cgp::vec3 speed;
 
+	cgp::vec2 mouse_pos;
+	cgp::vec2 mouse_speed;
+
 	
 	// ****************************** //
 	// Functions
@@ -45,7 +50,8 @@ struct scene_structure {
 	
 	// Function to call in the animation loop in main (*)
 	//   This function replace the standard trackball behavior that must also be removed in the main (from mouse_move_callback)
-	void update_camera(); 
+	void update_camera(float xpos, float ypos);
+	void update_mouse(float xpos, float ypos);
 	
 
 	void initialize();  // Standard initialization to be called before the animation loop

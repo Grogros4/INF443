@@ -36,12 +36,15 @@ int main(int, char* argv[])
 	// ************************ //
 	
 	// Standard Initialization with dimension in pixels
-	GLFWwindow* window = standard_window_initialization(); 
-	
+	GLFWwindow* window = standard_window_initialization(4096, 2048); 
+
 	// Custom scene initialization
 	std::cout << "Initialize data of the scene ..." << std::endl;
 	scene.initialize();                                              
 	std::cout << "Initialization success" << std::endl;
+	
+
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 
 	// ************************ //
@@ -58,7 +61,10 @@ int main(int, char* argv[])
 		scene.display_gui();
 
 		// Update the camera position at every frame for a fly-mode
-		scene.update_camera();
+		double mouse_x = 0.0;
+		double mouse_y = 0.0;
+		glfwGetCursorPos(window, &mouse_x, &mouse_y);
+		scene.update_camera(mouse_x, mouse_y);
 
 		// Call the display of the scene
 		scene.display();
@@ -87,6 +93,7 @@ void window_size_callback(GLFWwindow* , int width, int height)
 void mouse_move_callback(GLFWwindow* /*window*/, double xpos, double ypos)
 {
 	scene.inputs.mouse_position_update( { xpos, ypos } );
+	scene.update_mouse(xpos, ypos);
 
 	// Remove the standard trackball behavior in the main function (*)
 	//   The motion is now computed in the animation loop at each frame
@@ -109,7 +116,7 @@ GLFWwindow* standard_window_initialization(int width_target, int height_target)
 {
 	// Create the window using GLFW
 	GLFWwindow* window = cgp::create_window(width_target, height_target);
-
+	
 	// Update storage for window size for the scene
 	int width = 0, height = 0;
 	glfwGetWindowSize(window, &width, &height);

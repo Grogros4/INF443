@@ -1,0 +1,1019 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="C:\code_inf443\library\cgp\base\basic_types\basic_types.cpp">
+      <Filter>cgp\base\basic_types</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\base\error\error.cpp">
+      <Filter>cgp\base\error</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\base\rand\rand.cpp">
+      <Filter>cgp\base\rand</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\base\string\string.cpp">
+      <Filter>cgp\base\string</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\containers\buffer\test\test_buffer.cpp">
+      <Filter>cgp\containers\buffer\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\containers\buffer_stack\special_types\special_types.cpp">
+      <Filter>cgp\containers\buffer_stack\special_types</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\containers\buffer_stack\test\test_buffer_stack.cpp">
+      <Filter>cgp\containers\buffer_stack\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\containers\grid\test\test_grid.cpp">
+      <Filter>cgp\containers\grid\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\containers\grid_stack\grid_stack_2D\test\test_grid_stack_2D.cpp">
+      <Filter>cgp\containers\grid_stack\grid_stack_2D\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\containers\offset_grid\offset_grid.cpp">
+      <Filter>cgp\containers\offset_grid</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\curve_drawable\curve_drawable.cpp">
+      <Filter>cgp\display\drawable\curve_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\curve_dynamic_drawable\curve_dynamic_drawable.cpp">
+      <Filter>cgp\display\drawable\curve_dynamic_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable.cpp">
+      <Filter>cgp\display\drawable\hierarchy_mesh_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable_node\hierarchy_mesh_drawable_node.cpp">
+      <Filter>cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable_node</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\mesh_drawable\mesh_drawable.cpp">
+      <Filter>cgp\display\drawable\mesh_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\mesh_normal_drawable\mesh_normal_drawable.cpp">
+      <Filter>cgp\display\drawable\mesh_normal_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\mesh_wireframe_drawable\mesh_wireframe_drawable.cpp">
+      <Filter>cgp\display\drawable\mesh_wireframe_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\segments_drawable\segments_drawable.cpp">
+      <Filter>cgp\display\drawable\segments_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\shading_parameters\shading_parameters.cpp">
+      <Filter>cgp\display\drawable\shading_parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\skybox_drawable\skybox_drawable.cpp">
+      <Filter>cgp\display\drawable\skybox_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\spatial_domain_grid_drawable\spatial_domain_grid_drawable.cpp">
+      <Filter>cgp\display\drawable\spatial_domain_grid_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\trajectory_drawable\trajectory_drawable.cpp">
+      <Filter>cgp\display\drawable\trajectory_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\drawable\triangle_soup_drawable\triangle_soup_drawable.cpp">
+      <Filter>cgp\display\drawable\triangle_soup_drawable</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\image\image.cpp">
+      <Filter>cgp\display\image</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\opengl\debug\debug.cpp">
+      <Filter>cgp\display\opengl\debug</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\opengl\helper\opengl_helper.cpp">
+      <Filter>cgp\display\opengl\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\opengl\shaders\shaders.cpp">
+      <Filter>cgp\display\opengl\shaders</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\opengl\texture\texture.cpp">
+      <Filter>cgp\display\opengl\texture</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\opengl\uniform\uniform.cpp">
+      <Filter>cgp\display\opengl\uniform</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\display\window\window.cpp">
+      <Filter>cgp\display\window</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\files\files.cpp">
+      <Filter>cgp\files</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\helper_common_scene\helper\helper.cpp">
+      <Filter>cgp\helper_common_scene\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\helper_common_scene\scene_environment_basic\scene_environment_basic.cpp">
+      <Filter>cgp\helper_common_scene\scene_environment_basic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera\camera_around_center\camera_around_center.cpp">
+      <Filter>cgp\interaction\camera\camera_around_center</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera\camera_base\camera_base.cpp">
+      <Filter>cgp\interaction\camera\camera_base</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera\camera_head\camera_head.cpp">
+      <Filter>cgp\interaction\camera\camera_head</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera\camera_projection\camera_projection.cpp">
+      <Filter>cgp\interaction\camera\camera_projection</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera\camera_spherical_coordinates\camera_spherical_coordinates.cpp">
+      <Filter>cgp\interaction\camera\camera_spherical_coordinates</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera\common_functions\common_functions.cpp">
+      <Filter>cgp\interaction\camera\common_functions</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\camera_standard_behavior\camera_standard_behavior.cpp">
+      <Filter>cgp\interaction\camera_standard_behavior</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\glfw_inputs\glfw_inputs.cpp">
+      <Filter>cgp\interaction\glfw_inputs</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\gui\gui.cpp">
+      <Filter>cgp\interaction\gui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\picking\picking_plane\picking_plane.cpp">
+      <Filter>cgp\interaction\picking\picking_plane</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\picking\picking_spheres\picking_spheres.cpp">
+      <Filter>cgp\interaction\picking\picking_spheres</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\picking\picking_structure\picking_structure.cpp">
+      <Filter>cgp\interaction\picking\picking_structure</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\timer\timer_basic\timer_basic.cpp">
+      <Filter>cgp\interaction\timer\timer_basic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\timer\timer_event_periodic\timer_event_periodic.cpp">
+      <Filter>cgp\interaction\timer\timer_event_periodic</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\timer\timer_fps\timer_fps.cpp">
+      <Filter>cgp\interaction\timer\timer_fps</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\timer\timer_interval\timer_interval.cpp">
+      <Filter>cgp\interaction\timer\timer_interval</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\interaction\tracker\velocity_tracker\velocity_tracker.cpp">
+      <Filter>cgp\interaction\tracker\velocity_tracker</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\affine\affine_rt\affine_rt.cpp">
+      <Filter>cgp\math\affine\affine_rt</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\affine\affine_rts\affine_rts.cpp">
+      <Filter>cgp\math\affine\affine_rts</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\frame\frame.cpp">
+      <Filter>cgp\math\frame</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\interpolation\interpolation.cpp">
+      <Filter>cgp\math\interpolation</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\matrix\matrix_stack\special_types\definition\special_types.cpp">
+      <Filter>cgp\math\matrix\matrix_stack\special_types\definition</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\matrix\matrix_stack\special_types\mat4\mat4.cpp">
+      <Filter>cgp\math\matrix\matrix_stack\special_types\mat4</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\matrix\test\test_matrix_stack.cpp">
+      <Filter>cgp\math\matrix\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\projection\projection.cpp">
+      <Filter>cgp\math\projection</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\quaternion\quaternion.cpp">
+      <Filter>cgp\math\quaternion</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\rotation_transform\rotation_transform.cpp">
+      <Filter>cgp\math\rotation_transform</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\rotation_transform\test\test_rotation.cpp">
+      <Filter>cgp\math\rotation_transform\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\vec_mat\test\test_vec_mat.cpp">
+      <Filter>cgp\math\vec_mat\test</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\math\vec_mat\vec_mat.cpp">
+      <Filter>cgp\math\vec_mat</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\curve\curve.cpp">
+      <Filter>cgp\shape\curve</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\implicit\marching_cube\helper\marching_cubes_lut.cpp">
+      <Filter>cgp\shape\implicit\marching_cube\helper</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\implicit\marching_cube\marching_cube.cpp">
+      <Filter>cgp\shape\implicit\marching_cube</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\intersection\intersection.cpp">
+      <Filter>cgp\shape\intersection</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\mesh\loader\obj\obj.cpp">
+      <Filter>cgp\shape\mesh\loader\obj</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\mesh\primitive\mesh_primitive.cpp">
+      <Filter>cgp\shape\mesh\primitive</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\mesh\structure\mesh.cpp">
+      <Filter>cgp\shape\mesh\structure</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\noise\noise.cpp">
+      <Filter>cgp\shape\noise</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\cgp\shape\spatial_domain\spatial_domain_grid_3D\spatial_domain_grid_3D.cpp">
+      <Filter>cgp\shape\spatial_domain\spatial_domain_grid_3D</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\glad\src\glad.cpp">
+      <Filter>third_party\src\glad\src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\imgui\imgui.cpp">
+      <Filter>third_party\src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\imgui\imgui_demo.cpp">
+      <Filter>third_party\src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\imgui\imgui_draw.cpp">
+      <Filter>third_party\src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\imgui\imgui_impl_glfw.cpp">
+      <Filter>third_party\src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\imgui\imgui_impl_opengl3.cpp">
+      <Filter>third_party\src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\imgui\imgui_widgets.cpp">
+      <Filter>third_party\src\imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\jpeg\jpgd.cpp">
+      <Filter>third_party\src\jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\jpeg\jpge.cpp">
+      <Filter>third_party\src\jpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\lodepng\lodepng.cpp">
+      <Filter>third_party\src\lodepng</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\library\third_party\src\simplexnoise\simplexnoise1234.cpp">
+      <Filter>third_party\src\simplexnoise</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\scenes\Project\Project\src\environment_camera_head\environment_camera_head.cpp">
+      <Filter>src\environment_camera_head</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\scenes\Project\Project\src\main.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\scenes\Project\Project\src\scene.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="C:\code_inf443\scenes\Project\Project\src\terrain.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\base.hpp">
+      <Filter>cgp\base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\basic_types\basic_types.hpp">
+      <Filter>cgp\base\basic_types</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\error\error.hpp">
+      <Filter>cgp\base\error</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\rand\rand.hpp">
+      <Filter>cgp\base\rand</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\stl\stl.hpp">
+      <Filter>cgp\base\stl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\string\string.hpp">
+      <Filter>cgp\base\string</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\base\types\types.hpp">
+      <Filter>cgp\base\types</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\cgp.hpp">
+      <Filter>cgp</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer\buffer.hpp">
+      <Filter>cgp\containers\buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer\test\test_buffer.hpp">
+      <Filter>cgp\containers\buffer\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\buffer_stack.hpp">
+      <Filter>cgp\containers\buffer_stack</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\implementation\buffer_stack.hpp">
+      <Filter>cgp\containers\buffer_stack\implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\implementation\buffer_stack2.hpp">
+      <Filter>cgp\containers\buffer_stack\implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\implementation\buffer_stack3.hpp">
+      <Filter>cgp\containers\buffer_stack\implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\implementation\buffer_stack4.hpp">
+      <Filter>cgp\containers\buffer_stack\implementation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\special_types\special_types.hpp">
+      <Filter>cgp\containers\buffer_stack\special_types</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\buffer_stack\test\test_buffer_stack.hpp">
+      <Filter>cgp\containers\buffer_stack\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\containers.hpp">
+      <Filter>cgp\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid\grid.hpp">
+      <Filter>cgp\containers\grid</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid\grid_2D\grid_2D.hpp">
+      <Filter>cgp\containers\grid\grid_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid\grid_3D\grid_3D.hpp">
+      <Filter>cgp\containers\grid\grid_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid\test\test_grid.hpp">
+      <Filter>cgp\containers\grid\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid_stack\grid_stack.hpp">
+      <Filter>cgp\containers\grid_stack</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid_stack\grid_stack_2D\grid_stack_2D.hpp">
+      <Filter>cgp\containers\grid_stack\grid_stack_2D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\grid_stack\grid_stack_2D\test\test_grid_stack_2D.hpp">
+      <Filter>cgp\containers\grid_stack\grid_stack_2D\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\containers\offset_grid\offset_grid.hpp">
+      <Filter>cgp\containers\offset_grid</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\display.hpp">
+      <Filter>cgp\display</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\curve_drawable\curve_drawable.hpp">
+      <Filter>cgp\display\drawable\curve_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\curve_dynamic_drawable\curve_dynamic_drawable.hpp">
+      <Filter>cgp\display\drawable\curve_dynamic_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\drawable.hpp">
+      <Filter>cgp\display\drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable.hpp">
+      <Filter>cgp\display\drawable\hierarchy_mesh_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable_node\hierarchy_mesh_drawable_node.hpp">
+      <Filter>cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable_node</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\mesh_drawable\mesh_drawable.hpp">
+      <Filter>cgp\display\drawable\mesh_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\mesh_normal_drawable\mesh_normal_drawable.hpp">
+      <Filter>cgp\display\drawable\mesh_normal_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\mesh_wireframe_drawable\mesh_wireframe_drawable.hpp">
+      <Filter>cgp\display\drawable\mesh_wireframe_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\segments_drawable\segments_drawable.hpp">
+      <Filter>cgp\display\drawable\segments_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\shading_parameters\shading_parameters.hpp">
+      <Filter>cgp\display\drawable\shading_parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\skybox_drawable\skybox_drawable.hpp">
+      <Filter>cgp\display\drawable\skybox_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\spatial_domain_grid_drawable\spatial_domain_grid_drawable.hpp">
+      <Filter>cgp\display\drawable\spatial_domain_grid_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\trajectory_drawable\trajectory_drawable.hpp">
+      <Filter>cgp\display\drawable\trajectory_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\drawable\triangle_soup_drawable\triangle_soup_drawable.hpp">
+      <Filter>cgp\display\drawable\triangle_soup_drawable</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\image\image.hpp">
+      <Filter>cgp\display\image</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\debug\debug.hpp">
+      <Filter>cgp\display\opengl\debug</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\glad\glad.hpp">
+      <Filter>cgp\display\opengl\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\helper\opengl_helper.hpp">
+      <Filter>cgp\display\opengl\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\opengl.hpp">
+      <Filter>cgp\display\opengl</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\shaders\shaders.hpp">
+      <Filter>cgp\display\opengl\shaders</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\texture\texture.hpp">
+      <Filter>cgp\display\opengl\texture</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\opengl\uniform\uniform.hpp">
+      <Filter>cgp\display\opengl\uniform</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\display\window\window.hpp">
+      <Filter>cgp\display\window</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\files\files.hpp">
+      <Filter>cgp\files</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\helper_common_scene\helper\helper.hpp">
+      <Filter>cgp\helper_common_scene\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\helper_common_scene\helper_common_scene.hpp">
+      <Filter>cgp\helper_common_scene</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\helper_common_scene\scene_environment_basic\scene_environment_basic.hpp">
+      <Filter>cgp\helper_common_scene\scene_environment_basic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\camera.hpp">
+      <Filter>cgp\interaction\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\camera_around_center\camera_around_center.hpp">
+      <Filter>cgp\interaction\camera\camera_around_center</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\camera_base\camera_base.hpp">
+      <Filter>cgp\interaction\camera\camera_base</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\camera_head\camera_head.hpp">
+      <Filter>cgp\interaction\camera\camera_head</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\camera_projection\camera_projection.hpp">
+      <Filter>cgp\interaction\camera\camera_projection</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\camera_spherical_coordinates\camera_spherical_coordinates.hpp">
+      <Filter>cgp\interaction\camera\camera_spherical_coordinates</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera\common_functions\common_functions.hpp">
+      <Filter>cgp\interaction\camera\common_functions</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\camera_standard_behavior\camera_standard_behavior.hpp">
+      <Filter>cgp\interaction\camera_standard_behavior</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\glfw_inputs\glfw_inputs.hpp">
+      <Filter>cgp\interaction\glfw_inputs</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\gui\gui.hpp">
+      <Filter>cgp\interaction\gui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\interaction.hpp">
+      <Filter>cgp\interaction</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\picking\picking.hpp">
+      <Filter>cgp\interaction\picking</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\picking\picking_plane\picking_plane.hpp">
+      <Filter>cgp\interaction\picking\picking_plane</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\picking\picking_spheres\picking_spheres.hpp">
+      <Filter>cgp\interaction\picking\picking_spheres</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\picking\picking_structure\picking_structure.hpp">
+      <Filter>cgp\interaction\picking\picking_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\timer\timer.hpp">
+      <Filter>cgp\interaction\timer</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\timer\timer_basic\timer_basic.hpp">
+      <Filter>cgp\interaction\timer\timer_basic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\timer\timer_event_periodic\timer_event_periodic.hpp">
+      <Filter>cgp\interaction\timer\timer_event_periodic</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\timer\timer_fps\timer_fps.hpp">
+      <Filter>cgp\interaction\timer\timer_fps</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\timer\timer_interval\timer_interval.hpp">
+      <Filter>cgp\interaction\timer\timer_interval</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\tracker\tracker.hpp">
+      <Filter>cgp\interaction\tracker</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\interaction\tracker\velocity_tracker\velocity_tracker.hpp">
+      <Filter>cgp\interaction\tracker\velocity_tracker</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\affine\affine.hpp">
+      <Filter>cgp\math\affine</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\affine\affine_rt\affine_rt.hpp">
+      <Filter>cgp\math\affine\affine_rt</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\affine\affine_rts\affine_rts.hpp">
+      <Filter>cgp\math\affine\affine_rts</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\frame\frame.hpp">
+      <Filter>cgp\math\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\interpolation\interpolation.hpp">
+      <Filter>cgp\math\interpolation</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\math.hpp">
+      <Filter>cgp\math</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\matrix\matrix.hpp">
+      <Filter>cgp\math\matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\matrix\matrix_stack\matrix_stack.hpp">
+      <Filter>cgp\math\matrix\matrix_stack</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\matrix\matrix_stack\special_types\definition\special_types.hpp">
+      <Filter>cgp\math\matrix\matrix_stack\special_types\definition</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\matrix\matrix_stack\special_types\mat4\mat4.hpp">
+      <Filter>cgp\math\matrix\matrix_stack\special_types\mat4</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\matrix\matrix_stack\special_types\special_types.hpp">
+      <Filter>cgp\math\matrix\matrix_stack\special_types</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\matrix\test\test_matrix_stack.hpp">
+      <Filter>cgp\math\matrix\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\projection\projection.hpp">
+      <Filter>cgp\math\projection</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\quaternion\quaternion.hpp">
+      <Filter>cgp\math\quaternion</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\rotation_transform\rotation_transform.hpp">
+      <Filter>cgp\math\rotation_transform</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\rotation_transform\test\test_rotation.hpp">
+      <Filter>cgp\math\rotation_transform\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\vec_mat\test\test_vec_mat.hpp">
+      <Filter>cgp\math\vec_mat\test</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\math\vec_mat\vec_mat.hpp">
+      <Filter>cgp\math\vec_mat</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\curve\curve.hpp">
+      <Filter>cgp\shape\curve</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\implicit\implicit.hpp">
+      <Filter>cgp\shape\implicit</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\implicit\marching_cube\helper\marching_cubes_lut.hpp">
+      <Filter>cgp\shape\implicit\marching_cube\helper</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\implicit\marching_cube\marching_cube.hpp">
+      <Filter>cgp\shape\implicit\marching_cube</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\intersection\intersection.hpp">
+      <Filter>cgp\shape\intersection</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\mesh\loader\loader.hpp">
+      <Filter>cgp\shape\mesh\loader</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\mesh\loader\obj\obj.hpp">
+      <Filter>cgp\shape\mesh\loader\obj</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\mesh\mesh.hpp">
+      <Filter>cgp\shape\mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\mesh\primitive\mesh_primitive.hpp">
+      <Filter>cgp\shape\mesh\primitive</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\mesh\structure\mesh.hpp">
+      <Filter>cgp\shape\mesh\structure</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\noise\noise.hpp">
+      <Filter>cgp\shape\noise</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\shape.hpp">
+      <Filter>cgp\shape</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\spatial_domain\spatial_domain.hpp">
+      <Filter>cgp\shape\spatial_domain</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\cgp\shape\spatial_domain\spatial_domain_grid_3D\spatial_domain_grid_3D.hpp">
+      <Filter>cgp\shape\spatial_domain\spatial_domain_grid_3D</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\glad\include\glad\glad.hpp">
+      <Filter>third_party\src\glad\include\glad</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imconfig.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imgui.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imgui_impl_glfw.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imgui_impl_opengl3.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imgui_internal.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imstb_rectpack.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imstb_textedit.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\imgui\imstb_truetype.h">
+      <Filter>third_party\src\imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\jpeg\jpgd.h">
+      <Filter>third_party\src\jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\jpeg\jpge.h">
+      <Filter>third_party\src\jpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\lodepng\lodepng.h">
+      <Filter>third_party\src\lodepng</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\library\third_party\src\simplexnoise\simplexnoise1234.hpp">
+      <Filter>third_party\src\simplexnoise</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\scenes\Project\Project\src\environment_camera_head\environment_camera_head.hpp">
+      <Filter>src\environment_camera_head</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\scenes\Project\Project\src\scene.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="C:\code_inf443\scenes\Project\Project\src\terrain.hpp">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="C:\code_inf443\scenes\Project\Project\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="C:\code_inf443\scenes\Project\Project\shaders\mesh\frag.glsl">
+      <Filter>shaders\mesh</Filter>
+    </None>
+    <None Include="C:\code_inf443\scenes\Project\Project\shaders\mesh\vert.glsl">
+      <Filter>shaders\mesh</Filter>
+    </None>
+    <None Include="C:\code_inf443\scenes\Project\Project\shaders\single_color\frag.glsl">
+      <Filter>shaders\single_color</Filter>
+    </None>
+    <None Include="C:\code_inf443\scenes\Project\Project\shaders\single_color\vert.glsl">
+      <Filter>shaders\single_color</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="cgp">
+      <UniqueIdentifier>{8AFFBE67-9541-323D-B430-1C5B0ADBF8A0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base">
+      <UniqueIdentifier>{FBEE3F75-7666-334F-8AA9-8CCA172351F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base\basic_types">
+      <UniqueIdentifier>{46E5E062-72FD-377F-B31C-2DDDBA3C74D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base\error">
+      <UniqueIdentifier>{4497A266-7F29-390B-AE13-5D72C7FD8F4E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base\rand">
+      <UniqueIdentifier>{4B44A5AB-34DC-3EE6-A2CC-4197B0DE2019}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base\stl">
+      <UniqueIdentifier>{C6EB5F1B-A1DD-3150-9B9C-BFFF57EEF64A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base\string">
+      <UniqueIdentifier>{2C3C8029-A03A-3536-860C-66C974BF0885}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\base\types">
+      <UniqueIdentifier>{2612988F-CC23-39FA-B6AD-8F873406EFDC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers">
+      <UniqueIdentifier>{BF37E8D6-DC47-307C-9FA1-D10F9E5EC5F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\buffer">
+      <UniqueIdentifier>{8830B709-C4AE-3DB8-A778-EE859110814B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\buffer\test">
+      <UniqueIdentifier>{CBF30E85-8C5F-3787-9A01-336126A11574}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\buffer_stack">
+      <UniqueIdentifier>{4FD4603A-6C6A-33CB-AE69-6318C9CE05B8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\buffer_stack\implementation">
+      <UniqueIdentifier>{BCE10BC2-2EBB-3AD3-80A2-6D53C6760E6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\buffer_stack\special_types">
+      <UniqueIdentifier>{EC867A79-81C0-3463-B6D1-1707CA016DE7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\buffer_stack\test">
+      <UniqueIdentifier>{CBC81754-5E1A-33BF-8F66-BFDDDB25AFE6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid">
+      <UniqueIdentifier>{850DD6D7-6EEB-3C0B-A657-9C0B9AC4EB65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid\grid_2D">
+      <UniqueIdentifier>{B7AF065E-E707-38C0-B895-B00B412E12C9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid\grid_3D">
+      <UniqueIdentifier>{76B9640C-DF89-341F-8DDA-20FB1BDB94C6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid\test">
+      <UniqueIdentifier>{5429D55E-EFF7-3A62-9AE6-8D7CFEA07B85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid_stack">
+      <UniqueIdentifier>{B31A3403-94D0-30AA-A38A-CA0997CCDB85}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid_stack\grid_stack_2D">
+      <UniqueIdentifier>{97028194-B8EC-304A-A877-AD4B5CD7F3E0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\grid_stack\grid_stack_2D\test">
+      <UniqueIdentifier>{5FE6DF9A-7965-35D7-A27B-3DA529D01E26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\containers\offset_grid">
+      <UniqueIdentifier>{E4A7413B-6BC3-3CE6-BE66-B2AFB3017FAC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display">
+      <UniqueIdentifier>{AE523311-A742-3AE2-A7BF-99DD097E87DF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable">
+      <UniqueIdentifier>{40BEF7BE-7097-3FD2-B520-B114B2B2245D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\curve_drawable">
+      <UniqueIdentifier>{D6A9EB03-6010-3B26-8F38-B986E0E6AE4A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\curve_dynamic_drawable">
+      <UniqueIdentifier>{ADA53A27-6220-3B51-B63A-FD465FBB6FD2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\hierarchy_mesh_drawable">
+      <UniqueIdentifier>{D3F812E6-2D36-313C-AB09-11F1C390F36F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\hierarchy_mesh_drawable\hierarchy_mesh_drawable_node">
+      <UniqueIdentifier>{9C0DA1F8-5971-3F84-819E-D577838EBCD9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\mesh_drawable">
+      <UniqueIdentifier>{0F3CB056-38AA-30A6-91EF-700BCDD3F48F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\mesh_normal_drawable">
+      <UniqueIdentifier>{8A921305-BC71-381F-90E6-54F9019B3C69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\mesh_wireframe_drawable">
+      <UniqueIdentifier>{124E36CD-B54A-38FB-AB9C-BE70B22546CE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\segments_drawable">
+      <UniqueIdentifier>{AD22BCA3-EB4E-3937-8066-E8E3FDBE9D57}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\shading_parameters">
+      <UniqueIdentifier>{FE47FD31-70B1-340E-BD97-9968EC6134D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\skybox_drawable">
+      <UniqueIdentifier>{E977412B-D3EF-3313-A66B-A7793C097A8B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\spatial_domain_grid_drawable">
+      <UniqueIdentifier>{A8E1867D-C087-3694-AD61-C539209BE21C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\trajectory_drawable">
+      <UniqueIdentifier>{8D44E8DC-D031-3238-9241-E46709AED3BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\drawable\triangle_soup_drawable">
+      <UniqueIdentifier>{118F4CC6-26E3-3781-80ED-DC96DEF98EB5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\image">
+      <UniqueIdentifier>{D1A4502C-39B6-3D22-B04C-815D716F2F17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl">
+      <UniqueIdentifier>{EE4AEA29-D3D9-389B-86E4-99DACA7BB2A8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl\debug">
+      <UniqueIdentifier>{1E9900E7-3D58-3E03-A70D-8DCA041A7340}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl\glad">
+      <UniqueIdentifier>{A6DAAD58-23D5-3B7A-8660-FB7695A585C0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl\helper">
+      <UniqueIdentifier>{EB275192-23E5-3F1E-895B-B2EAD38FEC98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl\shaders">
+      <UniqueIdentifier>{92FB472C-C14C-3709-8AB4-D756B678D5AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl\texture">
+      <UniqueIdentifier>{E6C70451-0627-3B10-B9EF-6DFE437B7CCF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\opengl\uniform">
+      <UniqueIdentifier>{570E33CF-B294-394C-A67F-6309A7E2F961}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\display\window">
+      <UniqueIdentifier>{011B7565-6FBC-3C4C-A89D-5BD80CDE28F9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\files">
+      <UniqueIdentifier>{498264CD-2EFD-3C2F-8B27-DE2B96E0B17E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\helper_common_scene">
+      <UniqueIdentifier>{47ED1C7D-CCE6-3834-9F0A-44D86843AEC8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\helper_common_scene\helper">
+      <UniqueIdentifier>{72357889-BFC1-324A-87D4-F599361A55F7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\helper_common_scene\scene_environment_basic">
+      <UniqueIdentifier>{6F0C2A34-3E3F-36D7-9379-320FA690450F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction">
+      <UniqueIdentifier>{D45933F0-ADEF-3465-8E2C-C7249785EFDF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera">
+      <UniqueIdentifier>{F73D2DA2-28DC-3AFF-BFFE-1ABA71D60072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera\camera_around_center">
+      <UniqueIdentifier>{DF17CABD-0514-3B3C-8E87-4EE6804DDD9B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera\camera_base">
+      <UniqueIdentifier>{6C372047-1E18-3354-A066-1363F45EE348}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera\camera_head">
+      <UniqueIdentifier>{D328D387-9A2D-332C-94ED-8740DC262E55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera\camera_projection">
+      <UniqueIdentifier>{E08A603C-1205-3785-985A-2C4B49E87E91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera\camera_spherical_coordinates">
+      <UniqueIdentifier>{231FA534-BF11-3392-9EF1-72033DA48BAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera\common_functions">
+      <UniqueIdentifier>{2D6495BB-E64F-3242-A90F-DA8DD269537E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\camera_standard_behavior">
+      <UniqueIdentifier>{B5DD2954-95A5-39EA-B9AE-A8730C8782FB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\glfw_inputs">
+      <UniqueIdentifier>{1F7D0376-16E2-3B2A-8EB5-E3422338EB74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\gui">
+      <UniqueIdentifier>{0FC42D46-23BC-32DE-80C9-CACA22D28BD6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\picking">
+      <UniqueIdentifier>{C97FAC45-6B2B-3609-AF4A-4BFBF5641396}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\picking\picking_plane">
+      <UniqueIdentifier>{823B7101-2F98-3BAB-AD30-AD676BF2B550}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\picking\picking_spheres">
+      <UniqueIdentifier>{11A23DC3-BB6F-3A28-9FD0-C657B18E922E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\picking\picking_structure">
+      <UniqueIdentifier>{9FB3E772-AB2C-3759-A468-B1925DFC3A0E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\timer">
+      <UniqueIdentifier>{B2D9252D-57B1-3A9B-897C-45A81FEE7A84}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\timer\timer_basic">
+      <UniqueIdentifier>{C39D2864-FB68-37D9-9932-9B0603509C47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\timer\timer_event_periodic">
+      <UniqueIdentifier>{649CDB20-B57A-33B6-94C3-6A660E3CBD67}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\timer\timer_fps">
+      <UniqueIdentifier>{A88A9268-2D4C-3D39-97AE-9BB118B32CE9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\timer\timer_interval">
+      <UniqueIdentifier>{2D1F2AF6-F8EE-35AF-B878-CC7CD2A6EE51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\tracker">
+      <UniqueIdentifier>{F78B2B4E-F4EB-3D88-A2DE-D3FC9D4FD7D8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\interaction\tracker\velocity_tracker">
+      <UniqueIdentifier>{52978C05-6661-3F9D-8C9B-46AB2A230882}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math">
+      <UniqueIdentifier>{AC1F81D5-4238-34BA-A05F-063971588B3F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\affine">
+      <UniqueIdentifier>{EA41E3F6-7A7C-3B66-9B4E-C56DC2DF60D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\affine\affine_rt">
+      <UniqueIdentifier>{B9BAA91D-07D3-34DE-ABB1-711F11C0109E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\affine\affine_rts">
+      <UniqueIdentifier>{61ADD8B2-9780-37F3-8071-C5FDEE4F62EA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\frame">
+      <UniqueIdentifier>{C4AAD4D0-4D77-32D1-B40C-AFFB1DE4A024}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\interpolation">
+      <UniqueIdentifier>{9E80B9BE-5CD0-3496-AA63-6C1A83FA3E8C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\matrix">
+      <UniqueIdentifier>{EA09D1CA-05C9-3358-994B-7C2A42C0904D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\matrix\matrix_stack">
+      <UniqueIdentifier>{891E8502-1525-3D1B-ACAD-549032D26841}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\matrix\matrix_stack\special_types">
+      <UniqueIdentifier>{ED65B8ED-C777-30EC-9A48-BBAE0DBAE1BB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\matrix\matrix_stack\special_types\definition">
+      <UniqueIdentifier>{A9BE9A74-6698-3530-842E-206610CA32FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\matrix\matrix_stack\special_types\mat4">
+      <UniqueIdentifier>{D4E39D9B-92DF-3CC9-9502-325022DB707D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\matrix\test">
+      <UniqueIdentifier>{E73CEB77-7EA2-3699-828C-0C9DB465A54F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\projection">
+      <UniqueIdentifier>{F6AFB1CD-356B-346D-9470-9286AA159FCF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\quaternion">
+      <UniqueIdentifier>{8A0B2F4D-D343-3A6B-A34A-96C03DC473AD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\rotation_transform">
+      <UniqueIdentifier>{4586D0D4-7AB0-341D-8CBC-76CBB556C3C1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\rotation_transform\test">
+      <UniqueIdentifier>{DA1F78DB-152B-377B-8587-5F09D5F7B277}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\vec_mat">
+      <UniqueIdentifier>{5EB466DE-3984-3544-AFEB-3AD3734409E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\math\vec_mat\test">
+      <UniqueIdentifier>{CA9EBD89-75E0-3570-93D3-D5B769BC89F3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape">
+      <UniqueIdentifier>{E0CD3C11-662E-38E0-93FD-B2518C0BC618}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\curve">
+      <UniqueIdentifier>{A373D22A-972F-3261-9146-C0EC8643639F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\implicit">
+      <UniqueIdentifier>{73EE02D7-B98C-3B0C-B6AE-B2519A6FB240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\implicit\marching_cube">
+      <UniqueIdentifier>{A1D24522-8F0E-32FA-9098-899775C57B69}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\implicit\marching_cube\helper">
+      <UniqueIdentifier>{E9EAFFF9-2AC6-3650-A2E6-35DE42F3874A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\intersection">
+      <UniqueIdentifier>{7BBF56F7-8AA7-3DDC-B755-8ADA5DB0656F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\mesh">
+      <UniqueIdentifier>{AB3324D9-65CC-30E3-BC1C-C0DE1160AEF3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\mesh\loader">
+      <UniqueIdentifier>{3E966975-319B-3003-B88C-B52CD768709C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\mesh\loader\obj">
+      <UniqueIdentifier>{26269B88-E88C-31E6-B28C-CE9466F70E4E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\mesh\primitive">
+      <UniqueIdentifier>{56F577FD-5338-321F-A87E-87DAC1FE1600}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\mesh\structure">
+      <UniqueIdentifier>{29DE8A50-38FD-3AEC-A069-86156948D110}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\noise">
+      <UniqueIdentifier>{6A454E49-98E2-3F1A-B4AA-1A276126369D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\spatial_domain">
+      <UniqueIdentifier>{DDB53C5A-F04B-3AC7-89CE-DD24CBCED7F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cgp\shape\spatial_domain\spatial_domain_grid_3D">
+      <UniqueIdentifier>{3F6B3997-A3C6-397E-90A1-AFA388966DB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders">
+      <UniqueIdentifier>{5B9A40DF-6DA1-34A5-B9F2-941E7B97FE6F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\mesh">
+      <UniqueIdentifier>{688518F1-991F-3950-B0B9-260DEE14EC6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="shaders\single_color">
+      <UniqueIdentifier>{D4909430-0042-3C1B-8547-E58427B00648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{B390D419-4494-3A7E-B419-9F4B02CB08FD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\environment_camera_head">
+      <UniqueIdentifier>{7EB5E987-E28C-3CE0-AED1-668E43277745}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{CC81C2F7-DC63-336A-AD9E-8F2B6198598A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src">
+      <UniqueIdentifier>{2692A141-5C02-3D85-A84F-E64946013641}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\glad">
+      <UniqueIdentifier>{594B081F-7B44-38C9-9350-0A8C9A437409}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\glad\include">
+      <UniqueIdentifier>{CE7BC9CE-F672-3C62-A791-FBFFDE56C786}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\glad\include\glad">
+      <UniqueIdentifier>{37CCA125-0579-3FC1-951B-2B1AC38C0301}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\glad\src">
+      <UniqueIdentifier>{66D19609-865B-3B0D-AE49-A7EBFC2ABC54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\imgui">
+      <UniqueIdentifier>{1A76B2E1-1A35-3FBF-9CA7-61A413DAFC6E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\jpeg">
+      <UniqueIdentifier>{133B0BE8-C29F-3AC9-97B3-272579B77CB7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\lodepng">
+      <UniqueIdentifier>{0C3F89AB-8E01-3BCB-99DD-A664D89ACC5A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\src\simplexnoise">
+      <UniqueIdentifier>{2CD6D94D-37D8-3C93-9814-E3146C63C396}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
