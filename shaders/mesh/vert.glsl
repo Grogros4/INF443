@@ -23,11 +23,12 @@ uniform mat4 model;      // Model affine transform matrix associated to the curr
 uniform mat4 view;       // View matrix (rigid transform) of the camera
 uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the camera
 uniform vec3 speed;      // Player speed
-uniform float c;   		 // Speed of light
+uniform vec3 cc;   		 // Speed of light
 
 void main()
 {
-	
+	float c = 11;
+
     // The position of the vertex in the world space relative to camera
 	vec4 p = view * model * vec4(position, 1.0);
 	p = p / p.w;
@@ -36,6 +37,7 @@ void main()
 	//Calcul relativiste
 	if (length(speed) > 0.01){
 		float b = length(speed)/c;
+		//b = 0;
 		float gamma = 1/sqrt(1-b*b);
 
 		vec4 speed4 = vec4(speed,0);

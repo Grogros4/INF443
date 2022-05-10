@@ -93,7 +93,6 @@ void window_size_callback(GLFWwindow* , int width, int height)
 void mouse_move_callback(GLFWwindow* /*window*/, double xpos, double ypos)
 {
 	scene.inputs.mouse_position_update( { xpos, ypos } );
-	scene.update_mouse(xpos, ypos);
 
 	// Remove the standard trackball behavior in the main function (*)
 	//   The motion is now computed in the animation loop at each frame

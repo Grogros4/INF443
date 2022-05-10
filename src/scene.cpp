@@ -35,27 +35,37 @@ void scene_structure::update_camera(float xpos, float ypos)
 	quaternion rot = camera.orientation_camera.data;
 	camera.orientation_camera = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, yaw_angle) * rot;
 
-	speed = vec3{0,0,0};
+	vec3 acc = vec3{ 0.0f, 0.0f, 0.0f };
+
+	vec3 front = vec3{ camera.front().x, camera.front().y, 0 };
+	front /= sqrt(front.x * front.x + front.y * front.y);
+
 	if (keyboard.up)
 	{
-		vec3 front = vec3{ camera.front().x, camera.front().y, 0 };
-		front /= (front.x * front.x + front.y * front.y);
-		speed += gui.speed * front;
+		acc += front;
 	}
 	if (keyboard.down)
 	{
-		vec3 front = vec3{ camera.front().x, camera.front().y, 0 };
-		front /= (front.x * front.x + front.y * front.y);
-		speed += -gui.speed * front;
+		acc += - front;
 	}
 	if (keyboard.right)
 	{
-		speed += gui.speed * camera.right();
+		acc += camera.right();
 	}
 	if (keyboard.left)
 	{
-		speed += -gui.speed * camera.right();
+		acc += - camera.right();
 	}
+	
+	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+	if (acc_norm > 0.01)
+		acc = (walk_acc / acc_norm) * acc;
+	std::cout << acc << "\n";
+	speed += acc * dt - f * speed * dt;
+	//float speed_norm = sqrt(speed.x * speed.x + speed.y * speed.y + speed.z * speed.z);
+	//if (speed_norm > speed_max)
+	//	speed = (speed_max / speed_norm) * speed;
+	std::cout << speed << "\n";
 	camera.position_camera += speed * dt;
 
 	pos = camera.position();
@@ -64,7 +74,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 void scene_structure::initialize()
 {
 
-	float c = 1000;
+	float c = 10;
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
@@ -94,7 +104,7 @@ void scene_structure::display()
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
 	environment.speed = speed;
-	environment.c = c;
+	environment.c = vec3{ c,0,0 };
 
 	// The standard frame
 	if (gui.display_frame)
@@ -110,7 +120,7 @@ void scene_structure::display()
 void scene_structure::display_gui()
 {
 	ImGui::Checkbox("Frame", &gui.display_frame);
-	ImGui::SliderFloat("Speed", &gui.speed, 0.2f, 5.0f); // Set the camera velocity
+	//ImGui::SliderFloat("Speed", &gui.speed, 0.2f, 5.0f); // Set the camera velocity
 }
 
 
@@ -121,5 +131,5 @@ void opengl_uniform(GLuint shader, scene_environment_player_head const& environm
 	opengl_uniform(shader, "view", environment.camera.matrix_view());
 	opengl_uniform(shader, "light", environment.light);
 	opengl_uniform(shader, "speed", environment.speed);
-	opengl_uniform(shader, "c", environment.c);
+	opengl_uniform(shader, "cc", environment.c);
 }

@@ -11,12 +11,11 @@
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
 	bool display_frame = false;
-	float speed = 10.0f;       // The velocity of the camera displacement
 };
 
 struct scene_environment_player_head : public scene_environment_camera_head {
 	cgp::vec3 speed;
-	float c;
+	cgp::vec3 c;
 };
 
 
@@ -40,6 +39,9 @@ struct scene_structure {
 
 	cgp::vec3 pos;
 	cgp::vec3 speed;
+	float speed_max = 10.0f;
+	float walk_acc = 40.0f;
+	float f = 4.0f;
 	float c;
 
 	cgp::vec2 mouse_pos;
@@ -53,7 +55,6 @@ struct scene_structure {
 	// Function to call in the animation loop in main (*)
 	//   This function replace the standard trackball behavior that must also be removed in the main (from mouse_move_callback)
 	void update_camera(float xpos, float ypos);
-	void update_mouse(float xpos, float ypos);
 	
 
 	void initialize();  // Standard initialization to be called before the animation loop
