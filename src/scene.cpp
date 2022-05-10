@@ -74,9 +74,6 @@ void scene_structure::initialize()
 {
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
-
-	float c = 10;
-
 	// Load the terrain (display a debug message as the loading can take some time)
 	std::cout << " \nLoad terrain file ..." << std::endl;
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
@@ -104,7 +101,6 @@ void scene_structure::display()
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
 	environment.speed = speed;
-	environment.c = c;
 
 	// The standard frame
 	if (gui.display_frame)
