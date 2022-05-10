@@ -16,6 +16,7 @@ out struct fragment_data
     vec3 normal;   // normal position in world space
     vec3 color;    // vertex color
     vec2 uv;       // vertex uv
+	vec3 speed;
 } fragment;
 
 // Uniform variables expected to receive from the C++ program
@@ -32,16 +33,14 @@ void main()
 	vec4 p = view * model * vec4(position, 1.0);
 	p = p / p.w;
     float norme = length(p.xyz);
+	vec4 speed4 = vec4(speed,0);
+	speed4 = view * speed4;
 
 	//Calcul relativiste
 	if (length(speed) > 0.01){
 		float b = length(speed)/c;
 		//b = 0;
 		float gamma = 1/sqrt(1-b*b);
-
-		vec4 speed4 = vec4(speed,0);
-		speed4 = view * speed4;
-
 
 		//Calcul du repère orthogonal vers v
 		vec3 uve = speed4.xyz / length(speed4);
@@ -79,6 +78,7 @@ void main()
 	fragment.normal   = n.xyz;
 	fragment.color = color;
 	fragment.uv = uv;
+	fragment.speed = speed4.xyz;
 
 	// gl_Position is a built-in variable which is the expected output of the vertex shader
 	gl_Position = p_proj; // gl_Position is the projected vertex position (in normalized device coordinates)

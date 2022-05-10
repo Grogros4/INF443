@@ -9,6 +9,7 @@ in struct fragment_data
     vec3 normal;   // normal in the world space
     vec3 color;    // current color on the fragment
     vec2 uv;       // current uv-texture on the fragment
+	vec3 speed;
 } fragment;
 
 // Output of the fragment shader - output color
@@ -31,6 +32,98 @@ uniform float Ks;     // Specular coefficient
 uniform float specular_exp; // Specular exponent
 
 uniform mat4 view;       // View matrix (rigid transform) of the camera - to compute the camera position
+
+uniform float c;
+
+vec3 wavelength2rgb(float Wavelength)
+{	
+	float Gamma = 0.8f;
+	float IntensityMax = 1.0f;
+	float Red, Green, Blue;
+	float factor;
+
+	if((Wavelength >= 380) && (Wavelength < 440)) {
+        Red = -(Wavelength - 440) / (440 - 380);
+        Green = 0.0;
+        Blue = 1.0;
+    } else if((Wavelength >= 440) && (Wavelength < 490)) {
+        Red = 0.0;
+        Green = (Wavelength - 440) / (490 - 440);
+        Blue = 1.0;
+    } else if((Wavelength >= 490) && (Wavelength < 510)) {
+        Red = 0.0;
+        Green = 1.0;
+        Blue = -(Wavelength - 510) / (510 - 490);
+    } else if((Wavelength >= 510) && (Wavelength < 580)) {
+        Red = (Wavelength - 510) / (580 - 510);
+        Green = 1.0;
+        Blue = 0.0;
+    } else if((Wavelength >= 580) && (Wavelength < 645)) {
+        Red = 1.0;
+        Green = -(Wavelength - 645) / (645 - 580);
+        Blue = 0.0;
+    } else if((Wavelength >= 645) && (Wavelength < 781)) {
+        Red = 1.0;
+        Green = 0.0;
+        Blue = 0.0;
+    } else {
+        Red = 0.0;
+        Green = 0.0;
+        Blue = 0.0;
+    }
+
+    // Let the intensity fall off near the vision limits
+
+    if((Wavelength >= 380) && (Wavelength < 420)) {
+        factor = 0.3 + 0.7 * (Wavelength - 380) / (420 - 380);
+    } else if((Wavelength >= 420) && (Wavelength < 701)) {
+        factor = 1.0;
+    } else if((Wavelength >= 701) && (Wavelength < 781)) {
+        factor = 0.3 + 0.7 * (780 - Wavelength) / (780 - 700);
+    } else {
+        factor = 0.0;
+    }
+
+    // Don't want 0^x = 1 for x <> 0
+    Red = ( (Red == 0.0) ? 0 : IntensityMax * pow(Red * factor, Gamma) );
+    Green = ( (Green == 0.0) ? 0 : IntensityMax * pow(Green * factor, Gamma) );
+    Blue = ( (Blue == 0.0) ? 0 : IntensityMax * pow(Blue * factor, Gamma) );
+
+
+	return vec3(Red, Green, Blue);
+}
+
+vec3 dopplerEffect(vec3 color)
+{
+	if (length(fragment.speed) > 0.1)
+	{
+		float ctheta = dot(fragment.speed, fragment.position)/(length(fragment.speed)*length(fragment.position));
+		float b = length(fragment.speed) / c;
+		float gamma = 1 / sqrt(1-b*b);
+		float k = gamma * (1 + b * ctheta);
+	
+		float waveR = k * 630;
+		float waveG = k * 532;
+		float waveB = k * 465;
+
+		vec3 colorR = color.x * wavelength2rgb(waveR);
+		vec3 colorG = color.y * wavelength2rgb(waveG);
+		vec3 colorB = color.z * wavelength2rgb(waveB);
+
+		vec3 newColor;
+
+		newColor.x = max(colorR.x + colorG.x + colorB.x, 1.0f);
+		newColor.y = max(colorR.y + colorG.y + colorB.y, 1.0f);
+		newColor.z = max(colorR.z + colorG.z + colorB.z, 1.0f);
+
+		return newColor;
+	}
+	else
+	{
+		return color;
+	}
+	
+}
 
 void main()
 {
@@ -85,6 +178,7 @@ void main()
 
 	// Compute the final shaded color using Phong model
 	vec3 color_shading = (Ka + Kd * diffuse) * color_object + Ks * specular * vec3(1.0, 1.0, 1.0);
+	color_shading = dopplerEffect(color_shading);
 	
 	// Output color, with the alpha component
 	FragColor = vec4(color_shading, alpha * color_image_texture.a);
