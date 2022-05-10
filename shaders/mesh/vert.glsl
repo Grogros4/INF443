@@ -27,16 +27,47 @@ uniform float c;   		 // Speed of light
 
 void main()
 {
-
+	
     // The position of the vertex in the world space relative to camera
 	vec4 p = view * model * vec4(position, 1.0);
+	p = p / p.w;
+    float norme = length(p.xyz);
+
+	//Calcul relativiste
+	if (length(speed) > 0.01){
+		float b = length(speed)/c;
+		float gamma = 1/sqrt(1-b*b);
+
+		vec4 speed4 = vec4(speed,0);
+		speed4 = view * speed4;
+
+
+		//Calcul du repère orthogonal vers v
+		vec3 uve = speed4.xyz / length(speed4);
+		vec3 utheta = p.xyz - dot(p.xyz, uve)*uve;
+		utheta = utheta/length(utheta);
+		vec3 uz = cross(uve,utheta);
+	
+
+
+
+
+		float ctheta = dot(speed4, p)/(length(speed4)*length(p.xyz));
+		float stheta = dot(uz,cross(speed4.xyz, p.xyz))/(length(speed4)*length(p.xyz));
+
+		float cosi = (ctheta + b)/(1 + b*ctheta);
+		float sini = stheta / (gamma*(1 + b*ctheta));
+
+		
+
+		p.xyz = norme*(cosi * uve + sini * utheta);
+		}
+
+
+
 
 	// The normal of the vertex in the world space
 	vec4 n = model * vec4(normal, 0.0);
-
-	float b = length(speed)/c;
-
-	p.xyz = p.xyz + c*length(speed);
 
 	// The projected position of the vertex in the normalized device coordinates:
 	vec4 p_proj = projection * p;
