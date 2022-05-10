@@ -23,11 +23,10 @@ uniform mat4 model;      // Model affine transform matrix associated to the curr
 uniform mat4 view;       // View matrix (rigid transform) of the camera
 uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the camera
 uniform vec3 speed;      // Player speed
-uniform vec3 cc;   		 // Speed of light
+uniform float c;   		 // Speed of light
 
 void main()
 {
-	float c = 11;
 
     // The position of the vertex in the world space relative to camera
 	vec4 p = view * model * vec4(position, 1.0);

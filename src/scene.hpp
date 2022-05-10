@@ -15,7 +15,7 @@ struct gui_parameters {
 
 struct scene_environment_player_head : public scene_environment_camera_head {
 	cgp::vec3 speed;
-	cgp::vec3 c;
+	float c;
 };
 
 

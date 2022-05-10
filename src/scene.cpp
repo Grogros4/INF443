@@ -74,7 +74,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 void scene_structure::initialize()
 {
 
-	float c = 10;
+	c = 10.0f;
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
@@ -104,7 +104,9 @@ void scene_structure::display()
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
 	environment.speed = speed;
-	environment.c = vec3{ c,0,0 };
+	environment.c = c;
+	std::cout << environment.c << "c \n";
+
 
 	// The standard frame
 	if (gui.display_frame)
@@ -131,5 +133,5 @@ void opengl_uniform(GLuint shader, scene_environment_player_head const& environm
 	opengl_uniform(shader, "view", environment.camera.matrix_view());
 	opengl_uniform(shader, "light", environment.light);
 	opengl_uniform(shader, "speed", environment.speed);
-	opengl_uniform(shader, "cc", environment.c);
+	opengl_uniform(shader, "c", environment.c);
 }
