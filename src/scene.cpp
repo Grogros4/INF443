@@ -7,12 +7,6 @@
 using namespace cgp;
 
 
-void scene_structure::update_mouse(float xpos, float ypos)
-{
-	
-}
-
-
 // The main function implementing the Flying Mode
 void scene_structure::update_camera(float xpos, float ypos)
 {
@@ -46,26 +40,23 @@ void scene_structure::update_camera(float xpos, float ypos)
 	{
 		vec3 front = vec3{ camera.front().x, camera.front().y, 0 };
 		front /= (front.x * front.x + front.y * front.y);
-		speed = gui.speed * front;
-		camera.position_camera += speed * dt;
+		speed += gui.speed * front;
 	}
 	if (keyboard.down)
 	{
 		vec3 front = vec3{ camera.front().x, camera.front().y, 0 };
 		front /= (front.x * front.x + front.y * front.y);
-		speed = -gui.speed * front;
-		camera.position_camera += speed * dt;
+		speed += -gui.speed * front;
 	}
 	if (keyboard.right)
 	{
-		speed = gui.speed * camera.right();
-		camera.position_camera += speed * dt;
+		speed += gui.speed * camera.right();
 	}
 	if (keyboard.left)
 	{
-		speed = -gui.speed * camera.right();
-		camera.position_camera += speed * dt;
+		speed += -gui.speed * camera.right();
 	}
+	camera.position_camera += speed * dt;
 
 	pos = camera.position();
 }
