@@ -72,6 +72,8 @@ void scene_structure::update_camera(float xpos, float ypos)
 
 void scene_structure::initialize()
 {
+
+	float c = 100;
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
@@ -101,6 +103,7 @@ void scene_structure::display()
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
 	environment.speed = speed;
+	environment.c = c;
 
 	// The standard frame
 	if (gui.display_frame)
@@ -120,3 +123,12 @@ void scene_structure::display_gui()
 }
 
 
+void opengl_uniform(GLuint shader, scene_environment_player_head const& environment)
+{
+	// Basic uniform parameters
+	opengl_uniform(shader, "projection", environment.projection.matrix());
+	opengl_uniform(shader, "view", environment.camera.matrix_view());
+	opengl_uniform(shader, "light", environment.light);
+	opengl_uniform(shader, "speed", environment.speed);
+	opengl_uniform(shader, "c", environment.c);
+}
