@@ -72,7 +72,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 void scene_structure::initialize()
 {
 
-	c = 100000.0f;
+	c = 13.0f;
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)

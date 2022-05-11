@@ -95,16 +95,16 @@ vec3 wavelength2rgb(float Wavelength)
 
 vec3 dopplerEffect(vec3 color)
 {
-	if (length(fragment.speed) > 0.1)
+	if (length(fragment.speed) > 0.0000001)
 	{
 		float ctheta = dot(fragment.speed, fragment.position)/(length(fragment.speed)*length(fragment.position));
 		float b = length(fragment.speed) / c;
 		float gamma = 1 / sqrt(1-b*b);
 		float k = gamma * (1 + b * ctheta);
 	
-		float waveR = k * 630;
-		float waveG = k * 532;
-		float waveB = k * 465;
+		float waveR = k * 645;
+		float waveG = k * 510;
+		float waveB = k * 440;
 
 		vec3 colorR = color.x * wavelength2rgb(waveR);
 		vec3 colorG = color.y * wavelength2rgb(waveG);
@@ -112,9 +112,9 @@ vec3 dopplerEffect(vec3 color)
 
 		vec3 newColor;
 
-		newColor.x = max(colorR.x + colorG.x + colorB.x, 1.0f);
-		newColor.y = max(colorR.y + colorG.y + colorB.y, 1.0f);
-		newColor.z = max(colorR.z + colorG.z + colorB.z, 1.0f);
+		newColor.x = min(colorR.x + colorG.x + colorB.x, 1.0f);
+		newColor.y = min(colorR.y + colorG.y + colorB.y, 1.0f);
+		newColor.z = min(colorR.z + colorG.z + colorB.z, 1.0f);
 
 		return newColor;
 	}
@@ -123,6 +123,30 @@ vec3 dopplerEffect(vec3 color)
 		return color;
 	}
 	
+}
+
+vec3 dopplerEffect_new(vec3 color)
+{
+	if (length(fragment.speed) > 0.0000001)
+	{
+		float ctheta = dot(fragment.speed, fragment.position)/(length(fragment.speed)*length(fragment.position));
+		float b = length(fragment.speed) / c;
+		float gamma = 1 / sqrt(1-b*b);
+		float dopp = b * gamma * ctheta;
+
+		color = (gamma + dopp) * color; // Relativistic brightness
+
+		vec3 shift;
+		shift.r = 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.r + 2 * max(0, 0.5 - abs(dopp + 0.5)) * color.g + 2 * max(0, 0.5 - abs(dopp + 1.0)) * color.b;
+		shift.g = 2 * max(0, 0.5 - abs(dopp - 0.5)) * color.r + 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.g + 2 * max(0, 0.5 - abs(dopp + 0.5)) * color.b;
+		shift.b = 2 * max(0, 0.5 - abs(dopp - 1.0)) * color.r + 2 * max(0, 0.5 - abs(dopp - 0.5)) * color.g + 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.b;
+
+		return shift;
+	}
+	else
+	{
+		return color;
+	}
 }
 
 void main()
@@ -178,8 +202,8 @@ void main()
 
 	// Compute the final shaded color using Phong model
 	vec3 color_shading = (Ka + Kd * diffuse) * color_object + Ks * specular * vec3(1.0, 1.0, 1.0);
-	color_shading = dopplerEffect(color_shading);
-	
+	color_shading = dopplerEffect_new(color_shading);
+
 	// Output color, with the alpha component
 	FragColor = vec4(color_shading, alpha * color_image_texture.a);
 

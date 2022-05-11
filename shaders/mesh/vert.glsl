@@ -37,7 +37,7 @@ void main()
 	speed4 = view * speed4;
 
 	//Calcul relativiste
-	if (length(speed) > 0.01){
+	if (length(speed) > 0.00000001){
 		float b = length(speed)/c;
 		//b = 0;
 		float gamma = 1/sqrt(1-b*b);
