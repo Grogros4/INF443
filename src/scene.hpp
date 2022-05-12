@@ -30,7 +30,10 @@ struct scene_structure {
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
 	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
-	cgp::mesh_drawable demilune;
+	cgp::skybox_drawable skybox;
+
+	cgp::hierarchy_mesh_drawable demilune;
+	//cgp::mesh_drawable demilune;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
@@ -56,7 +59,7 @@ struct scene_structure {
 	//   This function replace the standard trackball behavior that must also be removed in the main (from mouse_move_callback)
 	void update_camera(float xpos, float ypos);
 	
-
+	void initialize_demilune();
 	void initialize();  // Standard initialization to be called before the animation loop
 	void display();     // The frame display to be called within the animation loop
 	void display_gui(); // The display of the GUI, also called within the animation loop
