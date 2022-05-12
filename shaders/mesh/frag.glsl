@@ -36,6 +36,17 @@ uniform mat4 view;       // View matrix (rigid transform) of the camera - to com
 
 uniform float c;
 
+
+float getFogFactor(float fogCoordinate)
+{
+	float result = 0.0;
+	float density = 0.01;
+	result = exp(-pow(density * fogCoordinate, 2.0));
+	result = 1.0 - clamp(result, 0.0, 1.0);
+	return result;
+}
+
+
 vec3 wavelength2rgb(float Wavelength)
 {	
 	float Gamma = 0.8f;
