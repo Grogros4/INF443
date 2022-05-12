@@ -37,6 +37,7 @@ uniform mat4 view;       // View matrix (rigid transform) of the camera - to com
 uniform float c;
 
 
+//Exponential function to calculate fog intensity
 float getFogFactor(float fogCoordinate)
 {
 	float result = 0.0;
@@ -208,8 +209,9 @@ void main()
 
 	// Compute Shading with fog
 	// ************************* //
-	vec4 p = view * model * vec4(fragment.position, 1.0);
 
+	//Get the position of the object relative to the camera to apply fog accordingly
+	vec4 p = view * model * vec4(fragment.position, 1.0);
 	float fogCoordinate = abs(p.z);
 
 	// Compute the base color of the object based on: vertex color, uniform color, and texture
@@ -220,7 +222,7 @@ void main()
 	color_shading = dopplerEffect_new(color_shading);
 
 	// Output color, with the alpha component
-	FragColor = mix(vec4(color_shading, alpha * color_image_texture.a), vec4(vec3(1.0,1.0,1.0), 1.0),getFogFactor(fogCoordinate));
+	FragColor = mix(vec4(color_shading, alpha * color_image_texture.a), vec4(dopplerEffect_new(vec3(1.0,1.0,1.0)), 1.0),getFogFactor(fogCoordinate));
 
 
 }
