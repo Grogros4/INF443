@@ -30,7 +30,21 @@ uniform float Kd;     // Diffuse coefficient
 uniform float Ks;     // Specular coefficient
 uniform float specular_exp; // Specular exponent
 
+uniform mat4 model;
 uniform mat4 view;       // View matrix (rigid transform) of the camera - to compute the camera position
+
+
+
+float getFogFactor(float fogCoordinate)
+{
+	float result = 0.0;
+	float density = 0.01;
+	result = exp(-pow(density * fogCoordinate, 2.0));	
+	result = 1.0 - clamp(result, 0.0, 1.0);
+	return result;
+}
+
+
 
 void main()
 {
@@ -77,8 +91,11 @@ void main()
 	vec4 color_image_texture = texture(image_texture, uv_image);
 
 
-	// Compute Shading
+	// Compute Shading with fog
 	// ************************* //
+	vec4 p = view * model * vec4(fragment.position, 1.0);
+
+	float fogCoordinate = abs(p.z);
 
 	// Compute the base color of the object based on: vertex color, uniform color, and texture
 	vec3 color_object  = fragment.color * color * color_image_texture.rgb;
@@ -87,7 +104,7 @@ void main()
 	vec3 color_shading = (Ka + Kd * diffuse) * color_object + Ks * specular * vec3(1.0, 1.0, 1.0);
 	
 	// Output color, with the alpha component
-	FragColor = vec4(color_shading, alpha * color_image_texture.a);
+	FragColor = mix(vec4(color_shading, alpha * color_image_texture.a), vec4(vec3(1.0,1.0,1.0), 1.0),getFogFactor(fogCoordinate));
 
 
 }
