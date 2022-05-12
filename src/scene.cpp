@@ -60,12 +60,10 @@ void scene_structure::update_camera(float xpos, float ypos)
 	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
 	if (acc_norm > 0.01)
 		acc = (walk_acc / acc_norm) * acc;
-	std::cout << acc << "\n";
 	speed += acc * dt - f * speed * dt;
 	//float speed_norm = sqrt(speed.x * speed.x + speed.y * speed.y + speed.z * speed.z);
 	//if (speed_norm > speed_max)
 	//	speed = (speed_max / speed_norm) * speed;
-	std::cout << speed << "\n";
 	camera.position_camera += speed * dt;
 
 	pos = camera.position();
@@ -74,7 +72,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 void scene_structure::initialize()
 {
 
-	c = 10.0f;
+	c = 13.0f;
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
