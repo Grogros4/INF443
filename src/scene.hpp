@@ -10,7 +10,7 @@
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
-	bool display_frame = true;
+	bool display_frame = false;
 };
 
 struct scene_environment_player_head : public scene_environment_camera_head {
@@ -33,11 +33,9 @@ struct scene_structure {
 	cgp::skybox_drawable skybox;
 
 	cgp::hierarchy_mesh_drawable demilune;
-	//cgp::mesh_drawable demilune;
 	cgp::mesh_drawable terrainx;
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
-	cgp::mesh_drawable demilune;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
@@ -50,6 +48,7 @@ struct scene_structure {
 	float walk_acc = 40.0f;
 	float f = 4.0f;
 	float c;
+	int chunk_size = 10;
 
 	cgp::vec2 mouse_pos;
 	cgp::vec2 mouse_speed;

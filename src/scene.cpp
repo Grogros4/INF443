@@ -124,8 +124,12 @@ void scene_structure::initialize()
 	std::cout << " \nLoad terrain file ..." << std::endl;
 	
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
-	mesh terrain_mesh = create_terrain_mesh(100, 100);
+	mesh terrain_mesh = create_terrain_mesh(100, chunk_size);
+	mesh terrain_meshx = create_terrain_mesh(100, chunk_size);
+	mesh terrain_meshy = create_terrain_mesh(100, chunk_size);
+	mesh terrain_meshxy = create_terrain_mesh(100, chunk_size);
 	terrain.initialize(terrain_mesh, "Terrain");
+	/*
 	terrainx.initialize(terrain_meshx, "TerrainX");
 	terrainx.anisotropic_scale.x = -1.0f;
 	terrainy.initialize(terrain_meshy, "TerrainY");
@@ -133,9 +137,8 @@ void scene_structure::initialize()
 	terrainxy.initialize(terrain_meshxy, "TerrainXY");
 	terrainxy.anisotropic_scale.x = -1.0f;
 	terrainxy.anisotropic_scale.y = -1.0f;
+	*/
 
-
-	demilune.initialize(mesh_load_file_obj("assets/demilune.obj"), "Demi-lune");
 	terrain.shading.phong.specular = 0.0f;
 	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
 	terrain.texture = grass;
@@ -156,8 +159,6 @@ void scene_structure::initialize()
 	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
 	environment.camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 
-	demilune.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
-
 
 	//Initialize the terrain
 
@@ -165,10 +166,11 @@ void scene_structure::initialize()
 
 
 int scene_structure::get_matrix_coordinate(float x) {
-	if (x + 50 < 0) {
-		return(int(x - 50) / 100);
+	int l = chunk_size / 2;
+	if (x + l < 0) {
+		return(int(x - l) / chunk_size);
 	}
-	return(int(x + 50) / 100);
+	return(int(x + l) / chunk_size);
 }
 
 
@@ -176,7 +178,9 @@ int scene_structure::get_matrix_coordinate(float x) {
 
 void scene_structure::display_terrain(float x, float y, scene_environment_player_head environment) {
 
+	
 	mat3 situation = get_mirroring(x, y);
+	
 	std::cout << "Situation" << std::endl;
 	for (int i = 0; i < 3; i++) { for (int j = 0; j < 3; j++) { std::cout << situation[i][j] << ""; } std::cout << "\n"; }
 	std::cout << int(x) << std::endl;
@@ -184,22 +188,30 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			int a = situation[i][j];
-			vec3 translation = { (2 - i - 1) * 100.0f + 100.0f * get_matrix_coordinate(x), (2 - j - 1) * 100.0f + 100.0f * get_matrix_coordinate(y), 0.0f };
+			vec3 translation = { (2 - i - 1) * chunk_size + chunk_size * get_matrix_coordinate(x), (2 - j - 1) * chunk_size + chunk_size * get_matrix_coordinate(y), 0.0f };
 			if (a == 0) {
+				terrain.anisotropic_scale.x = 1.0f;
+				terrain.anisotropic_scale.y = 1.0f;
 				terrain.transform.translation = translation;
 				draw(terrain, environment);
 			}
 			if (a == 1) {
-				terrainy.transform.translation = translation;
-				draw(terrainy, environment);
+				terrain.anisotropic_scale.x = 1.0f;
+				terrain.anisotropic_scale.y = -1.0f;
+				terrain.transform.translation = translation;
+				draw(terrain, environment);
 			}
 			if (a == 2) {
+				terrain.anisotropic_scale.x = -1.0f;
+				terrain.anisotropic_scale.y = 1.0f;
 				terrainx.transform.translation = translation;
-				draw(terrainx, environment);
+				draw(terrain, environment);
 			}
 			if (a == 3) {
+				terrain.anisotropic_scale.x = -1.0f;
+				terrain.anisotropic_scale.y = -1.0f;
 				terrainxy.transform.translation = translation;
-				draw(terrainxy, environment);
+				draw(terrain, environment);
 			}
 		}
 	}
@@ -212,8 +224,8 @@ mat3 scene_structure::get_mirroring(float x, float y) {
 	mat3 m;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			if (get_matrix_coordinate(x -(i-1)*100) % 2 == 0) {
-				if (get_matrix_coordinate(y - (j - 1) * 100) % 2 == 0) {
+			if (get_matrix_coordinate(x -(i-1) * chunk_size) % 2 == 0) {
+				if (get_matrix_coordinate(y - (j - 1) * chunk_size) % 2 == 0) {
 					m[i][j] = 0;
 				}
 				else {
@@ -221,7 +233,7 @@ mat3 scene_structure::get_mirroring(float x, float y) {
 				};
 			}
 			else {
-				if (get_matrix_coordinate(y - (j - 1) * 100) % 2 == 0) {
+				if (get_matrix_coordinate(y - (j - 1) * chunk_size) % 2 == 0) {
 					m[i][j] = 2;
 				}
 				else {
@@ -253,11 +265,23 @@ void scene_structure::display()
 	demilune["demilune_base"].transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 	quaternion rot = demilune["demilune_base"].transform.rotation.data;
 	demilune["demilune_base"].transform.translation = vec3{ 99.648, 3.73451, 0 };
-	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({0,0,1}, -443 * Pi/180) * rot;
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -443 * Pi / 180) * rot;
 	demilune.update_local_to_global_coordinates();
 	draw(demilune, environment);
-	draw(terrain, environment);
+	demilune["demilune_base"].transform.translation = vec3{ 69.6235, -18.8592, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -280 * Pi / 180) * rot;
+	demilune.update_local_to_global_coordinates();
 	draw(demilune, environment);
+	demilune["demilune_base"].transform.translation = vec3{ 86.8614, 94.0153, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -485 * Pi / 180) * rot;
+	demilune.update_local_to_global_coordinates();
+	draw(demilune, environment);
+	demilune["demilune_base"].transform.translation = vec3{ 55.8745, 92.1845, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -373 * Pi / 180) * rot;
+	demilune.update_local_to_global_coordinates();
+	draw(demilune, environment);
+
+	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
 }
 
 
