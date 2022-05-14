@@ -258,7 +258,7 @@ void scene_structure::display()
 
 	demilune.update_local_to_global_coordinates();
 	draw(demilune, environment);
-	display_terrain(terrain, environment);
+	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
 	draw(demilune, environment);
 }
 
