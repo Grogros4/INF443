@@ -222,7 +222,7 @@ void main()
 	color_shading = dopplerEffect_new(color_shading);
 
 	// Output color, with the alpha component
-	FragColor = mix(vec4(color_shading, alpha * color_image_texture.a), vec4(dopplerEffect_new(vec3(1.0,1.0,1.0)), 1.0),getFogFactor(fogCoordinate));
-
+	//FragColor = mix(vec4(color_shading, alpha * color_image_texture.a), vec4(dopplerEffect_new(vec3(1.0,1.0,1.0)), 1.0),getFogFactor(fogCoordinate));
+	FragColor = vec4(color_shading, 1);
 
 }

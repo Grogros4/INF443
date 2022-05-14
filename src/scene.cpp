@@ -56,6 +56,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 	{
 		acc += - camera.right();
 	}
+
 	
 	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
 	if (acc_norm > 0.01)
@@ -112,8 +113,6 @@ void scene_structure::initialize_demilune()
 	demilune.add(demilune_blanc, "demilune_base");
 	demilune.add(demilune_glass, "demilune_base");
 	demilune.add(demilune_bandes, "demilune_base");
-
-	demilune["demilune_base"].transform.rotation = rotation_transform::from_axis_angle({1,0,0}, Pi / 2.0f);
 }
 
 void scene_structure::initialize()
@@ -126,7 +125,7 @@ void scene_structure::initialize()
 	std::cout << " \nLoad terrain file ..." << std::endl;
 	
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
-	mesh terrain_mesh = create_terrain_mesh(100, 100);
+	mesh terrain_mesh = create_terrain_mesh(100, 1000);
 	terrain.initialize(terrain_mesh, "Terrain");
 	terrain.shading.phong.specular = 0.0f;
 	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
@@ -168,10 +167,26 @@ void scene_structure::display()
 	// Displaying the shape deformed by the shader
 	//draw(skybox, environment);
 
+	demilune["demilune_base"].transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
+	quaternion rot = demilune["demilune_base"].transform.rotation.data;
+	demilune["demilune_base"].transform.translation = vec3{ 99.648, 3.73451, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({0,0,1}, -443 * Pi/180) * rot;
 	demilune.update_local_to_global_coordinates();
 	draw(demilune, environment);
-	draw(terrain, environment);
+	demilune["demilune_base"].transform.translation = vec3{ 69.6235, -18.8592, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -280 * Pi/180) * rot;
+	demilune.update_local_to_global_coordinates();
 	draw(demilune, environment);
+	demilune["demilune_base"].transform.translation = vec3{ 86.8614, 94.0153, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -485 * Pi / 180) * rot;
+	demilune.update_local_to_global_coordinates();
+	draw(demilune, environment);
+	demilune["demilune_base"].transform.translation = vec3{ 55.8745, 92.1845, 0 };
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -373 * Pi / 180) * rot;
+	demilune.update_local_to_global_coordinates();
+	draw(demilune, environment);
+
+	draw(terrain, environment);
 }
 
 
