@@ -10,7 +10,7 @@
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
-	bool display_frame = false;
+	bool display_frame = true;
 };
 
 struct scene_environment_player_head : public scene_environment_camera_head {
@@ -34,6 +34,10 @@ struct scene_structure {
 
 	cgp::hierarchy_mesh_drawable demilune;
 	//cgp::mesh_drawable demilune;
+	cgp::mesh_drawable terrainx;
+	cgp::mesh_drawable terrainy;
+	cgp::mesh_drawable terrainxy;
+	cgp::mesh_drawable demilune;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
@@ -62,7 +66,10 @@ struct scene_structure {
 	void initialize_demilune();
 	void initialize();  // Standard initialization to be called before the animation loop
 	void display();     // The frame display to be called within the animation loop
-	void display_gui(); // The display of the GUI, also called within the animation loop
+	void display_gui(); // The display of the GUI, also called within the animation loop 
+	void display_terrain(float x, float y, scene_environment_player_head environment);
+	int get_matrix_coordinate(float x);
+	cgp::mat3 get_mirroring(float x, float y);
 };
 
 
