@@ -56,7 +56,8 @@ void scene_structure::update_camera(float xpos, float ypos)
 	{
 		acc += - camera.right();
 	}
-
+	if (isGrounded() && isJumping)
+		speed.z = 5.0f;
 	
 	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
 	if (acc_norm > 0.01)
@@ -85,12 +86,6 @@ bool scene_structure::isGrounded()
 		return true;
 	}
 	return false;
-}
-
-void scene_structure::jump()
-{
-	if (isGrounded()) speed.z = 1.0f;
-	speed.z = 5.0f;
 }
 
 void scene_structure::initialize_demilune()

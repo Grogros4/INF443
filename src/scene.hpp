@@ -44,6 +44,7 @@ struct scene_structure {
 
 	cgp::vec3 pos;
 	cgp::vec3 speed;
+	bool isJumping = false;
 	bool fly_mode = false;
 	float speed_max = 10.0f;
 	float walk_acc = 40.0f;
@@ -63,7 +64,6 @@ struct scene_structure {
 	// Function to call in the animation loop in main (*)
 	//   This function replace the standard trackball behavior that must also be removed in the main (from mouse_move_callback)
 	void update_camera(float xpos, float ypos);
-	void jump();
 	bool isGrounded();
 
 	void initialize_demilune();
