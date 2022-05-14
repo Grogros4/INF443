@@ -61,13 +61,36 @@ void scene_structure::update_camera(float xpos, float ypos)
 	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
 	if (acc_norm > 0.01)
 		acc = (walk_acc / acc_norm) * acc;
-	speed += acc * dt - f * speed * dt;
+	float g_eff = isGrounded() ? 0 : g;
+	speed += acc * dt - f * vec3{ speed.xy(), 0} *dt + g_eff * vec3{0, 0, -1} *dt;
 	//float speed_norm = sqrt(speed.x * speed.x + speed.y * speed.y + speed.z * speed.z);
 	//if (speed_norm > speed_max)
 	//	speed = (speed_max / speed_norm) * speed;
 	camera.position_camera += speed * dt;
 
-pos = camera.position();
+	float u = pos.x - get_matrix_coordinate(pos.x) * chunk_size;
+	float v = pos.y - get_matrix_coordinate(pos.y) * chunk_size;
+	if (camera.position_camera.z < evaluate_hills_height(u, v, chunk_size) + 1.5)
+		camera.position_camera.z = evaluate_hills_height(u, v, chunk_size) + 1.5;
+
+	pos = camera.position();
+}
+
+bool scene_structure::isGrounded()
+{
+	float u = pos.x - get_matrix_coordinate(pos.x) * chunk_size;
+	float v = pos.y - get_matrix_coordinate(pos.y) * chunk_size;
+	if (cgp::abs(pos.z - 1.5 - evaluate_hills_height(u, v, chunk_size)) < 0.1)
+	{
+		return true;
+	}
+	return false;
+}
+
+void scene_structure::jump()
+{
+	if (isGrounded()) speed.z = 1.0f;
+	speed.z = 5.0f;
 }
 
 void scene_structure::initialize_demilune()
@@ -124,24 +147,24 @@ void scene_structure::initialize()
 	std::cout << " \nLoad terrain file ..." << std::endl;
 	
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
-	mesh terrain_mesh = create_terrain_mesh(100, chunk_size);
-	mesh terrain_meshx = create_terrain_mesh(100, chunk_size);
-	mesh terrain_meshy = create_terrain_mesh(100, chunk_size);
-	mesh terrain_meshxy = create_terrain_mesh(100, chunk_size);
+	mesh terrain_mesh = create_terrain_mesh(100, chunk_size, 1, 1);
+	mesh terrain_meshx = create_terrain_mesh(100, chunk_size, -1, 1);
+	mesh terrain_meshy = create_terrain_mesh(100, chunk_size, 1, -1);
+	mesh terrain_meshxy = create_terrain_mesh(100, chunk_size, -1, -1);
 	terrain.initialize(terrain_mesh, "Terrain");
-	/*
 	terrainx.initialize(terrain_meshx, "TerrainX");
-	terrainx.anisotropic_scale.x = -1.0f;
 	terrainy.initialize(terrain_meshy, "TerrainY");
-	terrainy.anisotropic_scale.y = -1.0f;
 	terrainxy.initialize(terrain_meshxy, "TerrainXY");
-	terrainxy.anisotropic_scale.x = -1.0f;
-	terrainxy.anisotropic_scale.y = -1.0f;
-	*/
 
 	terrain.shading.phong.specular = 0.0f;
+	terrainx.shading.phong.specular = 0.0f;
+	terrainy.shading.phong.specular = 0.0f;
+	terrainxy.shading.phong.specular = 0.0f;
 	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
 	terrain.texture = grass;
+	terrainx.texture = grass;
+	terrainy.texture = grass;
+	terrainxy.texture = grass;
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -190,28 +213,20 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 			int a = situation[i][j];
 			vec3 translation = { (2 - i - 1) * chunk_size + chunk_size * get_matrix_coordinate(x), (2 - j - 1) * chunk_size + chunk_size * get_matrix_coordinate(y), 0.0f };
 			if (a == 0) {
-				terrain.anisotropic_scale.x = 1.0f;
-				terrain.anisotropic_scale.y = 1.0f;
 				terrain.transform.translation = translation;
 				draw(terrain, environment);
 			}
 			if (a == 1) {
-				terrain.anisotropic_scale.x = 1.0f;
-				terrain.anisotropic_scale.y = -1.0f;
-				terrain.transform.translation = translation;
-				draw(terrain, environment);
+				terrainy.transform.translation = translation;
+				draw(terrainy, environment);
 			}
 			if (a == 2) {
-				terrain.anisotropic_scale.x = -1.0f;
-				terrain.anisotropic_scale.y = 1.0f;
 				terrainx.transform.translation = translation;
-				draw(terrain, environment);
+				draw(terrainx, environment);
 			}
 			if (a == 3) {
-				terrain.anisotropic_scale.x = -1.0f;
-				terrain.anisotropic_scale.y = -1.0f;
 				terrainxy.transform.translation = translation;
-				draw(terrain, environment);
+				draw(terrainxy, environment);
 			}
 		}
 	}

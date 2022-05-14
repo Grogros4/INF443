@@ -1,37 +1,34 @@
 
 #include "terrain.hpp"
+#include "scene.hpp"
 
 
 using namespace cgp;
 
 // Evaluate 3D position of the terrain for any (u,v) \in [0,1]
-float evaluate_terrain_height(float x, float y, vec2 p[], float h[], float sigma[], int L, float terrain_length)
+float evaluate_terrain_height(float x, float y, float terrain_length)
 {
     float u = x + 0.5*terrain_length;
     float v = y + 0.5*terrain_length;
 
-    float z = 0;
-    for (int i = 0; i < L; i++)
-    {
-        vec2 p_0 = p[i];
-        float h_0 = h[i];
-        float sigma_0 = sigma[i];
-
-        float d = norm(vec2(x, y) - p_0) / sigma_0;
-
-        z += h_0 * std::exp(-d * d);
-    }
-
-    int octave = 6;
-    float persistency = 0.35;
-    float frequency_gain = 2;
-    float const noise = 0.1*noise_perlin({u, v}, octave, persistency, frequency_gain);
-    z += noise;
+    float hills = noise_perlin(0.05 * vec2{ u, v }, 1);
+    float noise = 0.1 * noise_perlin({u, v}, 6, 0.35, 2);
+    float z = hills + noise;
 
     return z;
 }
 
-mesh create_terrain_mesh(int N, float terrain_length)
+float evaluate_hills_height(float x, float y, float terrain_length)
+{
+    float u = x + 0.5 * terrain_length;
+    float v = y + 0.5 * terrain_length;
+
+    float hills = noise_perlin(0.05 * vec2{ u, v }, 1);
+
+    return hills;
+}
+
+mesh create_terrain_mesh(int N, float terrain_length, float scalex, float scaley)
 {
 
     mesh terrain; // temporary terrain storage (CPU only)
@@ -56,7 +53,7 @@ mesh create_terrain_mesh(int N, float terrain_length)
             float h[4] = { 3,-1.5,1,2 };
             float sigma[4] = { 10,3,4,4 };
             int L = 4;
-            float z = evaluate_terrain_height(x, y, {}, {}, {}, 0, terrain_length);
+            float z = evaluate_terrain_height(scalex * x, scaley * y, terrain_length);
 
             // Store vertex coordinates
             terrain.position[kv+N*ku] = {x,y,z};
@@ -121,7 +118,7 @@ std::vector<cgp::vec3> generate_positions_on_terrain(int N, float terrain_length
             }
         }
         
-        float z = evaluate_terrain_height(x, y, p, h, sigma, L, terrain_length);
+        float z = evaluate_terrain_height(x, y, terrain_length);
         pos.push_back(vec3{ x,y,z });
     }
 
