@@ -69,6 +69,53 @@ camera.position_camera += speed * dt;
 pos = camera.position();
 }
 
+void scene_structure::initialize_demilune()
+{
+	mesh_drawable demilune_base;
+	mesh_drawable demilune_saumon;
+	mesh_drawable demilune_toit;
+	mesh_drawable demilune_batiment;
+	mesh_drawable demilune_briques;
+	mesh_drawable demilune_blanc;
+	mesh_drawable demilune_glass;
+	mesh_drawable demilune_bandes;
+
+	demilune_base.initialize(mesh_primitive_cube({ 0,-2, 0 }), "demilune_base");
+	demilune_saumon.initialize(mesh_load_file_obj("assets/objects/demilune_saumon.obj"), "demilune_saumon");
+	demilune_toit.initialize(mesh_load_file_obj("assets/objects/demilune_toit.obj"), "demilune_toit");
+	demilune_batiment.initialize(mesh_load_file_obj("assets/objects/demilune_batiment.obj"), "demilune_batiment");
+	demilune_briques.initialize(mesh_load_file_obj("assets/objects/demilune_briques.obj"), "demilune_briques");
+	demilune_blanc.initialize(mesh_load_file_obj("assets/objects/demilune_blanc.obj"), "demilune_blanc");
+	demilune_glass.initialize(mesh_load_file_obj("assets/objects/demilune_glass.obj"), "demilune_glass");
+	demilune_bandes.initialize(mesh_load_file_obj("assets/objects/demilune_bandes.obj"), "demilune_bandes");
+
+	demilune_saumon.shading.color = 2 * vec3{ 0.171441, 0.061246, 0.064803 };
+	demilune_saumon.shading.phong = shading_parameters_phong::phong_parameters{1, 1, 0.5, 250};
+	demilune_toit.shading.color = vec3{ 1, 1, 1 };
+	demilune_toit.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
+	demilune_batiment.shading.color = vec3{ 0.342383, 0.342383, 0.342383 };
+	demilune_batiment.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 360 };
+	demilune_briques.shading.color = vec3{ 0.076185, 0.035601, 0.039546 };
+	demilune_briques.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
+	demilune_blanc.shading.color = vec3{ 0.800000, 0.800000, 0.800000 };
+	demilune_blanc.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
+	demilune_glass.shading.color = vec3{ 0.200000, 0.200000, 0.200000 };
+	demilune_glass.shading.phong = shading_parameters_phong::phong_parameters{ 1, 0, 0.5, 250 };
+	demilune_bandes.shading.color = vec3{ 0.400000, 0.000000, 0.000000 };
+	demilune_bandes.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
+
+	demilune.add(demilune_base);
+	demilune.add(demilune_saumon, "demilune_base");
+	demilune.add(demilune_toit, "demilune_base");
+	demilune.add(demilune_batiment, "demilune_base");
+	demilune.add(demilune_briques, "demilune_base");
+	demilune.add(demilune_blanc, "demilune_base");
+	demilune.add(demilune_glass, "demilune_base");
+	demilune.add(demilune_bandes, "demilune_base");
+
+	demilune["demilune_base"].transform.rotation = rotation_transform::from_axis_angle({1,0,0}, Pi / 2.0f);
+}
+
 void scene_structure::initialize()
 {
 	c = 100000.0f;
@@ -76,6 +123,7 @@ void scene_structure::initialize()
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
 	std::cout << " \nLoad terrain file ..." << std::endl;
+	
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
 	mesh terrain_mesh = create_terrain_mesh(100, 100);
 	mesh terrain_meshx = create_terrain_mesh(100, 100);
@@ -94,6 +142,15 @@ void scene_structure::initialize()
 
 
 	demilune.initialize(mesh_load_file_obj("assets/demilune.obj"), "Demi-lune");
+	terrain.shading.phong.specular = 0.0f;
+	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
+	terrain.texture = grass;
+
+	skybox.initialize("assets/skybox/");
+	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
+
+	initialize_demilune();
+
 	std::cout << " [OK] Terrain loaded\n" << std::endl;
 
 	// Load the texture of the terrain
@@ -197,7 +254,11 @@ void scene_structure::display()
 		draw(global_frame, environment);
 	
 	// Displaying the shape deformed by the shader
-	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
+	//draw(skybox, environment);
+
+	demilune.update_local_to_global_coordinates();
+	draw(demilune, environment);
+	display_terrain(terrain, environment);
 	draw(demilune, environment);
 }
 
