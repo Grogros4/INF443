@@ -68,9 +68,30 @@ void scene_structure::update_camera(float xpos, float ypos)
 	//if (speed_norm > speed_max)
 	//	speed = (speed_max / speed_norm) * speed;
 	camera.position_camera += speed * dt;
+	int scalex;
+	int scaley;
+	mat3 situation = get_mirroring(pos.x, pos.y);
 
+	if (situation[0][0] == 0) {
+		scalex = 1;
+		scaley = 1;
+	}
+	if (situation[0][0] == 1) {
+		scalex = 1;
+		scaley = -1;
+	}
+	if (situation[0][0] == 2) {
+		scalex = -1;
+		scaley = 1;
+	}
+	if (situation[0][0] == 3) {
+		scalex = -1;
+		scaley = -1;
+	}
 	float u = pos.x - get_matrix_coordinate(pos.x) * chunk_size;
 	float v = pos.y - get_matrix_coordinate(pos.y) * chunk_size;
+	u = scalex * u;
+	v = scaley * v;
 	if (camera.position_camera.z < evaluate_hills_height(u, v, chunk_size) + 1.5)
 		camera.position_camera.z = evaluate_hills_height(u, v, chunk_size) + 1.5;
 
@@ -79,9 +100,30 @@ void scene_structure::update_camera(float xpos, float ypos)
 
 bool scene_structure::isGrounded()
 {
+	int scalex;
+	int scaley;
+	mat3 situation = get_mirroring(pos.x, pos.y);
+
+	if (situation[0][0] == 0) {
+		scalex = 1;
+		scaley = 1;
+	}
+	if (situation[0][0] == 1) {
+		scalex = 1;
+		scaley = -1;
+	}
+	if (situation[0][0] == 2) {
+		scalex = -1;
+		scaley = 1;
+	}
+	if (situation[0][0] == 3) {
+		scalex = -1;
+		scaley = -1;
+	}
+	
 	float u = pos.x - get_matrix_coordinate(pos.x) * chunk_size;
 	float v = pos.y - get_matrix_coordinate(pos.y) * chunk_size;
-	if (cgp::abs(pos.z - 1.5 - evaluate_hills_height(u, v, chunk_size)) < 0.1)
+	if (cgp::abs(pos.z - 1.5 - evaluate_hills_height(scalex*u, scaley*v, chunk_size)) < 0.1)
 	{
 		return true;
 	}
@@ -193,15 +235,12 @@ int scene_structure::get_matrix_coordinate(float x) {
 
 
 
-
 void scene_structure::display_terrain(float x, float y, scene_environment_player_head environment) {
 
 	
 	mat3 situation = get_mirroring(x, y);
 	
-	std::cout << "Situation" << std::endl;
-	for (int i = 0; i < 3; i++) { for (int j = 0; j < 3; j++) { std::cout << situation[i][j] << ""; } std::cout << "\n"; }
-	std::cout << int(x) << std::endl;
+
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
