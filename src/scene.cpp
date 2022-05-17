@@ -1,5 +1,4 @@
 #include "scene.hpp"
-#include "terrain.hpp"
 
 /** This file contains the custom implementation associated the scene 
 *  The (*) indicates elements that are specific to the use of the camera mode and that should be handled if you want to use this effect in another scene. */
@@ -179,6 +178,9 @@ void scene_structure::initialize_demilune()
 
 void scene_structure::initialize()
 {
+
+	c = 13.0f;
+
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
@@ -204,7 +206,7 @@ void scene_structure::initialize()
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
 
-	l1 = light(vec3{0,0,10}, "bite");
+	l1.initialize(vec3{0,0,10}, "bite", 1.0f);
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -302,8 +304,8 @@ void scene_structure::display()
 {	
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
-	environment.speed = speed;
-	environment.c = c;
+	environment.env_speed = speed;
+	environment.env_c = c;
 	//std::cout << environment.c << "c \n";
 
 
@@ -335,8 +337,9 @@ void scene_structure::display()
 
 	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
 
-	l1.update(pos);
-	l1.display(environment);
+	l1.update(pos, c);
+	mesh_drawable mesh_l1 = l1.get_mesh();
+	draw(mesh_l1, environment);
 }
 
 
@@ -354,6 +357,6 @@ void opengl_uniform(GLuint shader, scene_environment_player_head const& environm
 	opengl_uniform(shader, "projection", environment.projection.matrix());
 	opengl_uniform(shader, "view", environment.camera.matrix_view());
 	opengl_uniform(shader, "light", environment.light);
-	opengl_uniform(shader, "speed", environment.speed);
-	opengl_uniform(shader, "c", environment.c);
+	opengl_uniform(shader, "speed", environment.env_speed);
+	opengl_uniform(shader, "c", environment.env_c);
 }

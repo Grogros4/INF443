@@ -5,6 +5,7 @@
 
 #include "cgp/cgp.hpp"
 #include "event.hpp"
+#include "terrain.hpp"
 #include "environment_camera_head/environment_camera_head.hpp"
 #include <iostream>
 
@@ -15,13 +16,9 @@ struct gui_parameters {
 };
 
 struct scene_environment_player_head : public scene_environment_camera_head {
-	cgp::vec3 speed;
-	float c;
+	cgp::vec3 env_speed;
+	float env_c;
 };
-
-
-float c = 13.0f;
-cgp::vec3 speed;
 
 
 // The structure of the custom scene
@@ -42,14 +39,17 @@ struct scene_structure {
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
 
-	light l1;
+	lamp l1;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
 	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
+	float c;
+	cgp::vec3 speed;
 	cgp::vec3 pos;
+
 	bool isJumping = false;
 	bool fly_mode = false;
 	float speed_max = 10.0f;

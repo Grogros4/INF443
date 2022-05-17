@@ -1,6 +1,4 @@
 
-#include "terrain.hpp"
-#include "scene.hpp"
 #include "event.hpp"
 
 
@@ -9,12 +7,9 @@ using namespace cgp;
 
 // RELATIVISTIC TIMER
 
-rel_timer::rel_timer() {
+float rel_timer::update(vec3 speed, float c) {
 	float beta = norm(speed) / c;
 	gamma = 1 / sqrt(1 - beta * beta);
-}
-
-float rel_timer::update() {
 	float dt = c_timer.update();
 	t += gamma * dt;
 	return gamma * dt;
@@ -23,23 +18,21 @@ float rel_timer::update() {
 
 // EVENT GESTION
 
-event::event(float cd, int i)
+single_event::single_event(float cd, int i)
 {
 	creation_date = cd;
 	id = i;
 }
 
-
-
-void events::push_event(int a) {
-	event_queue.push(event(timer.t, a));
+void multiple_events::push_event(int a) {
+	event_queue.push(single_event(timer.t, a));
 }
 
-void events::update(vec3 playerPos) {
+void multiple_events::update(vec3 playerPos, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
 	do {
-		event e = event_queue.front();
+		single_event e = event_queue.front();
 		float delta_t = timer.t - e.creation_date;
 		if (delta_t * c > d)
 		{
@@ -51,21 +44,22 @@ void events::update(vec3 playerPos) {
 }
 
 
-// LIGHT
+// LAMP
 
-light::light(vec3 p, std::string light_name, float per = 1, float o = 0) {
+void lamp::initialize(vec3 p, std::string light_name, float per) {
 	pos = p;
 	period = per;
 	name = light_name;
 	status = false;
-	offset = o;
+	offset = 0.0f;
 	mesh sphere_mesh = mesh_primitive_sphere();
 	light_source.initialize(sphere_mesh, light_name);
 	light_source.transform.translation = pos;
 	light_source.shading.color = { 1.0f, 1.0f, 1.0f };
 }
 
-void light::display(scene_environment_player_head environment) {
+
+mesh_drawable lamp::get_mesh() {
 
 	if (timer.t > period) {
 		timer.t -= period;
@@ -76,10 +70,10 @@ void light::display(scene_environment_player_head environment) {
 		status = !status;
 	}
 
-	draw(light_source, environment);
+	return light_source;
 }
 
-void light::activate(int id) {
+void lamp::activate(int id) {
 	if (id == 0) {
 		light_source.shading.color = { 0.0f, 0.0f, 0.0f };
 	}
