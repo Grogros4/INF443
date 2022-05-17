@@ -44,6 +44,8 @@ struct scene_structure {
 	lamp l1;
 	lamp l2;
 
+	cgp::mesh_drawable sky;
+
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
