@@ -29,7 +29,11 @@ void events::push_event(int a) {
 }
 
 void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
-	float d = norm(pos - playerPos);
+	float beta = norm(playerSpeed) / c;
+	float gamma = 1 / sqrt(1 - beta * beta);
+	vec3 uve = (norm(playerSpeed) < 0.00001) ? vec3{ 0,0,0 } : playerSpeed / norm(playerSpeed);
+	vec3 posEff = pos + ((1 / gamma) - 1) * dot(pos, uve) * uve;
+	float d = norm(posEff - playerPos);
 	bool cont = false;
 	do {
 		if (!event_queue.empty()) {
@@ -66,6 +70,7 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 	light_source.initialize(sphere_mesh, light_name);
 	light_source.transform.translation = pos;
 	light_source.shading.color = { 1.0f, 1.0f, 1.0f };
+	light_source.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1 };
 }
 
 cgp::mesh_drawable lamp::get_mesh(vec3 speed, float c) {
