@@ -28,10 +28,10 @@ void events::push_event(int a) {
 	event_queue.push(event(timer.t, a));
 }
 
-void events::update(vec3 playerPos, float c) {
+void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
-	timer.update();
+	timer.update(playerSpeed, c);
 	if (!event_queue.empty()) {
 		do {
 			event e = event_queue.front();
@@ -62,8 +62,8 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 }
 
 
-mesh_drawable lamp::get_mesh() {
-
+mesh_drawable lamp::get_mesh()
+{
 	if (timer.t > n * period) {
 		std::cout << n << std::endl;
 		n += 1;

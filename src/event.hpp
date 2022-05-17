@@ -21,12 +21,12 @@ struct event {
 struct events {
 
 	cgp::vec3 pos;
-	cgp::timer_basic timer;
+	rel_timer timer;
 	std::queue<event> event_queue;
 
 	//Functions
 	void push_event(int a);
-	void update(cgp::vec3 playerPos, float c);
+	void update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
 	virtual void activate(int id) = 0;
 	//void display(scene_environment_player_head environment);
 };
