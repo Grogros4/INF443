@@ -40,3 +40,4 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+/build
