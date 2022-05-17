@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Projet", "Projet.vcxproj", "{9AAA771F-D4DC-35CB-8DDF-75BF86215C36}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7} = {D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ALL_BUILD", "ALL_BUILD.vcxproj", "{85380563-18A7-3C17-845F-DA49065C3F51}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9AAA771F-D4DC-35CB-8DDF-75BF86215C36} = {9AAA771F-D4DC-35CB-8DDF-75BF86215C36}
+		{D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7} = {D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ZERO_CHECK", "ZERO_CHECK.vcxproj", "{D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		RelWithDebInfo|x64 = RelWithDebInfo|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9AAA771F-D4DC-35CB-8DDF-75BF86215C36}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{9AAA771F-D4DC-35CB-8DDF-75BF86215C36}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+		{85380563-18A7-3C17-845F-DA49065C3F51}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7}.RelWithDebInfo|x64.ActiveCfg = RelWithDebInfo|x64
+		{D3CDA2FD-DB36-3F68-8DD6-9AD6E63948C7}.RelWithDebInfo|x64.Build.0 = RelWithDebInfo|x64
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {374DF5D8-E495-383C-AC24-E88F504D4112}
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

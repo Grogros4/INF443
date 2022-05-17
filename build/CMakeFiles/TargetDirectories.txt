@@ -1,0 +1,3 @@
+C:/Users/thegr/OneDrive/Documents/Cours/2A/INF443/Projet/Projet/build/CMakeFiles/Projet.dir
+C:/Users/thegr/OneDrive/Documents/Cours/2A/INF443/Projet/Projet/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/thegr/OneDrive/Documents/Cours/2A/INF443/Projet/Projet/build/CMakeFiles/ZERO_CHECK.dir
