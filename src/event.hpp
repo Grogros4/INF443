@@ -2,6 +2,7 @@
 #include <queue>
 #include "cgp/cgp.hpp"
 
+
 struct rel_timer {
 	float gamma;
 	float t;
@@ -34,15 +35,17 @@ struct events {
 
 struct lamp : public virtual events {
 
-	cgp::mesh_drawable light_source;
+	cgp::hierarchy_mesh_drawable light_source_on;
+	cgp::hierarchy_mesh_drawable light_source_off;
 	std::string name;
 	float period;
 	bool status; //True = on, False = off
+	bool current_status;
 	float offset;
 	rel_timer clock;
 
 	//lamp(cgp::vec3 p, std::string light_name, float per);
 	void initialize(cgp::vec3 p, std::string light_name, float per);
 	void activate(int id);
-	cgp::mesh_drawable get_mesh(cgp::vec3 speed, float c);
+	cgp::hierarchy_mesh_drawable get_mesh(cgp::vec3 speed, float c);
 };

@@ -7,7 +7,7 @@
 
 
 // *************************** //
-// Global Variables
+// Global Variables		
 // *************************** //
 
 // A helper tool to factorize common default functions (Window initialization, code that starts frame, etc)

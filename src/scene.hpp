@@ -40,6 +40,7 @@ struct scene_structure {
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
 
+	cgp::mesh_drawable lampadaire;
 	lamp l1;
 	lamp l2;
 

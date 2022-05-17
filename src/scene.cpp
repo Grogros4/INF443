@@ -201,15 +201,18 @@ void scene_structure::initialize()
 	terrainx.shading.phong.specular = 0.0f;
 	terrainy.shading.phong.specular = 0.0f;
 	terrainxy.shading.phong.specular = 0.0f;
-	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
+	GLuint const grass = opengl_load_texture_image("assets/AVT_Albert-Einstein_9884.jpeg", GL_REPEAT, GL_REPEAT);
 	terrain.texture = grass;
 	terrainx.texture = grass;
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
 
- 
-    l1.initialize(vec3{ -5,0,10 }, "bite", 0.5f);
-	l2.initialize(vec3{ 5,0,10 }, "bite", 0.5f);
+
+
+	//Initializing lamp grid
+
+    l1.initialize(vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
+	l2.initialize(vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -342,11 +345,12 @@ void scene_structure::display()
 
 
 	l1.update(pos, speed, c);
-	mesh_drawable temp_light = l1.get_mesh(speed, c);
+	hierarchy_mesh_drawable temp_light = l1.get_mesh(speed, c);
 	draw(temp_light,environment);
 	l2.update(pos, speed, c);
 	temp_light = l2.get_mesh(speed, c);
 	draw(temp_light, environment);
+
 
 }
 
