@@ -44,6 +44,7 @@ struct light : public events{
 	float period;
 	bool status; //True = on, False = off
 	float offset;
+	cgp::timer_basic clock;
 
 	void initialize(cgp::vec3 p, std::string light_name, float per, float o);
 	void activate(int id);

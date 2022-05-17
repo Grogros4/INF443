@@ -35,6 +35,7 @@ struct scene_structure {
 	cgp::mesh_drawable terrainxy;
 	
 	light l1;
+	light l2;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
@@ -54,7 +55,7 @@ struct scene_structure {
 	cgp::vec2 mouse_speed;
 
 
-	float c = 13.0f;
+	float c = 30.0f;
 	cgp::vec3 speed;
 	
 	// ****************************** //

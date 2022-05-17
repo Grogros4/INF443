@@ -35,26 +35,32 @@ void events::push_event(int a) {
 void events::update(vec3 playerPos, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
-	if (!event_queue.empty()) {
-		do {
+	do {
+		if (!event_queue.empty()) {
 			event e = event_queue.front();
 			float delta_t = timer.t - e.creation_date;
 			if (delta_t * c > d)
 			{
+				std::cout << timer.t << std::endl;
+				std::cout << e.id << std::endl;
 				activate(e.id);
 				cont = true;
 				event_queue.pop();
 			}
-		} while (cont);
-	}
-}
+			else {
+				cont = false;
+			}
+		}
+		else {
+			cont = false;
+		}
+	} while (cont);
+		}
 
 
 // LIGHT
 
 void light::initialize(vec3 p, std::string light_name, float per, float o) {
-	o = 0;
-	per = 1;
 	pos = p;
 	period = per;
 	name = light_name;
@@ -67,9 +73,12 @@ void light::initialize(vec3 p, std::string light_name, float per, float o) {
 }
 
 cgp::mesh_drawable light::display_light() {
-
-	if (timer.t > period) {
-		timer.t -= period;
+	clock.update();
+	timer.update();
+	
+	if (clock.t > period) {
+		std::cout << "Creation" << std::endl;
+		clock.t -= period;
 		if (status)
 			push_event(0);
 		else
@@ -80,6 +89,7 @@ cgp::mesh_drawable light::display_light() {
 }
 
 void light::activate(int id) {
+	std::cout << id << std::endl;
 	if (id == 0) {
 		light_source.shading.color = { 0.0f, 0.0f, 0.0f };
 	}

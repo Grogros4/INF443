@@ -206,7 +206,9 @@ void scene_structure::initialize()
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
 
-	l1.initialize(vec3{ 0,0,10 }, "bite", 10, 0);
+	l1.initialize(vec3{ 0,0,10 }, "bite", 0.5f, 0);
+	l2.initialize(vec3{ 10,0,10 }, "bite", 0.5f, 0);
+
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -338,7 +340,11 @@ void scene_structure::display()
 	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
 
 	l1.update(pos, c);
-	draw(l1.display_light(),environment);
+	mesh_drawable temp_light = l1.display_light();
+	draw(temp_light,environment);
+	l2.update(pos, c);
+	temp_light = l2.display_light();
+	draw(temp_light, environment);
 }
 
 
