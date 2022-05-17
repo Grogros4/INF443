@@ -7,9 +7,9 @@
 using namespace cgp;
 
 
-
-void events::push_event(event a) {
-	event_queue.push(a);
+void events::push_event(int a) {
+	event b = event(timer.t, a);
+	event_queue.push(b);
 }
 
 
