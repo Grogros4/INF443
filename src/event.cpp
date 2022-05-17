@@ -18,19 +18,20 @@ float rel_timer::update(vec3 speed, float c) {
 
 // EVENT GESTION
 
-single_event::single_event(float cd, int i)
+event::event(float cd, int i)
 {
 	creation_date = cd;
 	id = i;
 }
 
-void multiple_events::push_event(int a) {
-	event_queue.push(single_event(timer.t, a));
+void events::push_event(int a) {
+	event_queue.push(event(timer.t, a));
 }
 
 void events::update(vec3 playerPos, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
+	timer.update();
 	if (!event_queue.empty()) {
 		do {
 			event e = event_queue.front();
@@ -41,7 +42,7 @@ void events::update(vec3 playerPos, float c) {
 				cont = true;
 				event_queue.pop();
 			}
-		} while (cont);
+		} while (cont && !event_queue.empty());
 	}
 }
 
@@ -63,15 +64,15 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 
 mesh_drawable lamp::get_mesh() {
 
-	if (timer.t > period) {
-		timer.t -= period;
+	if (timer.t > n * period) {
+		std::cout << n << std::endl;
+		n += 1;
 		if (status)
 			push_event(0);
 		else
 			push_event(1);
 		status = !status;
 	}
-
 	return light_source;
 }
 

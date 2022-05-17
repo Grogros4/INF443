@@ -2,6 +2,7 @@
 
 using namespace cgp;
 
+
 scene_environment_camera_head::scene_environment_camera_head()
 {
 	background_color = { 1,1,1 };

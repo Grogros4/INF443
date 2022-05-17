@@ -61,10 +61,6 @@ struct scene_structure {
 
 	cgp::vec2 mouse_pos;
 	cgp::vec2 mouse_speed;
-
-
-	float c = 13.0f;
-	cgp::vec3 speed;
 	
 	// ****************************** //
 	// Functions

@@ -10,19 +10,19 @@ struct rel_timer {
 	float update(cgp::vec3 speed, float c);
 };
 
-struct single_event {
+struct event {
 	float creation_date;
 	int id;
 
-	single_event(float cd, int i);
+	event(float cd, int i);
 };
 
 
-struct multiple_events {
+struct events {
 
 	cgp::vec3 pos;
 	cgp::timer_basic timer;
-	std::queue<single_event> event_queue;
+	std::queue<event> event_queue;
 
 	//Functions
 	void push_event(int a);
@@ -32,13 +32,14 @@ struct multiple_events {
 };
 
 
-struct lamp : public virtual multiple_events {
+struct lamp : public virtual events {
 
 	cgp::mesh_drawable light_source;
 	std::string name;
 	float period;
 	bool status; //True = on, False = off
 	float offset;
+	int n = 1;
 
 	//lamp(cgp::vec3 p, std::string light_name, float per);
 	void initialize(cgp::vec3 p, std::string light_name, float per);
