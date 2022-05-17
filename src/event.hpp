@@ -1,12 +1,12 @@
 #pragma once
 #include <queue>
 #include "cgp/cgp.hpp"
+
+
 struct event {
 	float creation_date;
 	int id;
 };
-
-
 
 
 struct events {

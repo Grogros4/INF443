@@ -6,7 +6,9 @@
 
 using namespace cgp;
 
-
+struct event {
+	event()
+};
 
 void events::push_event(event a) {
 	event_queue.push(a);
