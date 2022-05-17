@@ -1,8 +1,6 @@
 #pragma once
 #include <queue>
 #include "cgp/cgp.hpp"
-//#include "scene.hpp"
-//#include "environment_camera_head/environment_camera_head.hpp"
 
 struct rel_timer {
 	float gamma;

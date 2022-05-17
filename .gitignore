@@ -6,7 +6,6 @@
 *.slo
 *.lo
 *.o
-*.obj
 
 # Precompiled Headers
 *.gch
@@ -32,6 +31,7 @@
 *.out
 *.app
 
+
 # Visual C++ cache files
 ipch/
 *.aps
@@ -40,4 +40,6 @@ ipch/
 *.opensdf
 *.sdf
 *.cachefile
+
 /build
+/CMakeFiles/3.23.0-rc3

@@ -28,19 +28,21 @@ void multiple_events::push_event(int a) {
 	event_queue.push(single_event(timer.t, a));
 }
 
-void multiple_events::update(vec3 playerPos, float c) {
+void events::update(vec3 playerPos, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
-	do {
-		single_event e = event_queue.front();
-		float delta_t = timer.t - e.creation_date;
-		if (delta_t * c > d)
-		{
-			activate(e.id);
-			cont = true;
-			event_queue.pop();
-		}
-	} while (cont);
+	if (!event_queue.empty()) {
+		do {
+			event e = event_queue.front();
+			float delta_t = timer.t - e.creation_date;
+			if (delta_t * c > d)
+			{
+				activate(e.id);
+				cont = true;
+				event_queue.pop();
+			}
+		} while (cont);
+	}
 }
 
 

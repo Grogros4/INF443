@@ -6,6 +6,7 @@
 using namespace cgp;
 
 
+
 // The main function implementing the Flying Mode
 void scene_structure::update_camera(float xpos, float ypos)
 {
@@ -206,7 +207,7 @@ void scene_structure::initialize()
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
 
-	l1.initialize(vec3{0,0,10}, "bite", 1.0f);
+	l1 = light(vec3{0,0,10}, "bite");
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -337,9 +338,8 @@ void scene_structure::display()
 
 	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
 
-	l1.update(pos, c);
-	mesh_drawable mesh_l1 = l1.get_mesh();
-	draw(mesh_l1, environment);
+	l1.update(pos);
+	l1.display(environment);
 }
 
 
@@ -357,6 +357,6 @@ void opengl_uniform(GLuint shader, scene_environment_player_head const& environm
 	opengl_uniform(shader, "projection", environment.projection.matrix());
 	opengl_uniform(shader, "view", environment.camera.matrix_view());
 	opengl_uniform(shader, "light", environment.light);
-	opengl_uniform(shader, "speed", environment.env_speed);
-	opengl_uniform(shader, "c", environment.env_c);
+	opengl_uniform(shader, "speed", environment.speed);
+	opengl_uniform(shader, "c", environment.c);
 }
