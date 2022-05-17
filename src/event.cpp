@@ -17,7 +17,7 @@ struct event {
 	}
 };
 
-void events::push_event(event a) {
+void events::push_event(int a) {
 	event_queue.push(a);
 }
 

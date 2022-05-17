@@ -10,23 +10,25 @@ struct event {
 
 
 struct events {
-	float global_time;
 	cgp::vec3 pos;
+	cgp::timer_basic timer;
 	std::queue<event> event_queue;
 
 	//Functions
-	void push_event(event a);
+	void push_event(int a);
 	void activate();
 };
 
 
-struct lights {
+struct lights : public events{
+
+	cgp::mesh_drawable light_source;
 
 	std::string name;
 	float frequency;
-	private : float clock;
+	//private : float clock;
 	bool status; //True = on, False = off
-	cgp::mesh_drawable light_source; 
+	
 	cgp::vec3 pos;
 	events event_queue;
 
