@@ -29,7 +29,11 @@ void events::push_event(int a) {
 }
 
 void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
-	float d = norm(pos - playerPos);
+	float beta = norm(playerSpeed) / c;
+	float gamma = 1 / sqrt(1 - beta * beta);
+	vec3 uve = (norm(playerSpeed) < 0.00001) ? vec3{ 0,0,0 } : playerSpeed / norm(playerSpeed);
+	vec3 posEff = pos + ((1 / gamma) - 1) * dot(pos, uve) * uve;
+	float d = norm(posEff - playerPos);
 	bool cont = false;
 	do {
 		if (!event_queue.empty()) {
