@@ -66,14 +66,37 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 	name = light_name;
 	status = false;
 	offset = 0.0f;
-	mesh sphere_mesh = mesh_primitive_sphere();
-	light_source.initialize(sphere_mesh, light_name);
-	light_source.transform.translation = pos;
-	light_source.shading.color = { 1.0f, 1.0f, 1.0f };
-	light_source.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1 };
+
+
+	//Creation of the lamp structure
+	mesh_drawable lampadaire;
+	lampadaire.initialize(mesh_load_file_obj("assets/objects/lampadaire.obj"), "base" + name);
+	lampadaire.transform.scaling = 0.5f;
+	lampadaire.shading.color = { 0,0,0 };
+	lampadaire.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
+
+
+	mesh_drawable sphere;
+	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere" + name);
+	sphere.shading.color = { 1.0f, 1.0f, 1.0f };
+	sphere.transform.translation = {0, 0, 9};
+
+	light_source_on.add(lampadaire);
+	light_source_on.add(sphere, "base" + name);
+	light_source_on["base" + name].transform.translation = pos;
+	light_source_on["base" + name].transform.scaling = 0.4f;
+	light_source_on.update_local_to_global_coordinates();
+
+
+	sphere.shading.color = { 0, 0,0 };
+	light_source_off.add(lampadaire);
+	light_source_off.add(sphere, "base" + name);
+	light_source_off["base" + name].transform.translation = pos;
+	light_source_off["base" + name].transform.scaling = 0.4f;
+	light_source_off.update_local_to_global_coordinates();
 }
 
-cgp::mesh_drawable lamp::get_mesh(vec3 speed, float c) {
+cgp::hierarchy_mesh_drawable lamp::get_mesh(vec3 speed, float c) {
 	timer.update();
 	clock.update(speed, c);
 	if (clock.t > period) {
@@ -85,17 +108,21 @@ cgp::mesh_drawable lamp::get_mesh(vec3 speed, float c) {
 			push_event(1);
 		status = !status;
 	}
-	return light_source;
+	if (current_status){
+		return light_source_off;
+	}
+	else {
+		return light_source_on;
+	};
 }
 
 
 void lamp::activate(int id) {
 	std::cout << id << std::endl;
-
 	if (id == 0) {
-		light_source.shading.color = { 0.0f, 0.0f, 0.0f };
+		current_status = false;
 	}
 	else {
-		light_source.shading.color = { 1.0f, 1.0f, 1.0f };
+		current_status = true;
 	}
 }
