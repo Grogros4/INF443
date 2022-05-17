@@ -21,7 +21,7 @@ struct event {
 struct events {
 
 	cgp::vec3 pos;
-	rel_timer timer;
+	cgp::timer_basic timer;
 	std::queue<event> event_queue;
 
 	//Functions
@@ -39,10 +39,10 @@ struct lamp : public virtual events {
 	float period;
 	bool status; //True = on, False = off
 	float offset;
-	cgp::timer_basic clock;
+	rel_timer clock;
 
 	//lamp(cgp::vec3 p, std::string light_name, float per);
 	void initialize(cgp::vec3 p, std::string light_name, float per);
 	void activate(int id);
-	cgp::mesh_drawable get_mesh();
+	cgp::mesh_drawable get_mesh(cgp::vec3 speed, float c);
 };

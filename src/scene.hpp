@@ -40,8 +40,8 @@ struct scene_structure {
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
 
-	light l1;
-	light l2;
+	lamp l1;
+	lamp l2;
 
 
 	cgp::timer_basic timer; // A basic timer for the camera animation

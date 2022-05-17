@@ -68,10 +68,9 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 	light_source.shading.color = { 1.0f, 1.0f, 1.0f };
 }
 
-cgp::mesh_drawable light::display_light() {
-	clock.update();
+cgp::mesh_drawable lamp::get_mesh(vec3 speed, float c) {
 	timer.update();
-	
+	clock.update(speed, c);
 	if (clock.t > period) {
 		std::cout << "Creation" << std::endl;
 		clock.t -= period;
@@ -85,7 +84,7 @@ cgp::mesh_drawable light::display_light() {
 }
 
 
-void light::activate(int id) {
+void lamp::activate(int id) {
 	std::cout << id << std::endl;
 
 	if (id == 0) {
