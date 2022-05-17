@@ -39,7 +39,7 @@ struct lamp : public virtual events {
 	float period;
 	bool status; //True = on, False = off
 	float offset;
-	int n = 1;
+	cgp::timer_basic clock;
 
 	//lamp(cgp::vec3 p, std::string light_name, float per);
 	void initialize(cgp::vec3 p, std::string light_name, float per);

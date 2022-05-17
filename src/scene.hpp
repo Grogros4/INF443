@@ -40,14 +40,16 @@ struct scene_structure {
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
 
-	lamp l1;
+	light l1;
+	light l2;
+
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
 	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
-	float c;
+	float c = 30.0f;
 	cgp::vec3 speed;
 	cgp::vec3 pos;
 
@@ -61,6 +63,7 @@ struct scene_structure {
 
 	cgp::vec2 mouse_pos;
 	cgp::vec2 mouse_speed;
+
 	
 	// ****************************** //
 	// Functions
