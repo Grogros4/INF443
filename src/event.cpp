@@ -1,3 +1,4 @@
+
 #include "event.hpp"
 
 
@@ -6,12 +7,9 @@ using namespace cgp;
 
 // RELATIVISTIC TIMER
 
-rel_timer::rel_timer(cgp::vec3 speed, float c) {
+float rel_timer::update(vec3 speed, float c) {
 	float beta = norm(speed) / c;
 	gamma = 1 / sqrt(1 - beta * beta);
-}
-
-float rel_timer::update() {
 	float dt = c_timer.update();
 	t += gamma * dt;
 	return gamma * dt;
@@ -26,13 +24,11 @@ event::event(float cd, int i)
 	id = i;
 }
 
-
-
 void events::push_event(int a) {
 	event_queue.push(event(timer.t, a));
 }
 
-void events::update(vec3 playerPos, float c) {
+void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
 	do {
@@ -58,14 +54,14 @@ void events::update(vec3 playerPos, float c) {
 		}
 
 
-// LIGHT
+// LAMP
 
-void light::initialize(vec3 p, std::string light_name, float per, float o) {
+void lamp::initialize(vec3 p, std::string light_name, float per) {
 	pos = p;
 	period = per;
 	name = light_name;
 	status = false;
-	offset = o;
+	offset = 0.0f;
 	mesh sphere_mesh = mesh_primitive_sphere();
 	light_source.initialize(sphere_mesh, light_name);
 	light_source.transform.translation = pos;
@@ -85,11 +81,13 @@ cgp::mesh_drawable light::display_light() {
 			push_event(1);
 		status = !status;
 	}
-	return(light_source);
+	return light_source;
 }
+
 
 void light::activate(int id) {
 	std::cout << id << std::endl;
+
 	if (id == 0) {
 		light_source.shading.color = { 0.0f, 0.0f, 0.0f };
 	}

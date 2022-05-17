@@ -16,11 +16,4 @@ struct scene_environment_camera_head {
 	scene_environment_camera_head();
 };
 
-struct scene_environment_player_head : public scene_environment_camera_head {
-	cgp::vec3 speed;
-	float c;
-};
-
-
 void opengl_uniform(GLuint shader, scene_environment_camera_head const& environment);
-void opengl_uniform(GLuint shader, scene_environment_player_head const& environment);
