@@ -58,12 +58,14 @@ void scene_structure::update_camera(float xpos, float ypos)
 	}
 	if (isGrounded() && isJumping)
 		speed.z = 5.0f;
-	
+
 	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
 	if (acc_norm > 0.01)
 		acc = (walk_acc / acc_norm) * acc;
 	float g_eff = isGrounded() ? 0 : g;
 	speed += acc * dt - f * vec3{ speed.xy(), 0} *dt + g_eff * vec3{0, 0, -1} *dt;
+	//if (isGrounded() && speed.z < 0)
+		speed.z = 0;
 	//float speed_norm = sqrt(speed.x * speed.x + speed.y * speed.y + speed.z * speed.z);
 	//if (speed_norm > speed_max)
 	//	speed = (speed_max / speed_norm) * speed;
@@ -177,7 +179,6 @@ void scene_structure::initialize_demilune()
 
 void scene_structure::initialize()
 {
-	c = 100000.0f;
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
