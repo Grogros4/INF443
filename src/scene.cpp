@@ -38,7 +38,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 	vec3 acc = vec3{ 0.0f, 0.0f, 0.0f };
 
 	vec3 front = vec3{ camera.front().x, camera.front().y, 0 };
-	front /= sqrt(front.x * front.x + front.y * front.y);
+	front /= norm(front);
 
 	if (keyboard.up)
 	{
@@ -59,7 +59,7 @@ void scene_structure::update_camera(float xpos, float ypos)
 	if (isGrounded() && isJumping)
 		speed.z = 5.0f;
 
-	float acc_norm = sqrt(acc.x * acc.x + acc.y * acc.y + acc.z * acc.z);
+	float acc_norm = norm(acc);
 	if (acc_norm > 0.01)
 		acc = (walk_acc / acc_norm) * acc;
 	float g_eff = isGrounded() ? 0 : g;
@@ -204,6 +204,8 @@ void scene_structure::initialize()
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
 
+	l1 = light(vec3{0,0,10}, "bite");
+
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 
@@ -332,6 +334,9 @@ void scene_structure::display()
 	draw(demilune, environment);
 
 	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
+
+	l1.update(pos);
+	l1.display(environment);
 }
 
 
