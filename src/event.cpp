@@ -7,7 +7,14 @@
 using namespace cgp;
 
 struct event {
-	event()
+	float creation_date;
+	int id;
+
+	event(float cd, int i)
+	{
+		creation_date = cd;
+		id = i;
+	}
 };
 
 void events::push_event(event a) {
