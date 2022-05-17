@@ -1,8 +1,0 @@
-﻿  event.cpp
-  scene.cpp
-C:\Users\thegr\OneDrive\Documents\Cours\2A\INF443\Projet\Projet\src\scene.cpp(28,14): warning C4189: 'roll' : variable locale initialisée mais non référencée
-C:\Users\thegr\OneDrive\Documents\Cours\2A\INF443\Projet\Projet\src\scene.cpp(127): warning C4701: variable locale 'scalex' potentiellement non initialisée utilisée
-C:\Users\thegr\OneDrive\Documents\Cours\2A\INF443\Projet\Projet\src\scene.cpp(127): warning C4701: variable locale 'scaley' potentiellement non initialisée utilisée
-C:\Users\thegr\OneDrive\Documents\Cours\2A\INF443\Projet\Projet\src\scene.cpp(94): warning C4701: variable locale 'scalex' potentiellement non initialisée utilisée
-C:\Users\thegr\OneDrive\Documents\Cours\2A\INF443\Projet\Projet\src\scene.cpp(95): warning C4701: variable locale 'scaley' potentiellement non initialisée utilisée
-  Projet.vcxproj -> C:\Users\thegr\OneDrive\Documents\Cours\2A\INF443\Projet\Projet\Projet.exe
