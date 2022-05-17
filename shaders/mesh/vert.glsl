@@ -32,9 +32,9 @@ void main()
     // The position of the vertex in the world space relative to camera
 	vec4 p = view * model * vec4(position, 1.0);
 	p = p / p.w;
-    float norme = length(p.xyz);
 	vec4 speed4 = vec4(speed,0);
 	speed4 = view * speed4;
+	vec3 uve = speed4.xyz / length(speed4);
 
 	//Calcul relativiste
 	if (length(speed) > 0.00000001){
@@ -42,8 +42,10 @@ void main()
 		//b = 0;
 		float gamma = 1/sqrt(1-b*b);
 
+		p.xyz += ((1/gamma) - 1) * dot(p.xyz, uve) * uve;
+		float norme = length(p.xyz);
+
 		//Calcul du repère orthogonal vers v
-		vec3 uve = speed4.xyz / length(speed4);
 		vec3 utheta = p.xyz - dot(p.xyz, uve)*uve;
 		utheta = utheta/length(utheta);
 		vec3 uz = cross(uve,utheta);

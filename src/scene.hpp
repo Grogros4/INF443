@@ -50,7 +50,7 @@ struct scene_structure {
 	float walk_acc = 40.0f;
 	float f = 4.0f;
 	float g = 10;
-	float c;
+	float c = 13.0f;
 	int chunk_size = 100;
 
 	cgp::vec2 mouse_pos;
