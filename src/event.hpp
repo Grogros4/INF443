@@ -1,13 +1,16 @@
 #pragma once
 #include <queue>
 #include "cgp/cgp.hpp"
-#include "scene.hpp"
+
+
 
 
 struct rel_timer {
 	float gamma;
 	float t;
 	cgp::timer_basic c_timer;
+
+	rel_timer(cgp::vec3 speed, float c);
 
 	float update();
 };
@@ -28,9 +31,9 @@ struct events {
 
 	//Functions
 	void push_event(int a);
-	void update(cgp::vec3 playerPos);
-	void activate(int id);
-	void display(scene_environment_player_head environment);
+	void update(cgp::vec3 playerPos, float c);
+	virtual void activate(int id) = 0;
+	//void display();
 };
 
 
@@ -42,7 +45,7 @@ struct light : public events{
 	bool status; //True = on, False = off
 	float offset;
 
-	light(cgp::vec3 p, std::string light_name, float per = 1, float o = 0);
+	void initialize(cgp::vec3 p, std::string light_name, float per, float o);
 	void activate(int id);
-	void display(scene_environment_player_head environment);
+	cgp::mesh_drawable display_light();
 };

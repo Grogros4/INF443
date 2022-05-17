@@ -2,6 +2,7 @@
 
 using namespace cgp;
 
+
 scene_environment_camera_head::scene_environment_camera_head()
 {
 	background_color = { 1,1,1 };
@@ -14,4 +15,14 @@ void opengl_uniform(GLuint shader, scene_environment_camera_head const& environm
 	opengl_uniform(shader, "projection", environment.projection.matrix());
 	opengl_uniform(shader, "view", environment.camera.matrix_view());
 	opengl_uniform(shader, "light", environment.light);
+}
+
+void opengl_uniform(GLuint shader, scene_environment_player_head const& environment)
+{
+	// Basic uniform parameters
+	opengl_uniform(shader, "projection", environment.projection.matrix());
+	opengl_uniform(shader, "view", environment.camera.matrix_view());
+	opengl_uniform(shader, "light", environment.light);
+	opengl_uniform(shader, "speed", environment.speed);
+	opengl_uniform(shader, "c", environment.c);
 }

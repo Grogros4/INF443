@@ -1,6 +1,3 @@
-
-#include "terrain.hpp"
-#include "scene.hpp"
 #include "event.hpp"
 
 
@@ -9,7 +6,7 @@ using namespace cgp;
 
 // RELATIVISTIC TIMER
 
-rel_timer::rel_timer() {
+rel_timer::rel_timer(cgp::vec3 speed, float c) {
 	float beta = norm(speed) / c;
 	gamma = 1 / sqrt(1 - beta * beta);
 }
@@ -35,25 +32,29 @@ void events::push_event(int a) {
 	event_queue.push(event(timer.t, a));
 }
 
-void events::update(vec3 playerPos) {
+void events::update(vec3 playerPos, float c) {
 	float d = norm(pos - playerPos);
 	bool cont = false;
-	do {
-		event e = event_queue.front();
-		float delta_t = timer.t - e.creation_date;
-		if (delta_t * c > d)
-		{
-			activate(e.id);
-			cont = true;
-			event_queue.pop();
-		}
-	} while (cont);
+	if (!event_queue.empty()) {
+		do {
+			event e = event_queue.front();
+			float delta_t = timer.t - e.creation_date;
+			if (delta_t * c > d)
+			{
+				activate(e.id);
+				cont = true;
+				event_queue.pop();
+			}
+		} while (cont);
+	}
 }
 
 
 // LIGHT
 
-light::light(vec3 p, std::string light_name, float per = 1, float o = 0) {
+void light::initialize(vec3 p, std::string light_name, float per, float o) {
+	o = 0;
+	per = 1;
 	pos = p;
 	period = per;
 	name = light_name;
@@ -65,7 +66,7 @@ light::light(vec3 p, std::string light_name, float per = 1, float o = 0) {
 	light_source.shading.color = { 1.0f, 1.0f, 1.0f };
 }
 
-void light::display(scene_environment_player_head environment) {
+cgp::mesh_drawable light::display_light() {
 
 	if (timer.t > period) {
 		timer.t -= period;
@@ -75,8 +76,7 @@ void light::display(scene_environment_player_head environment) {
 			push_event(1);
 		status = !status;
 	}
-
-	draw(light_source, environment);
+	return(light_source);
 }
 
 void light::activate(int id) {

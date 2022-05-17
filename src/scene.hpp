@@ -9,19 +9,11 @@
 #include <iostream>
 
 
+
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
 	bool display_frame = false;
 };
-
-struct scene_environment_player_head : public scene_environment_camera_head {
-	cgp::vec3 speed;
-	float c;
-};
-
-
-float c = 13.0f;
-cgp::vec3 speed;
 
 
 // The structure of the custom scene
@@ -41,7 +33,7 @@ struct scene_structure {
 	cgp::mesh_drawable terrainx;
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
-
+	
 	light l1;
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
@@ -61,6 +53,9 @@ struct scene_structure {
 	cgp::vec2 mouse_pos;
 	cgp::vec2 mouse_speed;
 
+
+	float c = 13.0f;
+	cgp::vec3 speed;
 	
 	// ****************************** //
 	// Functions
