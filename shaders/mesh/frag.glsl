@@ -36,12 +36,14 @@ uniform mat4 view;       // View matrix (rigid transform) of the camera - to com
 
 uniform float c;
 
+vec3 camera_position;
+
 
 //Exponential function to calculate fog intensity
 float getFogFactor(float fogCoordinate)
 {
 	float result = 0.0;
-	float density = 0.01;
+	float density = 0.005;
 	result = exp(-pow(density * fogCoordinate, 2.0));
 	result = 1.0 - clamp(result, 0.0, 1.0);
 	return result;
@@ -142,7 +144,9 @@ vec3 dopplerEffect_new(vec3 color)
 {
 	if (length(fragment.speed) > 0.0000001)
 	{
-		float ctheta = dot(fragment.speed, fragment.position)/(length(fragment.speed)*length(fragment.position));
+		vec3 pos = fragment.position - camera_position;
+
+		float ctheta = dot(fragment.speed, pos)/(length(fragment.speed)*length(pos));
 		float b = length(fragment.speed) / c;
 		float gamma = 1 / sqrt(1-b*b);
 		float dopp = b * gamma * ctheta;
@@ -168,7 +172,7 @@ void main()
 	// Compute the position of the center of the camera
 	mat3 O = transpose(mat3(view));                   // get the orientation matrix
 	vec3 last_col = vec3(view*vec4(0.0, 0.0, 0.0, 1.0)); // get the last column
-	vec3 camera_position = -O*last_col;
+	camera_position = -O*last_col;
 
 	// Re-normalize the normals (interpolated on the triangle)
 	vec3 N = normalize(fragment.normal);
@@ -211,18 +215,25 @@ void main()
 	// ************************* //
 
 	//Get the position of the object relative to the camera to apply fog accordingly
-	vec4 p = view * model * vec4(fragment.position, 1.0);
-	float fogCoordinate = abs(p.z);
+	
+	vec3 p = fragment.position; 
+	p -= camera_position;
+	float fogCoordinate = max(sqrt(p.x*p.x + p.y*p.y), 0);
+	vec4 fogColor = mix(vec4(0.5,0.5,0.5,0), vec4(0,0,0,0), 1 - exp(-0.005*p.z));
 
 	// Compute the base color of the object based on: vertex color, uniform color, and texture
 	vec3 color_object  = fragment.color * color * color_image_texture.rgb;
 
 	// Compute the final shaded color using Phong model
 	vec3 color_shading = (Ka + Kd * diffuse) * color_object + Ks * specular * vec3(1.0, 1.0, 1.0);
-	color_shading = dopplerEffect_new(color_shading);
+	//color_shading = dopplerEffect_new(color_shading);
 
 	// Output color, with the alpha component
-	//FragColor = mix(vec4(color_shading, alpha * color_image_texture.a), vec4(dopplerEffect_new(vec3(1.0,1.0,1.0)), 1.0),getFogFactor(fogCoordinate));
-	FragColor = vec4(color_shading, 1);
+	FragColor = vec4(color_shading, alpha * color_image_texture.a);
+	//FragColor.xyz = dopplerEffect_new(FragColor.xyz);
+	//fogColor.xyz = dopplerEffect_new(fogColor.xyz);
+	FragColor = mix(FragColor, fogColor, getFogFactor(fogCoordinate));
+	FragColor.xyz = dopplerEffect_new(FragColor.xyz);
+	//FragColor = vec4(color_shading, 1);
 
 }

@@ -182,6 +182,8 @@ void scene_structure::initialize()
 
 	c = 13.0f;
 
+	//GLuint const shader_1 = opengl_load_shader("shaders/sky/vert.glsl", "shaders/sky/frag.glsl");
+
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
@@ -217,8 +219,10 @@ void scene_structure::initialize()
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 
-	sky.initialize(mesh_primitive_sphere(10000), "sky");
-	sky.shading.color = { 0, 0, 1 };
+	sky.initialize(mesh_primitive_sphere(400), "sky");
+	sky.shading.color = { 0, 0, 0 };
+	sky.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1000 };
+
 
 	initialize_demilune();
 

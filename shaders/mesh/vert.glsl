@@ -30,18 +30,19 @@ void main()
 {
 
     // The position of the vertex in the world space relative to camera
-	vec4 p = view * model * vec4(position, 1.0);
+	vec4 pos = model * vec4(position, 1);
+	vec4 p = view * pos;
 	p = p / p.w;
 	vec4 speed4 = vec4(speed,0);
 	speed4 = view * speed4;
-	vec3 uve = speed4.xyz / length(speed4);
 
 	//Calcul relativiste
 	if (length(speed) > 0.00000001){
 		float b = length(speed)/c;
-		//b = 0;
 		float gamma = 1/sqrt(1-b*b);
 
+		
+		vec3 uve = speed4.xyz / length(speed4);
 		p.xyz += ((1/gamma) - 1) * dot(p.xyz, uve) * uve;
 		float norme = length(p.xyz);
 
@@ -74,13 +75,12 @@ void main()
 	// The projected position of the vertex in the normalized device coordinates:
 	vec4 p_proj = projection * p;
 
-
 	// Fill the parameters sent to the fragment shader
-	fragment.position = p.xyz;
-	fragment.normal   = n.xyz;
+	fragment.position = (pos/pos.w).xyz;
+	fragment.normal = n.xyz;
 	fragment.color = color;
 	fragment.uv = uv;
-	fragment.speed = speed4.xyz;
+	fragment.speed = speed;
 
 	// gl_Position is a built-in variable which is the expected output of the vertex shader
 	gl_Position = p_proj; // gl_Position is the projected vertex position (in normalized device coordinates)
