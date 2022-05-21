@@ -82,7 +82,7 @@ mesh create_terrain_mesh(int N, float terrain_length, float scalex, float scaley
     return terrain;
 }
 
-std::vector<cgp::vec3> generate_positions_on_terrain(int N, float terrain_length)
+std::vector<cgp::vec3> generate_positions_on_terrain(int N, float terrain_length, float scalex, float scaley)
 {
     std::vector<cgp::vec3> pos;
     for (int i = 0; i < N; i++)
@@ -117,9 +117,10 @@ std::vector<cgp::vec3> generate_positions_on_terrain(int N, float terrain_length
             }
         }
         
-        float z = evaluate_terrain_height(x, y, terrain_length);
+        float z = evaluate_hills_height(scalex*x, scaley*y, terrain_length);
         pos.push_back(vec3{ x,y,z });
     }
 
     return pos;
 }
+

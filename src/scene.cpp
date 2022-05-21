@@ -189,6 +189,9 @@ void scene_structure::initialize()
 	mesh terrain_meshx = create_terrain_mesh(100, chunk_size, -1, 1);
 	mesh terrain_meshy = create_terrain_mesh(100, chunk_size, 1, -1);
 	mesh terrain_meshxy = create_terrain_mesh(100, chunk_size, -1, -1);
+
+
+
 	terrain.initialize(terrain_mesh, "Terrain");
 	terrainx.initialize(terrain_meshx, "TerrainX");
 	terrainy.initialize(terrain_meshy, "TerrainY");
@@ -203,6 +206,12 @@ void scene_structure::initialize()
 	terrainx.texture = grass;
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
+
+
+	tree_position = generate_positions_on_terrain(100, chunk_size, 1,1);
+	tree_positionx = generate_positions_on_terrain(100, chunk_size, -1,1);
+	tree_positiony = generate_positions_on_terrain(100, chunk_size, 1,-1);
+	tree_positionxy = generate_positions_on_terrain(100, chunk_size, -1,-1);
 
 
 
@@ -272,28 +281,59 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 
 	
 	mat3 situation = get_mirroring(x, y);
-	
-
+	int u;
+	int v;
+	mesh const tree_mesh = create_tree();
+	mesh_drawable tree;
+	tree.initialize(tree_mesh, "tree");
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
+			u = get_matrix_coordinate(x) + 1-i;
+			v = get_matrix_coordinate(y) + 1-j;
+			u = std::abs(u);
+			v = std::abs(v);
 			int a = situation[i][j];
 			vec3 translation = { (2 - i - 1) * chunk_size + chunk_size * get_matrix_coordinate(x), (2 - j - 1) * chunk_size + chunk_size * get_matrix_coordinate(y), 0.0f };
 			if (a == 0) {
 				terrain.transform.translation = translation;
 				draw(terrain, environment);
+				if ((u + v) >= 3) { 
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_position[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 			if (a == 1) {
 				terrainy.transform.translation = translation;
 				draw(terrainy, environment);
+				if ((u + v) >= 3) {
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_positiony[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 			if (a == 2) {
 				terrainx.transform.translation = translation;
 				draw(terrainx, environment);
+				if ((u + v) >= 3) {
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_positionx[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 			if (a == 3) {
 				terrainxy.transform.translation = translation;
 				draw(terrainxy, environment);
+				if ((u + v) >= 3) {
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_positionxy[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 		}
 	}

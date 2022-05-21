@@ -8,6 +8,8 @@
 #include "terrain.hpp"
 #include "environment_camera_head/environment_camera_head.hpp"
 #include <iostream>
+#include "tree.hpp"
+
 
 
 
@@ -48,6 +50,11 @@ struct scene_structure {
 	cgp::mesh_drawable terrainx;
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
+	std::vector<cgp::vec3> tree_position;
+	std::vector<cgp::vec3> tree_positionx;
+	std::vector<cgp::vec3> tree_positiony;
+	std::vector<cgp::vec3> tree_positionxy;
+
 
 	cgp::mesh_drawable lampadaire;
 	lamp l1;
@@ -61,7 +68,7 @@ struct scene_structure {
 	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
-	float c = 30.0f;
+	float c = 13.0f;
 	cgp::vec3 speed;
 	cgp::vec3 pos;
 
