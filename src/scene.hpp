@@ -21,6 +21,10 @@ struct scene_environment_player_head : public scene_environment_camera_head {
 	float env_c;
 };
 
+struct scene_environment_hud : public cgp::scene_environment_basic {
+	cgp::vec3 env_speed;
+	float env_c;
+};
 
 // The structure of the custom scene
 struct scene_structure {
@@ -30,10 +34,15 @@ struct scene_structure {
 	// ****************************** //
 
 	scene_environment_player_head environment; // The specific scene environment that contains a "head camera" (*)
+	scene_environment_player_head environment_hud; // Specific environment to draw HUD elements
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
 	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
 	cgp::skybox_drawable skybox;
+
+	cgp::mesh_drawable quad;
+	cgp::mesh_drawable second;
+	rel_timer clock_timer;
 
 	cgp::hierarchy_mesh_drawable demilune;
 	cgp::mesh_drawable terrainx;

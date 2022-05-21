@@ -179,14 +179,11 @@ void scene_structure::initialize_demilune()
 
 void scene_structure::initialize()
 {
-
-	c = 13.0f;
-
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
 	std::cout << " \nLoad terrain file ..." << std::endl;
-	
+
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
 	mesh terrain_mesh = create_terrain_mesh(100, chunk_size, 1, 1);
 	mesh terrain_meshx = create_terrain_mesh(100, chunk_size, -1, 1);
@@ -201,7 +198,7 @@ void scene_structure::initialize()
 	terrainx.shading.phong.specular = 0.0f;
 	terrainy.shading.phong.specular = 0.0f;
 	terrainxy.shading.phong.specular = 0.0f;
-	GLuint const grass = opengl_load_texture_image("assets/AVT_Albert-Einstein_9884.jpeg", GL_REPEAT, GL_REPEAT);
+	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
 	terrain.texture = grass;
 	terrainx.texture = grass;
 	terrainy.texture = grass;
@@ -211,7 +208,7 @@ void scene_structure::initialize()
 
 	//Initializing lamp grid
 
-    l1.initialize(vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
+	l1.initialize(vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1 }, "lamp1", 0.5f);
 	l2.initialize(vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
 
 	skybox.initialize("assets/skybox/");
@@ -230,9 +227,29 @@ void scene_structure::initialize()
 	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
 	environment.camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 
+	//Initializing the ortho camera
+	environment_hud.projection = camera_projection::orthographic(-2, 2, -1, 1, -1, 1);
+	environment_hud.light = { 0,0,1 };
+	/*
+	environment_hud.camera.look_at({ 0, 0, 0.5f }, { 0,0,0 }, { 0,1,0 });
+	environment_hud.camera.distance_to_center = 2.5f;
+	*/
 
-	//Initialize the terrain
+	environment_hud.env_c = 30000000.0f;
+	environment_hud.env_speed = { 0,0,0 };
 
+
+	//Initialize HUD texture
+	quad.initialize(mesh_primitive_disc(0.1, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
+	quad.texture = opengl_load_texture_image("assets/clock/empty_clock.png");
+	//quad.anisotropic_scale.y = 2;
+
+
+
+	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.08,0 }, { 0.001,0.08,0 }, { 0.001,0,0 }), "Second");
+	//second.anisotropic_scale.y = 2;
+	second.transform.translation = { -1.6,-0.6, 0 };
+	second.shading.color = { 1,0,0 };
 }
 
 
@@ -351,7 +368,11 @@ void scene_structure::display()
 	temp_light = l2.get_mesh(speed, c);
 	draw(temp_light, environment);
 
+	clock_timer.update(speed, c);
 
+	draw(quad, environment_hud);
+	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
+	draw(second, environment_hud);
 }
 
 
