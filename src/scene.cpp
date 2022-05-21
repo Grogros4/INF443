@@ -179,21 +179,19 @@ void scene_structure::initialize_demilune()
 
 void scene_structure::initialize()
 {
-
-	c = 13.0f;
-
-	//GLuint const shader_1 = opengl_load_shader("shaders/sky/vert.glsl", "shaders/sky/frag.glsl");
-
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
 	// Load the terrain (display a debug message as the loading can take some time)
 	std::cout << " \nLoad terrain file ..." << std::endl;
-	
+
 	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
 	mesh terrain_mesh = create_terrain_mesh(100, chunk_size, 1, 1);
 	mesh terrain_meshx = create_terrain_mesh(100, chunk_size, -1, 1);
 	mesh terrain_meshy = create_terrain_mesh(100, chunk_size, 1, -1);
 	mesh terrain_meshxy = create_terrain_mesh(100, chunk_size, -1, -1);
+
+
+
 	terrain.initialize(terrain_mesh, "Terrain");
 	terrainx.initialize(terrain_meshx, "TerrainX");
 	terrainy.initialize(terrain_meshy, "TerrainY");
@@ -203,11 +201,17 @@ void scene_structure::initialize()
 	terrainx.shading.phong.specular = 0.0f;
 	terrainy.shading.phong.specular = 0.0f;
 	terrainxy.shading.phong.specular = 0.0f;
-	GLuint const grass = opengl_load_texture_image("assets/AVT_Albert-Einstein_9884.jpeg", GL_REPEAT, GL_REPEAT);
+	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
 	terrain.texture = grass;
 	terrainx.texture = grass;
 	terrainy.texture = grass;
 	terrainxy.texture = grass;
+
+
+	tree_position = generate_positions_on_terrain(100, chunk_size, 1,1);
+	tree_positionx = generate_positions_on_terrain(100, chunk_size, -1,1);
+	tree_positiony = generate_positions_on_terrain(100, chunk_size, 1,-1);
+	tree_positionxy = generate_positions_on_terrain(100, chunk_size, -1,-1);
 
 
 
@@ -237,9 +241,29 @@ void scene_structure::initialize()
 	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
 	environment.camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 
+	//Initializing the ortho camera
+	environment_hud.projection = camera_projection::orthographic(-2, 2, -1, 1, -1, 1);
+	environment_hud.light = { 0,0,1 };
+	/*
+	environment_hud.camera.look_at({ 0, 0, 0.5f }, { 0,0,0 }, { 0,1,0 });
+	environment_hud.camera.distance_to_center = 2.5f;
+	*/
 
-	//Initialize the terrain
+	environment_hud.light_speed = 30000000.0f;
+	environment_hud.speed = { 0,0,0 };
 
+
+	//Initialize HUD texture
+	quad.initialize(mesh_primitive_disc(0.1, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
+	quad.texture = opengl_load_texture_image("assets/clock/empty_clock.png");
+	//quad.anisotropic_scale.y = 2;
+
+
+
+	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.08,0 }, { 0.001,0.08,0 }, { 0.001,0,0 }), "Second");
+	//second.anisotropic_scale.y = 2;
+	second.transform.translation = { -1.6,-0.6, 0 };
+	second.shading.color = { 1,0,0 };
 }
 
 
@@ -257,28 +281,59 @@ void scene_structure::display_terrain(float x, float y, scene_environment_camera
 
 	
 	mat3 situation = get_mirroring(x, y);
-	
-
+	int u;
+	int v;
+	mesh const tree_mesh = create_tree();
+	mesh_drawable tree;
+	tree.initialize(tree_mesh, "tree");
 
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
+			u = get_matrix_coordinate(x) + 1-i;
+			v = get_matrix_coordinate(y) + 1-j;
+			u = std::abs(u);
+			v = std::abs(v);
 			int a = situation[i][j];
 			vec3 translation = { (2 - i - 1) * chunk_size + chunk_size * get_matrix_coordinate(x), (2 - j - 1) * chunk_size + chunk_size * get_matrix_coordinate(y), 0.0f };
 			if (a == 0) {
 				terrain.transform.translation = translation;
 				draw(terrain, environment);
+				if ((u + v) >= 3) { 
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_position[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 			if (a == 1) {
 				terrainy.transform.translation = translation;
 				draw(terrainy, environment);
+				if ((u + v) >= 3) {
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_positiony[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 			if (a == 2) {
 				terrainx.transform.translation = translation;
 				draw(terrainx, environment);
+				if ((u + v) >= 3) {
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_positionx[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 			if (a == 3) {
 				terrainxy.transform.translation = translation;
 				draw(terrainxy, environment);
+				if ((u + v) >= 3) {
+					for (int k = 0; k < tree_position.size(); k++) {
+						tree.transform.translation = tree_positionxy[k] + translation;
+						draw(tree, environment);
+					}
+				}
 			}
 		}
 	}
@@ -356,7 +411,11 @@ void scene_structure::display()
 
 	sky.transform.translation = pos;
 	draw(sky, environment);
+	clock_timer.update(speed, c);
 
+	draw(quad, environment_hud);
+	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
+	draw(second, environment_hud);
 }
 
 

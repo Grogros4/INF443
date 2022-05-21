@@ -8,12 +8,19 @@
 #include "terrain.hpp"
 #include "environment_camera_head.hpp"
 #include <iostream>
+#include "tree.hpp"
+
 
 
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
 	bool display_frame = false;
+};
+
+struct scene_environment_hud : public cgp::scene_environment_basic {
+	cgp::vec3 env_speed;
+	float env_c;
 };
 
 // The structure of the custom scene
@@ -24,15 +31,25 @@ struct scene_structure {
 	// ****************************** //
 
 	scene_environment_camera_head environment; // The specific scene environment that contains a "head camera" (*)
+	scene_environment_camera_head environment_hud; // Specific environment to draw HUD elements
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
 	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
 	cgp::skybox_drawable skybox;
 
+	cgp::mesh_drawable quad;
+	cgp::mesh_drawable second;
+	rel_timer clock_timer;
+
 	cgp::hierarchy_mesh_drawable demilune;
 	cgp::mesh_drawable terrainx;
 	cgp::mesh_drawable terrainy;
 	cgp::mesh_drawable terrainxy;
+	std::vector<cgp::vec3> tree_position;
+	std::vector<cgp::vec3> tree_positionx;
+	std::vector<cgp::vec3> tree_positiony;
+	std::vector<cgp::vec3> tree_positionxy;
+
 
 	cgp::mesh_drawable lampadaire;
 	lamp l1;
@@ -46,7 +63,7 @@ struct scene_structure {
 	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
-	float c = 30.0f;
+	float c = 13.0f;
 	cgp::vec3 speed;
 	cgp::vec3 pos;
 
