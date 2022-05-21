@@ -214,6 +214,11 @@ void scene_structure::initialize()
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 
+	sky.initialize(mesh_primitive_sphere(400), "sky");
+	sky.shading.color = { 0, 0, 0 };
+	sky.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1000 };
+
+
 	initialize_demilune();
 
 	std::cout << " [OK] Terrain loaded\n" << std::endl;
@@ -368,6 +373,8 @@ void scene_structure::display()
 	temp_light = l2.get_mesh(speed, c);
 	draw(temp_light, environment);
 
+	sky.transform.translation = pos;
+	draw(sky, environment);
 	clock_timer.update(speed, c);
 
 	draw(quad, environment_hud);

@@ -5,7 +5,7 @@ using namespace cgp;
 
 scene_environment_camera_head::scene_environment_camera_head()
 {
-	background_color = { 1,1,1 };
+	background_color = { 0,0,0.5 };
 	projection = camera_projection::perspective(50.0f * Pi / 180, 1.0f, 0.1f, 500.0f);
 }
 
