@@ -213,8 +213,8 @@ void scene_structure::initialize()
 
 	//Initializing lamp grid
 
-    l1.initialize(vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
-	l2.initialize(vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
+    l1.initialize(environment, vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
+	l2.initialize(environment, vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -253,7 +253,7 @@ int scene_structure::get_matrix_coordinate(float x) {
 
 
 
-void scene_structure::display_terrain(float x, float y, scene_environment_player_head environment) {
+void scene_structure::display_terrain(float x, float y, scene_environment_camera_head environment) {
 
 	
 	mat3 situation = get_mirroring(x, y);
@@ -317,8 +317,8 @@ void scene_structure::display()
 {	
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
-	environment.env_speed = speed;
-	environment.env_c = c;
+	environment.speed = speed;
+	environment.light_speed = c;
 	//std::cout << environment.c << "c \n";
 
 
@@ -352,11 +352,7 @@ void scene_structure::display()
 
 
 	l1.update(pos, speed, c);
-	hierarchy_mesh_drawable temp_light = l1.get_mesh(speed, c);
-	draw(temp_light,environment);
 	l2.update(pos, speed, c);
-	temp_light = l2.get_mesh(speed, c);
-	draw(temp_light, environment);
 
 	sky.transform.translation = pos;
 	draw(sky, environment);
@@ -369,15 +365,4 @@ void scene_structure::display_gui()
 {
 	ImGui::Checkbox("Frame", &gui.display_frame);
 	//ImGui::SliderFloat("Speed", &gui.speed, 0.2f, 5.0f); // Set the camera velocity
-}
-
-
-void opengl_uniform(GLuint shader, scene_environment_player_head const& environment)
-{
-	// Basic uniform parameters
-	opengl_uniform(shader, "projection", environment.projection.matrix());
-	opengl_uniform(shader, "view", environment.camera.matrix_view());
-	opengl_uniform(shader, "light", environment.light);
-	opengl_uniform(shader, "speed", environment.env_speed);
-	opengl_uniform(shader, "c", environment.env_c);
 }

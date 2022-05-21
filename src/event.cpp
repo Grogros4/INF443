@@ -29,6 +29,7 @@ void events::push_event(int a) {
 }
 
 void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
+	timer.update();
 	float beta = norm(playerSpeed) / c;
 	float gamma = 1 / sqrt(1 - beta * beta);
 	vec3 uve = (norm(playerSpeed) < 0.00001) ? vec3{ 0,0,0 } : playerSpeed / norm(playerSpeed);
@@ -60,7 +61,7 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 
 // LAMP
 
-void lamp::initialize(vec3 p, std::string light_name, float per) {
+void lamp::initialize(scene_environment_camera_head& environment, vec3 p, std::string light_name, float per) {
 	pos = p;
 	period = per;
 	name = light_name;
@@ -69,36 +70,19 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 
 
 	//Creation of the lamp structure
-	mesh_drawable lampadaire;
-	lampadaire.initialize(mesh_load_file_obj("assets/objects/lampadaire.obj"), "base" + name);
+	lampadaire.initialize(mesh_load_file_obj("assets/objects/lampadaire.obj"), "base_" + name);
 	lampadaire.transform.scaling = 0.5f;
 	lampadaire.shading.color = { 0,0,0 };
 	lampadaire.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 
-
-	mesh_drawable sphere;
-	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere" + name);
+	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere_" + name);
 	sphere.shading.color = { 1.0f, 1.0f, 1.0f };
 	sphere.transform.translation = {0, 0, 9};
-
-	light_source_on.add(lampadaire);
-	light_source_on.add(sphere, "base" + name);
-	light_source_on["base" + name].transform.translation = pos;
-	light_source_on["base" + name].transform.scaling = 0.4f;
-	light_source_on.update_local_to_global_coordinates();
-
-
-	sphere.shading.color = { 0, 0,0 };
-	light_source_off.add(lampadaire);
-	light_source_off.add(sphere, "base" + name);
-	light_source_off["base" + name].transform.translation = pos;
-	light_source_off["base" + name].transform.scaling = 0.4f;
-	light_source_off.update_local_to_global_coordinates();
 }
 
-cgp::hierarchy_mesh_drawable lamp::get_mesh(vec3 speed, float c) {
-	timer.update();
-	clock.update(speed, c);
+void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
+{
+	clock.update(playerSpeed, c);
 	if (clock.t > period) {
 		std::cout << "Creation" << std::endl;
 		clock.t -= period;
@@ -108,21 +92,19 @@ cgp::hierarchy_mesh_drawable lamp::get_mesh(vec3 speed, float c) {
 			push_event(1);
 		status = !status;
 	}
-	if (current_status){
-		return light_source_off;
-	}
-	else {
-		return light_source_on;
-	};
+
+	events::update(playerPos, playerSpeed, c);
 }
 
 
 void lamp::activate(int id) {
 	std::cout << id << std::endl;
 	if (id == 0) {
-		current_status = false;
+		sphere.shading.color = { 0.0f, 0.0f, 0.0f };
 	}
 	else {
-		current_status = true;
+		sphere.shading.color = { 1.0f, 1.0f, 1.0f };
 	}
+	draw(lampadaire, environment);
+	draw(sphere, environment);
 }
