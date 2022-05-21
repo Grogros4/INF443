@@ -299,7 +299,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 				terrain.transform.translation = translation;
 				draw(terrain, environment);
 				if ((u + v) >= 3) { 
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v)-2))); k++) {
 						tree.transform.translation = tree_position[k] + translation;
 						draw(tree, environment);
 					}
@@ -309,7 +309,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 				terrainy.transform.translation = translation;
 				draw(terrainy, environment);
 				if ((u + v) >= 3) {
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
 						tree.transform.translation = tree_positiony[k] + translation;
 						draw(tree, environment);
 					}
@@ -319,7 +319,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 				terrainx.transform.translation = translation;
 				draw(terrainx, environment);
 				if ((u + v) >= 3) {
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
 						tree.transform.translation = tree_positionx[k] + translation;
 						draw(tree, environment);
 					}
@@ -329,7 +329,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_player
 				terrainxy.transform.translation = translation;
 				draw(terrainxy, environment);
 				if ((u + v) >= 3) {
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
 						tree.transform.translation = tree_positionxy[k] + translation;
 						draw(tree, environment);
 					}
