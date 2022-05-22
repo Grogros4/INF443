@@ -23,13 +23,15 @@ out struct fragment_data
 uniform mat4 model;      // Model affine transform matrix associated to the current shape
 uniform mat4 view;       // View matrix (rigid transform) of the camera
 uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the camera
-uniform vec3 speed;      // Player speed
+uniform vec3 player_speed;      // Player speed
 uniform float c;   		 // Speed of light
+uniform vec3 obj_speed;  // Speed of the object
 
 void main()
 {
 
     // The position of the vertex in the world space relative to camera
+	vec3 speed = player_speed;
 	vec4 pos = model * vec4(position, 1);
 	vec4 p = view * pos;
 	p = p / p.w;
@@ -37,9 +39,10 @@ void main()
 	speed4 = view * speed4;
 
 	//Calcul relativiste
+	float b = length(speed)/c;
+	float gamma = 1/sqrt(1-b*b);
 	if (length(speed) > 0.00000001){
-		float b = length(speed)/c;
-		float gamma = 1/sqrt(1-b*b);
+		
 
 		
 		vec3 uve = speed4.xyz / length(speed4);
@@ -75,12 +78,28 @@ void main()
 	// The projected position of the vertex in the normalized device coordinates:
 	vec4 p_proj = projection * p;
 
+	//Compute the composition of player and object speed
+	vec3 u_para = (obj_speed + player_speed ) / length(obj_speed + player_speed);
+	vec3 u_ortho1;
+	vec3 u_ortho2;
+	if (u_para.z < -0.99999f){
+		u_ortho1 = vec3(0.0,-1.0,0.0);
+		u_ortho2 = vec3(-1.0,0.0,0.0);
+	}
+	else{
+		float a = 1.0/(1.0 + u_para.z);
+		float b = -u_para.x*u_para.y*a;
+		u_ortho1 = vec3(1.0 - u_para.x*u_para.x*a,b,-u_para.x);
+		u_ortho2 = vec3(b, 1.0 - u_para.y*u_para.y*a, -u_para.y);
+	}
+	vec3 new_speed = (dot(player_speed,u_para)*u_para - obj_speed)/(1 - dot(obj_speed,player_speed)/(c*c)) + (dot(u_ortho1,player_speed)*u_ortho1 + dot(u_ortho2,player_speed)*u_ortho2)/(gamma*(1 - dot(obj_speed,player_speed)/(c*c)));
+	
 	// Fill the parameters sent to the fragment shader
 	fragment.position = (pos/pos.w).xyz;
 	fragment.normal = n.xyz;
 	fragment.color = color;
 	fragment.uv = uv;
-	fragment.speed = speed;
+	fragment.speed = new_speed;
 
 	// gl_Position is a built-in variable which is the expected output of the vertex shader
 	gl_Position = p_proj; // gl_Position is the projected vertex position (in normalized device coordinates)
