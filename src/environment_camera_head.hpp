@@ -11,6 +11,7 @@ struct scene_environment_camera_head {
 	cgp::camera_projection projection;
 	cgp::vec3 light;  // stores the light position
 	cgp::vec3 speed;
+	cgp::vec3 obj_speed;
 	float light_speed;
 
 	// Change the standard rotating camera to a "head camera" more appropriate to model free-flight (*)

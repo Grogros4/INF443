@@ -102,6 +102,22 @@ void scene_structure::initialize()
 	sky.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1000 };
 
 
+
+	//Initializing the car
+	// Key 3D positions
+	buffer<vec3> key_positions =
+	{ {-10,0,10}, {-10,0,10}, {10,0,10}, {10,0,10}};
+
+	// Key times (time at which the position must pass in the corresponding position)
+	buffer<float> key_times =
+	{ 0.0f, 1.0f, 2.0f, 3.0f};
+	
+	mesh_drawable sphere;
+	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere");
+	car1.initialize(sphere, key_positions, key_times);
+
+
+
 	initialize_demilune();
 
 	std::cout << " [OK] Terrain loaded\n" << std::endl;
@@ -125,6 +141,7 @@ void scene_structure::initialize()
 
 	environment_hud.light_speed = 30000000.0f;
 	environment_hud.speed = { 0,0,0 };
+	environment_hud.obj_speed = { 0,0,0 };
 
 
 	//Initialize HUD texture
@@ -173,7 +190,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_camera
 				terrain.transform.translation = translation;
 				draw(terrain, environment);
 				if ((u + v) >= 3) { 
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v)-2))); k++) {
 						tree.transform.translation = tree_position[k] + translation;
 						draw(tree, environment);
 					}
@@ -183,7 +200,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_camera
 				terrainy.transform.translation = translation;
 				draw(terrainy, environment);
 				if ((u + v) >= 3) {
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
 						tree.transform.translation = tree_positiony[k] + translation;
 						draw(tree, environment);
 					}
@@ -193,7 +210,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_camera
 				terrainx.transform.translation = translation;
 				draw(terrainx, environment);
 				if ((u + v) >= 3) {
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
 						tree.transform.translation = tree_positionx[k] + translation;
 						draw(tree, environment);
 					}
@@ -203,7 +220,7 @@ void scene_structure::display_terrain(float x, float y, scene_environment_camera
 				terrainxy.transform.translation = translation;
 				draw(terrainxy, environment);
 				if ((u + v) >= 3) {
-					for (int k = 0; k < tree_position.size(); k++) {
+					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
 						tree.transform.translation = tree_positionxy[k] + translation;
 						draw(tree, environment);
 					}
@@ -248,6 +265,7 @@ void scene_structure::display()
 	environment.light = environment.camera.position(); 
 	environment.speed = speed;
 	environment.light_speed = c;
+	environment.obj_speed = { 0,0,0 };
 	//std::cout << environment.c << "c \n";
 
 
@@ -290,6 +308,11 @@ void scene_structure::display()
 	draw(quad, environment_hud);
 	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
 	draw(second, environment_hud);
+
+	car1.update(pos, speed, c);
+	environment.obj_speed = car1.current_speed;
+	draw(car1.get_mesh(), environment);
+	environment.obj_speed = { 0,0,0 };
 }
 
 

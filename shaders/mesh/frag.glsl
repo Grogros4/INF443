@@ -10,7 +10,7 @@ in struct fragment_data
     vec3 color;    // current color on the fragment
     vec2 uv;       // current uv-texture on the fragment
 	vec3 speed;
-} fragment;
+	} fragment;
 
 // Output of the fragment shader - output color
 layout(location=0) out vec4 FragColor;
@@ -43,7 +43,7 @@ vec3 camera_position;
 float getFogFactor(float fogCoordinate)
 {
 	float result = 0.0;
-	float density = 0.005;
+	float density = 0.01;
 	result = exp(-pow(density * fogCoordinate, 2.0));
 	result = 1.0 - clamp(result, 0.0, 1.0);
 	return result;

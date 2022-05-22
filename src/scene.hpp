@@ -55,6 +55,8 @@ struct scene_structure {
 	lamp l1;
 	lamp l2;
 
+	car car1;
+
 	cgp::mesh_drawable sky;
 
 
@@ -63,13 +65,13 @@ struct scene_structure {
 	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
-	float c = 13.0f;
+	float c = 40.0f;
 	cgp::vec3 speed;
 	cgp::vec3 pos;
 
 	bool isJumping = false;
 	bool fly_mode = false;
-	float speed_max = 10.0f;
+	float speed_max = 20.0f;
 	float walk_acc = 40.0f;
 	float f = walk_acc / speed_max;
 	float g = 10;
