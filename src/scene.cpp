@@ -217,8 +217,8 @@ void scene_structure::initialize()
 
 	//Initializing lamp grid
 
-    l1.initialize(environment, vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
-	l2.initialize(environment, vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
+    l1.initialize(vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
+	l2.initialize(vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
 
 	skybox.initialize("assets/skybox/");
 	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
@@ -406,8 +406,8 @@ void scene_structure::display()
 	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
 
 
-	l1.update(pos, speed, c);
-	l2.update(pos, speed, c);
+	l1.update(environment, pos, speed, c);
+	l2.update(environment, pos, speed, c);
 
 	sky.transform.translation = pos;
 	draw(sky, environment);

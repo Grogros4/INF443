@@ -61,7 +61,7 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 
 // LAMP
 
-void lamp::initialize(scene_environment_camera_head& environment, vec3 p, std::string light_name, float per) {
+void lamp::initialize(vec3 p, std::string light_name, float per) {
 	pos = p;
 	period = per;
 	name = light_name;
@@ -69,18 +69,21 @@ void lamp::initialize(scene_environment_camera_head& environment, vec3 p, std::s
 	offset = 0.0f;
 
 
+
 	//Creation of the lamp structure
 	lampadaire.initialize(mesh_load_file_obj("assets/objects/lampadaire.obj"), "base_" + name);
 	lampadaire.transform.scaling = 0.5f;
 	lampadaire.shading.color = { 0,0,0 };
 	lampadaire.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
+	lampadaire.transform.translation = pos;
 
 	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere_" + name);
 	sphere.shading.color = { 1.0f, 1.0f, 1.0f };
 	sphere.transform.translation = {0, 0, 9};
+	sphere.transform.translation += pos;
 }
 
-void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
+void lamp::update(scene_environment_camera_head env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 {
 	clock.update(playerSpeed, c);
 	if (clock.t > period) {
@@ -94,6 +97,9 @@ void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 	}
 
 	events::update(playerPos, playerSpeed, c);
+
+	draw(lampadaire, env);
+	draw(sphere, env);
 }
 
 
@@ -105,6 +111,4 @@ void lamp::activate(int id) {
 	else {
 		sphere.shading.color = { 1.0f, 1.0f, 1.0f };
 	}
-	draw(lampadaire, environment);
-	draw(sphere, environment);
 }
