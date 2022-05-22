@@ -23,13 +23,15 @@ out struct fragment_data
 uniform mat4 model;      // Model affine transform matrix associated to the current shape
 uniform mat4 view;       // View matrix (rigid transform) of the camera
 uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the camera
-uniform vec3 speed;      // Player speed
+uniform vec3 player_speed;      // Player speed
 uniform float c;   		 // Speed of light
+uniform vec3 obj_speed;  // Speed of the object
 
 void main()
 {
 
     // The position of the vertex in the world space relative to camera
+	vec3 speed = player_speed - obj_speed;
 	vec4 pos = model * vec4(position, 1);
 	vec4 p = view * pos;
 	p = p / p.w;
