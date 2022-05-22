@@ -4,6 +4,7 @@
 
 // Custom scene of this code
 #include "scene.hpp"
+#include "player_mover.hpp"
 
 
 // *************************** //
@@ -16,6 +17,7 @@ cgp::helper_common_scene helper_common;
 
 // The custom structure of the current scene defined in "scene.hpp"
 scene_structure scene;
+player_mover playerMover(&scene);
 
 
 
@@ -61,10 +63,9 @@ int main(int, char* argv[])
 		scene.display_gui();
 
 		// Update the camera position at every frame for a fly-mode
-		double mouse_x = 0.0;
-		double mouse_y = 0.0;
-		glfwGetCursorPos(window, &mouse_x, &mouse_y);
-		scene.update_camera(mouse_x, mouse_y);
+
+		//scene.update_camera(mouse_x, mouse_y);
+		playerMover.update_camera();
 
 		// Call the display of the scene
 		scene.display();
@@ -93,6 +94,7 @@ void window_size_callback(GLFWwindow* , int width, int height)
 void mouse_move_callback(GLFWwindow* /*window*/, double xpos, double ypos)
 {
 	scene.inputs.mouse_position_update( { xpos, ypos } );
+	playerMover.update_mouse(xpos, ypos);
 
 	// Remove the standard trackball behavior in the main function (*)
 	//   The motion is now computed in the animation loop at each frame
@@ -104,6 +106,12 @@ void mouse_click_callback(GLFWwindow* /*window*/, int button, int action, int /*
 	scene.inputs.mouse.click.update_from_glfw_click(button, action);
 }
 
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	playerMover.update_c(yoffset);
+}
+
+
 // This function is called everytime a keyboard touch is pressed/released
 void keyboard_callback(GLFWwindow* /*window*/, int key, int , int action, int /*mods*/)
 {
@@ -111,9 +119,58 @@ void keyboard_callback(GLFWwindow* /*window*/, int key, int , int action, int /*
 	if (key == GLFW_KEY_SPACE)
 	{
 		if (action == GLFW_PRESS)
-			scene.isJumping = true;
+			playerMover.isJumping = true;
 		else if (action == GLFW_RELEASE)
-			scene.isJumping = false;
+			playerMover.isJumping = false;
+	}
+	if (key == GLFW_KEY_DOWN)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isCrouching = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isCrouching = false;
+	}
+	if (key == GLFW_KEY_W)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isMovingForward = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isMovingForward = false;
+	}
+	if (key == GLFW_KEY_S)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isMovingBackward = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isMovingBackward = false;
+	}
+	if (key == GLFW_KEY_A)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isMovingLeftward = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isMovingLeftward = false;
+	}
+	if (key == GLFW_KEY_D)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isMovingRightward = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isMovingRightward = false;
+	}
+	if (key == GLFW_KEY_D)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isMovingRightward = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isMovingRightward = false;
+	}
+	if (key == GLFW_KEY_D)
+	{
+		if (action == GLFW_PRESS)
+			playerMover.isMovingRightward = true;
+		else if (action == GLFW_RELEASE)
+			playerMover.isMovingRightward = false;
 	}
 }
 
@@ -138,7 +195,8 @@ GLFWwindow* standard_window_initialization(int width_target, int height_target)
 	glfwSetKeyCallback(window, keyboard_callback);            // Event called when a keyboard touch is pressed/released
 	glfwSetMouseButtonCallback(window, mouse_click_callback); // Event called when a button of the mouse is clicked/released
 	glfwSetCursorPosCallback(window, mouse_move_callback);    // Event called when the mouse is moved
-	glfwSetWindowSizeCallback(window, window_size_callback);  // Event called when the window is rescaled        
+	glfwSetWindowSizeCallback(window, window_size_callback);  // Event called when the window is rescaled
+	glfwSetScrollCallback(window, scroll_callback);
 
 	// Load default shader and initialize default frame
 	helper_common.initialize();
