@@ -15,4 +15,6 @@ void opengl_uniform(GLuint shader, scene_environment_camera_head const& environm
 	opengl_uniform(shader, "projection", environment.projection.matrix());
 	opengl_uniform(shader, "view", environment.camera.matrix_view());
 	opengl_uniform(shader, "light", environment.light);
+	opengl_uniform(shader, "speed", environment.speed);
+	opengl_uniform(shader, "c", environment.light_speed);
 }

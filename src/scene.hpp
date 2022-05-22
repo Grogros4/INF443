@@ -6,7 +6,7 @@
 #include "cgp/cgp.hpp"
 #include "event.hpp"
 #include "terrain.hpp"
-#include "environment_camera_head/environment_camera_head.hpp"
+#include "environment_camera_head.hpp"
 #include <iostream>
 #include "tree.hpp"
 
@@ -16,11 +16,6 @@
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
 	bool display_frame = false;
-};
-
-struct scene_environment_player_head : public scene_environment_camera_head {
-	cgp::vec3 env_speed;
-	float env_c;
 };
 
 struct scene_environment_hud : public cgp::scene_environment_basic {
@@ -35,8 +30,8 @@ struct scene_structure {
 	// Elements and shapes of the scene
 	// ****************************** //
 
-	scene_environment_player_head environment; // The specific scene environment that contains a "head camera" (*)
-	scene_environment_player_head environment_hud; // Specific environment to draw HUD elements
+	scene_environment_camera_head environment; // The specific scene environment that contains a "head camera" (*)
+	scene_environment_camera_head environment_hud; // Specific environment to draw HUD elements
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
 	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
@@ -97,7 +92,7 @@ struct scene_structure {
 	void initialize();  // Standard initialization to be called before the animation loop
 	void display();     // The frame display to be called within the animation loop
 	void display_gui(); // The display of the GUI, also called within the animation loop 
-	void display_terrain(float x, float y, scene_environment_player_head environment);
+	void display_terrain(float x, float y, scene_environment_camera_head environment);
 	int get_matrix_coordinate(float x);
 	cgp::mat3 get_mirroring(float x, float y);
 };
