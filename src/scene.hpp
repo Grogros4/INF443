@@ -21,10 +21,6 @@ struct gui_parameters {
 struct scene_environment_hud : public cgp::scene_environment_basic {
 	cgp::vec3 env_speed;
 	float env_c;
-
-struct scene_environment_hud : public cgp::scene_environment_basic {
-	cgp::vec3 env_speed;
-	float env_c;
 };
 
 // The structure of the custom scene

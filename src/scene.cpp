@@ -265,8 +265,8 @@ void scene_structure::initialize()
 	environment_hud.camera.distance_to_center = 2.5f;
 	*/
 
-	environment_hud.env_c = 30000000.0f;
-	environment_hud.env_speed = { 0,0,0 };
+	environment_hud.light_speed = 30000000.0f;
+	environment_hud.speed = { 0,0,0 };
 	environment_hud.obj_speed = { 0,0,0 };
 
 
@@ -389,8 +389,8 @@ void scene_structure::display()
 {	
 	// set the light position to the camera
 	environment.light = environment.camera.position(); 
-	environment.env_speed = speed;
-	environment.env_c = c;
+	environment.speed = speed;
+	environment.light_speed = c;
 	environment.obj_speed = { 0,0,0 };
 	//std::cout << environment.c << "c \n";
 

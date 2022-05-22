@@ -55,7 +55,7 @@ struct lamp : public virtual events {
 
 	//lamp(cgp::vec3 p, std::string light_name, float per);
 	void initialize(cgp::vec3 p, std::string light_name, float per);
-	void activate(int id);
+	void activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed);
 	void update(scene_environment_camera_head env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
 };
 
