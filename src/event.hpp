@@ -38,7 +38,6 @@ struct events {
 	void push_event(int a, cgp::vec3 position, cgp::vec3 speed);
 	void update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
 	virtual void activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) = 0;
-	//void display(scene_environment_player_head environment);
 };
 
 
@@ -56,7 +55,7 @@ struct lamp : public virtual events {
 	//lamp(cgp::vec3 p, std::string light_name, float per);
 	void initialize(cgp::vec3 p, std::string light_name, float per);
 	void activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed);
-	void update(scene_environment_camera_head env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
+	void update(scene_environment_camera_head& env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
 };
 
 

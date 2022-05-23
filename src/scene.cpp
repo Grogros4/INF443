@@ -5,127 +5,35 @@
 
 using namespace cgp;
 
-
-void scene_structure::initialize_demilune()
-{
-	mesh_drawable demilune_base;
-	mesh_drawable demilune_saumon;
-	mesh_drawable demilune_toit;
-	mesh_drawable demilune_batiment;
-	mesh_drawable demilune_briques;
-	mesh_drawable demilune_blanc;
-	mesh_drawable demilune_glass;
-	mesh_drawable demilune_bandes;
-
-	demilune_base.initialize(mesh_primitive_cube({ 0,-2, 0 }), "demilune_base");
-	demilune_saumon.initialize(mesh_load_file_obj("assets/objects/demilune_saumon.obj"), "demilune_saumon");
-	demilune_toit.initialize(mesh_load_file_obj("assets/objects/demilune_toit.obj"), "demilune_toit");
-	demilune_batiment.initialize(mesh_load_file_obj("assets/objects/demilune_batiment.obj"), "demilune_batiment");
-	demilune_briques.initialize(mesh_load_file_obj("assets/objects/demilune_briques.obj"), "demilune_briques");
-	demilune_blanc.initialize(mesh_load_file_obj("assets/objects/demilune_blanc.obj"), "demilune_blanc");
-	demilune_glass.initialize(mesh_load_file_obj("assets/objects/demilune_glass.obj"), "demilune_glass");
-	demilune_bandes.initialize(mesh_load_file_obj("assets/objects/demilune_bandes.obj"), "demilune_bandes");
-
-	demilune_saumon.shading.color = 2 * vec3{ 0.171441, 0.061246, 0.064803 };
-	demilune_saumon.shading.phong = shading_parameters_phong::phong_parameters{1, 1, 0.5, 250};
-	demilune_toit.shading.color = vec3{ 1, 1, 1 };
-	demilune_toit.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
-	demilune_batiment.shading.color = vec3{ 0.342383, 0.342383, 0.342383 };
-	demilune_batiment.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 360 };
-	demilune_briques.shading.color = vec3{ 0.076185, 0.035601, 0.039546 };
-	demilune_briques.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
-	demilune_blanc.shading.color = vec3{ 0.800000, 0.800000, 0.800000 };
-	demilune_blanc.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
-	demilune_glass.shading.color = vec3{ 0.200000, 0.200000, 0.200000 };
-	demilune_glass.shading.phong = shading_parameters_phong::phong_parameters{ 1, 0, 0.5, 250 };
-	demilune_bandes.shading.color = vec3{ 0.400000, 0.000000, 0.000000 };
-	demilune_bandes.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0.5, 250 };
-
-	demilune.add(demilune_base);
-	demilune.add(demilune_saumon, "demilune_base");
-	demilune.add(demilune_toit, "demilune_base");
-	demilune.add(demilune_batiment, "demilune_base");
-	demilune.add(demilune_briques, "demilune_base");
-	demilune.add(demilune_blanc, "demilune_base");
-	demilune.add(demilune_glass, "demilune_base");
-	demilune.add(demilune_bandes, "demilune_base");
-}
-
 void scene_structure::initialize()
 {
 	// Default frame
 	global_frame.initialize(mesh_primitive_frame(), "Frame");
-	// Load the terrain (display a debug message as the loading can take some time)
-	std::cout << " \nLoad terrain file ..." << std::endl;
 
-	//mesh terrain_mesh = mesh_primitive_quadrangle({ -10, -10, 0 }, { 10, -10, 0 }, { 10, 10, 0 }, { -10, 10, 0 });
-	mesh terrain_mesh = create_terrain_mesh(100, chunk_size, 1, 1);
-	mesh terrain_meshx = create_terrain_mesh(100, chunk_size, -1, 1);
-	mesh terrain_meshy = create_terrain_mesh(100, chunk_size, 1, -1);
-	mesh terrain_meshxy = create_terrain_mesh(100, chunk_size, -1, -1);
+	// Initializing terrain
+	terrain.initialize(&environment, 100, chunk_size);
 
+	// Initializing demilunes
+	demi_lunes.initialize(&environment);
 
+	// Initializing lamp grid
+    l1.initialize(vec3{ -5, 0, terrain.evaluate_hills_height(-5,0) + 0.1}, "lamp1", 0.5f);
+	l2.initialize(vec3{ 5, 0, terrain.evaluate_hills_height(5,0) + 0.1 }, "lamp2", 0.5f);
 
-	terrain.initialize(terrain_mesh, "Terrain");
-	terrainx.initialize(terrain_meshx, "TerrainX");
-	terrainy.initialize(terrain_meshy, "TerrainY");
-	terrainxy.initialize(terrain_meshxy, "TerrainXY");
-
-	terrain.shading.phong.specular = 0.0f;
-	terrainx.shading.phong.specular = 0.0f;
-	terrainy.shading.phong.specular = 0.0f;
-	terrainxy.shading.phong.specular = 0.0f;
-	GLuint const grass = opengl_load_texture_image("assets/texture_grass.jpg", GL_REPEAT, GL_REPEAT);
-	terrain.texture = grass;
-	terrainx.texture = grass;
-	terrainy.texture = grass;
-	terrainxy.texture = grass;
-
-
-	tree_position = generate_positions_on_terrain(100, chunk_size, 1,1);
-	tree_positionx = generate_positions_on_terrain(100, chunk_size, -1,1);
-	tree_positiony = generate_positions_on_terrain(100, chunk_size, 1,-1);
-	tree_positionxy = generate_positions_on_terrain(100, chunk_size, -1,-1);
-
-
-
-	//Initializing lamp grid
-
-    l1.initialize(vec3{ -5,0,evaluate_hills_height(-5,0,chunk_size) + 0.1}, "lamp1", 0.5f);
-	l2.initialize(vec3{ 5,0,evaluate_hills_height(5,0,chunk_size) + 0.1 }, "lamp2", 0.5f);
-
-	skybox.initialize("assets/skybox/");
-	skybox.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
-
+	// Initializing sky
 	sky.initialize(mesh_primitive_sphere(400), "sky");
 	sky.shading.color = { 0, 0, 0 };
 	sky.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1000 };
 
-
-
-	//Initializing the car
+	// Initializing the car
 	// Key 3D positions
-	buffer<vec3> key_positions =
-	{ {-10,0,10}, {-10,0,10}, {10,0,10}, {10,0,10}};
-
+	buffer<vec3> key_positions = { {-10,0,10}, {-10,0,10}, {10,0,10}, {10,0,10}};
 	// Key times (time at which the position must pass in the corresponding position)
-	buffer<float> key_times =
-	{ 0.0f, 1.0f, 2.0f, 3.0f};
-	
+	buffer<float> key_times = { 0.0f, 1.0f, 2.0f, 3.0f};
+	// car mesh
 	mesh_drawable sphere;
 	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere");
 	car1.initialize(sphere, key_positions, key_times);
-
-
-
-	initialize_demilune();
-
-	std::cout << " [OK] Terrain loaded\n" << std::endl;
-
-	// Load the texture of the terrain
-	std::cout << " \nLoad terrain texture ..." << std::endl;
-	//terrain.texture = opengl_load_texture_image("assets/mountain.jpg");
-	std::cout << " [OK] Texture loaded\n" << std::endl;
 
 	// Initial placement of the camera
 	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
@@ -134,23 +42,15 @@ void scene_structure::initialize()
 	//Initializing the ortho camera
 	environment_hud.projection = camera_projection::orthographic(-2, 2, -1, 1, -1, 1);
 	environment_hud.light = { 0,0,1 };
-	/*
-	environment_hud.camera.look_at({ 0, 0, 0.5f }, { 0,0,0 }, { 0,1,0 });
-	environment_hud.camera.distance_to_center = 2.5f;
-	*/
-
 	environment_hud.light_speed = 30000000.0f;
 	environment_hud.speed = { 0,0,0 };
 	environment_hud.obj_speed = { 0,0,0 };
 
 
-	//Initialize HUD texture
+	// Initialize HUD texture
 	quad.initialize(mesh_primitive_disc(0.1, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
 	quad.texture = opengl_load_texture_image("assets/clock/empty_clock.png");
 	//quad.anisotropic_scale.y = 2;
-
-
-
 	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.08,0 }, { 0.001,0.08,0 }, { 0.001,0,0 }), "Second");
 	//second.anisotropic_scale.y = 2;
 	second.transform.translation = { -1.6,-0.6, 0 };
@@ -158,167 +58,37 @@ void scene_structure::initialize()
 }
 
 
-int scene_structure::get_matrix_coordinate(float x) {
-	int l = chunk_size / 2;
-	if (x + l < 0) {
-		return(int(x - l) / chunk_size);
-	}
-	return(int(x + l) / chunk_size);
-}
-
-
-
-void scene_structure::display_terrain(float x, float y, scene_environment_camera_head environment) {
-
-	
-	mat3 situation = get_mirroring(x, y);
-	int u;
-	int v;
-	mesh const tree_mesh = create_tree();
-	mesh_drawable tree;
-	tree.initialize(tree_mesh, "tree");
-
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			u = get_matrix_coordinate(x) + 1-i;
-			v = get_matrix_coordinate(y) + 1-j;
-			u = std::abs(u);
-			v = std::abs(v);
-			int a = situation[i][j];
-			vec3 translation = { (2 - i - 1) * chunk_size + chunk_size * get_matrix_coordinate(x), (2 - j - 1) * chunk_size + chunk_size * get_matrix_coordinate(y), 0.0f };
-			if (a == 0) {
-				terrain.transform.translation = translation;
-				draw(terrain, environment);
-				if ((u + v) >= 3) { 
-					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v)-2))); k++) {
-						tree.transform.translation = tree_position[k] + translation;
-						draw(tree, environment);
-					}
-				}
-			}
-			if (a == 1) {
-				terrainy.transform.translation = translation;
-				draw(terrainy, environment);
-				if ((u + v) >= 3) {
-					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
-						tree.transform.translation = tree_positiony[k] + translation;
-						draw(tree, environment);
-					}
-				}
-			}
-			if (a == 2) {
-				terrainx.transform.translation = translation;
-				draw(terrainx, environment);
-				if ((u + v) >= 3) {
-					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
-						tree.transform.translation = tree_positionx[k] + translation;
-						draw(tree, environment);
-					}
-				}
-			}
-			if (a == 3) {
-				terrainxy.transform.translation = translation;
-				draw(terrainxy, environment);
-				if ((u + v) >= 3) {
-					for (int k = 0; k < int(tree_position.size() * exp(-2 / sqrt((u + v) - 2))); k++) {
-						tree.transform.translation = tree_positionxy[k] + translation;
-						draw(tree, environment);
-					}
-				}
-			}
-		}
-	}
-
-}
-
-
-
-mat3 scene_structure::get_mirroring(float x, float y) {
-	mat3 m;
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
-			if (get_matrix_coordinate(x -(i-1) * chunk_size) % 2 == 0) {
-				if (get_matrix_coordinate(y - (j - 1) * chunk_size) % 2 == 0) {
-					m[i][j] = 0;
-				}
-				else {
-					m[i][j] = 1;
-				};
-			}
-			else {
-				if (get_matrix_coordinate(y - (j - 1) * chunk_size) % 2 == 0) {
-					m[i][j] = 2;
-				}
-				else {
-					m[i][j] = 3;
-				}
-			};
-		}
-	}
-	return(m);
-}
-
-
 void scene_structure::display()
 {	
-	// set the light position to the camera
-	environment.light = environment.camera.position(); 
+	// Updating world parameters
+	environment.light = vec3{0, 0, 50};
 	environment.speed = speed;
 	environment.light_speed = c;
 	environment.obj_speed = { 0,0,0 };
-	//std::cout << environment.c << "c \n";
 
+	// Displaying terrain (and trees)
+	terrain.display();
 
-	// The standard frame
-	if (gui.display_frame)
-		draw(global_frame, environment);
-	
-	// Displaying the shape deformed by the shader
-	//draw(skybox, environment);
+	// Displaying demilunes
+	demi_lunes.display();
 
-	demilune["demilune_base"].transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
-	quaternion rot = demilune["demilune_base"].transform.rotation.data;
-	demilune["demilune_base"].transform.translation = vec3{ 99.648, 3.73451, 0 };
-	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -443 * Pi / 180) * rot;
-	demilune.update_local_to_global_coordinates();
-	draw(demilune, environment);
-	demilune["demilune_base"].transform.translation = vec3{ 69.6235, -18.8592, 0 };
-	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -280 * Pi / 180) * rot;
-	demilune.update_local_to_global_coordinates();
-	draw(demilune, environment);
-	demilune["demilune_base"].transform.translation = vec3{ 86.8614, 94.0153, 0 };
-	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -485 * Pi / 180) * rot;
-	demilune.update_local_to_global_coordinates();
-	draw(demilune, environment);
-	demilune["demilune_base"].transform.translation = vec3{ 55.8745, 92.1845, 0 };
-	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -373 * Pi / 180) * rot;
-	demilune.update_local_to_global_coordinates();
-	draw(demilune, environment);
-
-	display_terrain(environment.camera.position_camera.x, environment.camera.position_camera.y, environment);
-
-
+	// Updating and displaying lamps
 	l1.update(environment, pos, speed, c);
 	l2.update(environment, pos, speed, c);
 
+	// Displaying sky (and stars)
 	sky.transform.translation = pos;
 	draw(sky, environment);
-	clock_timer.update(speed, c);
 
+	// Updating and displaying clock HUD
+	clock_timer.update(speed, c);
 	draw(quad, environment_hud);
 	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
 	draw(second, environment_hud);
 
+	// Updating and displaying car
 	car1.update(pos, speed, c);
 	environment.obj_speed = car1.current_speed;
 	draw(car1.get_mesh(), environment);
 	environment.obj_speed = { 0,0,0 };
-}
-
-
-
-void scene_structure::display_gui()
-{
-	ImGui::Checkbox("Frame", &gui.display_frame);
-	//ImGui::SliderFloat("Speed", &gui.speed, 0.2f, 5.0f); // Set the camera velocity
 }

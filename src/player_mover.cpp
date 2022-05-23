@@ -19,11 +19,11 @@ void player_mover::update_c(double o)
 {
 	if (o > offset)
 	{
-		scene->c += (scene->c - scene->speed_max - 0.1) * 0.1;
+		scene->c += (scene->c - speed_max - 0.1) * 0.1;
 	}
 	else
 	{
-		scene->c -= (scene->c - scene->speed_max - 0.1) * 0.1;
+		scene->c -= (scene->c - speed_max - 0.1) * 0.1;
 	}
 }
 
@@ -79,7 +79,7 @@ void player_mover::update_camera()
 
 	int scalex;
 	int scaley;
-	mat3 situation = scene->get_mirroring(pos.x, pos.y);
+	mat3 situation = scene->terrain.get_mirroring(pos.x, pos.y);
 
 	if (situation[0][0] == 0) {
 		scalex = 1;
@@ -97,15 +97,15 @@ void player_mover::update_camera()
 		scalex = -1;
 		scaley = -1;
 	}
-	float u = pos.x - scene->get_matrix_coordinate(pos.x) * scene->chunk_size;
-	float v = pos.y - scene->get_matrix_coordinate(pos.y) * scene->chunk_size;
+	float u = pos.x - scene->terrain.get_matrix_coordinate(pos.x) * scene->chunk_size;
+	float v = pos.y - scene->terrain.get_matrix_coordinate(pos.y) * scene->chunk_size;
 	u = scalex * u;
 	v = scaley * v;
 	//if (camera.position_camera.z < evaluate_hills_height(u, v, scene->chunk_size) + 1.5)
 	//	camera.position_camera.z = evaluate_hills_height(u, v, scene->chunk_size) + 1.5;
 
 	if (grounded && !isJumping)
-		camera.position_camera.z = camera.position_camera.z = evaluate_hills_height(u, v, scene->chunk_size) + 1.5;
+		camera.position_camera.z = camera.position_camera.z = scene->terrain.evaluate_hills_height(u, v) + 1.5;
 
 
 	pos = camera.position();
@@ -119,7 +119,7 @@ bool player_mover::isGrounded()
 {
 	int scalex;
 	int scaley;
-	mat3 situation = scene->get_mirroring(pos.x, pos.y);
+	mat3 situation = scene->terrain.get_mirroring(pos.x, pos.y);
 
 	if (situation[0][0] == 0) {
 		scalex = 1;
@@ -138,9 +138,9 @@ bool player_mover::isGrounded()
 		scaley = -1;
 	}
 	
-	float u = pos.x - scene->get_matrix_coordinate(pos.x) * scene->chunk_size;
-	float v = pos.y - scene->get_matrix_coordinate(pos.y) * scene->chunk_size;
-	if (pos.z - 1.5 - evaluate_hills_height(scalex*u, scaley*v, scene->chunk_size) < 0.5)
+	float u = pos.x - scene->terrain.get_matrix_coordinate(pos.x) * scene->chunk_size;
+	float v = pos.y - scene->terrain.get_matrix_coordinate(pos.y) * scene->chunk_size;
+	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(scalex*u, scaley*v) < 0.5)
 	{
 		return true;
 	}

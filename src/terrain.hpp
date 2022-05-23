@@ -1,16 +1,33 @@
 #pragma once
 
 #include "cgp/cgp.hpp"
+#include "environment_camera_head.hpp"
+#include "tree.hpp"
 
+struct Terrain {
 
-float evaluate_terrain_height(float x, float y, float terrain_length);
-float evaluate_hills_height(float x, float y, float terrain_length);
+	scene_environment_camera_head* environment;
 
-/** Compute a terrain mesh 
-	The (x,y) coordinates of the terrain are set in [-length/2, length/2].
-	The z coordinates of the vertices are computed using evaluate_terrain_height(x,y).
-	The vertices are sampled along a regular grid structure in (x,y) directions. 
-	The total number of vertices is N*N (N along each direction x/y) 	*/
-cgp::mesh create_terrain_mesh(int N, float length, float scalex, float scaley);
+	Trees trees;
 
-std::vector<cgp::vec3> generate_positions_on_terrain(int N, float terrain_length, float scalex, float scaley);
+	cgp::mesh_drawable terrain;
+	cgp::mesh_drawable terrainx;
+	cgp::mesh_drawable terrainy;
+	cgp::mesh_drawable terrainxy;
+
+	std::vector<cgp::vec3> tree_position;
+	std::vector<cgp::vec3> tree_positionx;
+	std::vector<cgp::vec3> tree_positiony;
+	std::vector<cgp::vec3> tree_positionxy;
+
+	int chunk_size;
+
+	float evaluate_terrain_height(float x, float y);
+	float evaluate_hills_height(float x, float y);
+	cgp::mesh create_terrain_mesh(int N, float scalex, float scaley);
+	int get_matrix_coordinate(float x);
+	cgp::mat3 get_mirroring(float x, float y);
+	void initialize(scene_environment_camera_head* env, int N, float length);
+	std::vector<cgp::vec3> generate_positions_on_terrain(int N, float scalex, float scaley);
+	void display();
+};

@@ -4,7 +4,7 @@ using namespace cgp;
 
 const double PI = 3.141592653589793238463;
 
-mesh create_cylinder_mesh(float radius, float height)
+mesh Trees::create_cylinder_mesh(float radius, float height)
 {
     mesh m; 
 
@@ -42,7 +42,7 @@ mesh create_cylinder_mesh(float radius, float height)
     return m;
 }
 
-mesh create_cone_mesh(float radius, float height, float z_offset)
+mesh Trees::create_cone_mesh(float radius, float height, float z_offset)
 {
     mesh m; 
     // To do: fill this mesh ...
@@ -67,7 +67,7 @@ mesh create_cone_mesh(float radius, float height, float z_offset)
     return m;
 }
 
-mesh create_tree()
+mesh Trees::create_tree()
 {
     float h = 2; // trunk height
     float r = 0.5f; // trunk radius
@@ -92,7 +92,7 @@ mesh create_tree()
 }
 
 
-mesh create_mushroom()
+mesh Trees::create_mushroom()
 {
     float h = 0.03f; // trunk height
     float r = 0.01f; // trunk radius

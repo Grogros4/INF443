@@ -8,7 +8,7 @@
 #include "terrain.hpp"
 #include "environment_camera_head.hpp"
 #include <iostream>
-#include "tree.hpp"
+#include "demilunes.hpp"
 
 
 
@@ -34,21 +34,14 @@ struct scene_structure {
 	scene_environment_camera_head environment_hud; // Specific environment to draw HUD elements
 	
 	cgp::mesh_drawable global_frame;    // The standard global frame
-	cgp::mesh_drawable terrain;         // The terrain loaded from an external file
 	cgp::skybox_drawable skybox;
 
 	cgp::mesh_drawable quad;
 	cgp::mesh_drawable second;
 	rel_timer clock_timer;
 
-	cgp::hierarchy_mesh_drawable demilune;
-	cgp::mesh_drawable terrainx;
-	cgp::mesh_drawable terrainy;
-	cgp::mesh_drawable terrainxy;
-	std::vector<cgp::vec3> tree_position;
-	std::vector<cgp::vec3> tree_positionx;
-	std::vector<cgp::vec3> tree_positiony;
-	std::vector<cgp::vec3> tree_positionxy;
+	Terrain terrain;
+	Demilunes demi_lunes;
 
 
 	cgp::mesh_drawable lampadaire;
@@ -62,23 +55,13 @@ struct scene_structure {
 
 	cgp::timer_basic timer; // A basic timer for the camera animation
 
-	gui_parameters gui;     // The standard GUI element storage
 	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
 
 	float c = 40.0f;
 	cgp::vec3 speed;
 	cgp::vec3 pos;
 
-	bool isJumping = false;
-	bool fly_mode = false;
-	float speed_max = 20.0f;
-	float walk_acc = 40.0f;
-	float f = walk_acc / speed_max;
-	float g = 10;
 	int chunk_size = 100;
-
-	cgp::vec2 mouse_pos;
-	cgp::vec2 mouse_speed;
 
 	
 	// ****************************** //
@@ -87,16 +70,9 @@ struct scene_structure {
 	
 	// Function to call in the animation loop in main (*)
 	//   This function replace the standard trackball behavior that must also be removed in the main (from mouse_move_callback)
-	void update_camera(float xpos, float ypos);
-	bool isGrounded();
 
-	void initialize_demilune();
 	void initialize();  // Standard initialization to be called before the animation loop
 	void display();     // The frame display to be called within the animation loop
-	void display_gui(); // The display of the GUI, also called within the animation loop 
-	void display_terrain(float x, float y, scene_environment_camera_head environment);
-	int get_matrix_coordinate(float x);
-	cgp::mat3 get_mirroring(float x, float y);
 };
 
 

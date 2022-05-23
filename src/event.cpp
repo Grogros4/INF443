@@ -50,6 +50,9 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 	vec3 posEff;
 	float d;
 	bool cont = false;
+
+	timer.update();
+
 	do {
 		if (!event_queue.empty()) {
 			event e = event_queue.front();
@@ -61,10 +64,6 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 			float delta_t = timer.t - e.creation_date;
 			if (delta_t * c > d)
 			{
-				/*
-				std::cout << timer.t << std::endl;
-				std::cout << e.id << std::endl;
-				*/
 				activate(e.id, e.event_pos, e.event_speed);
 				cont = true;
 				event_queue.pop();
@@ -89,8 +88,6 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 	status = false;
 	offset = 0.0f;
 
-
-
 	//Creation of the lamp structure
 	lampadaire.initialize(mesh_load_file_obj("assets/objects/lampadaire.obj"), "base_" + name);
 	lampadaire.transform.scaling = 0.5f;
@@ -104,7 +101,7 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 	sphere.transform.translation += pos;
 }
 
-void lamp::update(scene_environment_camera_head env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
+void lamp::update(scene_environment_camera_head& env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 {
 	clock.update(playerSpeed, c);
 	if (clock.t > period) {
@@ -117,6 +114,7 @@ void lamp::update(scene_environment_camera_head env, cgp::vec3 playerPos, cgp::v
 	}
 
 	events::update(playerPos, playerSpeed, c);
+	std::cout << status << std::endl;
 
 	draw(lampadaire, env);
 	draw(sphere, env);
@@ -148,13 +146,10 @@ void car::initialize(cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& 
 void car::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 	current_pos = e_position;
 	current_speed = e_speed;
-	std::cout << current_pos << std::endl;
-	std::cout << current_speed << std::endl;
 	
 }
 
 cgp::mesh_drawable car::get_mesh() {
-	timer.update();
 	key_timer.update();
 	float t = key_timer.t;
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
