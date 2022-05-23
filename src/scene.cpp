@@ -33,7 +33,7 @@ void scene_structure::initialize()
 	// car mesh
 	mesh_drawable sphere;
 	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere");
-	car1.initialize(sphere, key_positions, key_times);
+	car1.initialize(&environment, sphere, key_positions, key_times);
 
 	// Initial placement of the camera
 	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
@@ -88,7 +88,4 @@ void scene_structure::display()
 
 	// Updating and displaying car
 	car1.update(pos, speed, c);
-	environment.obj_speed = car1.current_speed;
-	draw(car1.get_mesh(), environment);
-	environment.obj_speed = { 0,0,0 };
 }

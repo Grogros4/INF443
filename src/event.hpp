@@ -32,6 +32,7 @@ struct events {
 	cgp::vec3 pos;
 	cgp::timer_basic timer;
 	std::queue<event> event_queue;
+	scene_environment_camera_head* environment;
 
 	//Functions
 	void push_event(int a);
@@ -42,8 +43,6 @@ struct events {
 
 
 struct lamp : public virtual events {
-
-	scene_environment_camera_head* environment;
 
 	cgp::mesh_drawable lampadaire;
 	cgp::mesh_drawable sphere;
@@ -69,7 +68,7 @@ struct car : public virtual events {
 	cgp::vec3 current_speed;
 	keyframe_structure keyframes;
 
-	void initialize(cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& key_positions, cgp::buffer<float> const& key_times);
+	void initialize(scene_environment_camera_head* env, cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& key_positions, cgp::buffer<float> const& key_times);
 	void activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed);
-	cgp::mesh_drawable get_mesh();
+	void update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
 };

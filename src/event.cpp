@@ -161,7 +161,8 @@ void lamp::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 
 //CAR
 
-void car::initialize(cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& key_positions, cgp::buffer<float> const& key_times) {
+void car::initialize(scene_environment_camera_head* env, cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& key_positions, cgp::buffer<float> const& key_times) {
+	environment = env;
 	keyframes.initialize(key_positions, key_times);
 	body = car_body;
 	int N = key_times.size();
@@ -177,16 +178,19 @@ void car::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 	
 }
 
-cgp::mesh_drawable car::get_mesh() {
+
+void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
+	events::update(playerPos, playerSpeed, c);
 	key_timer.update();
-	
 	float t = key_timer.t;
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
 	int idx = find_index_of_interval(t, keyframes.key_times);
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
-
 	//std::cout << norm(speed) << std::endl;
 	push_event(0, p, speed);
 	body.transform.translation = current_pos;
-	return body;
+	(*environment).obj_speed = current_speed;
+	draw(body, *environment);
+	(*environment).obj_speed = { 0,0,0 };
+
 }
