@@ -12,6 +12,7 @@ float rel_timer::update(vec3 speed, float c) {
 	gamma = 1 / sqrt(1 - beta * beta);
 	float dt = c_timer.update();
 	t += gamma * dt;
+	c_timer.t = t;
 	return gamma * dt;
 }
 
@@ -192,5 +193,4 @@ void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
 	(*environment).obj_speed = current_speed;
 	draw(body, *environment);
 	(*environment).obj_speed = { 0,0,0 };
-
 }
