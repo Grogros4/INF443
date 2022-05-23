@@ -21,9 +21,7 @@ void scene_structure::initialize()
 	l2.initialize(&environment, vec3{ 5, 0, terrain.evaluate_hills_height(5,0) + 0.1 }, "lamp2", 0.5f);
 
 	// Initializing sky
-	sky.initialize(mesh_primitive_sphere(400), "sky");
-	sky.shading.color = { 0, 0, 0 };
-	sky.shading.phong = shading_parameters_phong::phong_parameters{ 1, 1, 0, 1000 };
+	sky.initialize(&environment, 400, 1000, 0.5);
 
 	// Initializing the car
 	// Key 3D positions
@@ -69,16 +67,15 @@ void scene_structure::display()
 	// Displaying terrain (and trees)
 	terrain.display();
 
+	// Displaying sky (and stars)
+	sky.display();
+
 	// Displaying demilunes
 	demi_lunes.display();
 
 	// Updating and displaying lamps
 	l1.update(pos, speed, c);
 	l2.update(pos, speed, c);
-
-	// Displaying sky (and stars)
-	sky.transform.translation = pos;
-	draw(sky, environment);
 
 	// Updating and displaying clock HUD
 	clock_timer.update(speed, c);

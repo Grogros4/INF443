@@ -40,10 +40,12 @@ vec3 camera_position;
 
 
 //Exponential function to calculate fog intensity
-float getFogFactor(float fogCoordinate)
+float getFogFactor(vec3 pp)
 {
 	float result = 0.0;
 	float density = 0.01;
+	float z = 100;
+	float fogCoordinate = length(pp.xy) * exp(-pp.z / z);
 	result = exp(-pow(density * fogCoordinate, 2.0));
 	result = 1.0 - clamp(result, 0.0, 1.0);
 	return result;
@@ -219,7 +221,9 @@ void main()
 	vec3 p = fragment.position; 
 	p -= camera_position;
 	float fogCoordinate = max(sqrt(p.x*p.x + p.y*p.y), 0);
-	vec4 fogColor = mix(vec4(0.5,0.5,0.5,0), vec4(0,0,0,0), 1 - exp(-0.005*p.z));
+	//vec4 fogColor = mix(vec4(0,0,0.1,0), vec4(0,0,0,0), 1 - exp(-0.01*0*p.z));
+	vec4 fogColor = vec4(0,0,0.1,0);
+	float fogFactor = getFogFactor(p);
 
 	// Compute the base color of the object based on: vertex color, uniform color, and texture
 	vec3 color_object  = fragment.color * color * color_image_texture.rgb;
@@ -232,7 +236,7 @@ void main()
 	FragColor = vec4(color_shading, alpha * color_image_texture.a);
 	//FragColor.xyz = dopplerEffect_new(FragColor.xyz);
 	//fogColor.xyz = dopplerEffect_new(fogColor.xyz);
-	FragColor = mix(FragColor, fogColor, getFogFactor(fogCoordinate));
+	FragColor = mix(FragColor, fogColor, fogFactor);
 	FragColor.xyz = dopplerEffect_new(FragColor.xyz);
 	//FragColor = vec4(color_shading, 1);
 
