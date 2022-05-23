@@ -43,6 +43,8 @@ struct events {
 
 struct lamp : public virtual events {
 
+	scene_environment_camera_head* environment;
+
 	cgp::mesh_drawable lampadaire;
 	cgp::mesh_drawable sphere;
 	std::string name;
@@ -53,9 +55,9 @@ struct lamp : public virtual events {
 	rel_timer clock;
 
 	//lamp(cgp::vec3 p, std::string light_name, float per);
-	void initialize(cgp::vec3 p, std::string light_name, float per);
+	void initialize(scene_environment_camera_head* env, cgp::vec3 p, std::string light_name, float per);
 	void activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed);
-	void update(scene_environment_camera_head& env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
+	void update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
 };
 
 

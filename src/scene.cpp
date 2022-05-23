@@ -17,8 +17,8 @@ void scene_structure::initialize()
 	demi_lunes.initialize(&environment);
 
 	// Initializing lamp grid
-    l1.initialize(vec3{ -5, 0, terrain.evaluate_hills_height(-5,0) + 0.1}, "lamp1", 0.5f);
-	l2.initialize(vec3{ 5, 0, terrain.evaluate_hills_height(5,0) + 0.1 }, "lamp2", 0.5f);
+    l1.initialize(&environment, vec3{ -5, 0, terrain.evaluate_hills_height(-5,0) + 0.1}, "lamp1", 0.5f);
+	l2.initialize(&environment, vec3{ 5, 0, terrain.evaluate_hills_height(5,0) + 0.1 }, "lamp2", 0.5f);
 
 	// Initializing sky
 	sky.initialize(mesh_primitive_sphere(400), "sky");
@@ -73,8 +73,8 @@ void scene_structure::display()
 	demi_lunes.display();
 
 	// Updating and displaying lamps
-	l1.update(environment, pos, speed, c);
-	l2.update(environment, pos, speed, c);
+	l1.update(pos, speed, c);
+	l2.update(pos, speed, c);
 
 	// Displaying sky (and stars)
 	sky.transform.translation = pos;

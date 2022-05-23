@@ -107,7 +107,8 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 
 // LAMP
 
-void lamp::initialize(vec3 p, std::string light_name, float per) {
+void lamp::initialize(scene_environment_camera_head* env, vec3 p, std::string light_name, float per) {
+	environment = env;
 	pos = p;
 	period = per;
 	name = light_name;
@@ -127,7 +128,7 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 	sphere.transform.translation += pos;
 }
 
-void lamp::update(scene_environment_camera_head& env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
+void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 {
 	timer.update();
 	clock.update(playerSpeed, c);
@@ -143,8 +144,8 @@ void lamp::update(scene_environment_camera_head& env, cgp::vec3 playerPos, cgp::
 	events::update(playerPos, playerSpeed, c);
 	std::cout << status << std::endl;
 
-	draw(lampadaire, env);
-	draw(sphere, env);
+	draw(lampadaire, *environment);
+	draw(sphere, *environment);
 }
 
 
