@@ -48,14 +48,40 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 	float gamma;
 	vec3 uve;
 	vec3 posEff;
+	vec3 relative_speed;
 	float d;
 	bool cont = false;
 	do {
 		if (!event_queue.empty()) {
+			vec3 new_speed = playerSpeed;
 			event e = event_queue.front();
-			beta = norm(playerSpeed - e.event_speed) / c;
+			if (norm(e.event_speed) > 0.999999f*c) {
+				e.event_speed = (e.event_speed / norm(e.event_speed)) * 0.999999f * c;
+			}
+			beta = norm(e.event_speed) / c;
 			gamma = 1 / sqrt(1 - beta * beta);
-			uve = (norm(playerSpeed - e.event_speed) < 0.00001) ? vec3{ 0,0,0 } : (playerSpeed - e.event_speed) / norm(playerSpeed - e.event_speed);
+			if (norm(e.event_speed + playerSpeed) > 0.00001) {
+				vec3 u_para = (e.event_speed + playerSpeed) / norm(e.event_speed + playerSpeed);
+				vec3 u_ortho1;
+				vec3 u_ortho2;
+				if (u_para.z < -0.99999f) {
+					u_ortho1 = vec3(0.0, -1.0, 0.0);
+					u_ortho2 = vec3(-1.0, 0.0, 0.0);
+				}
+				else {
+					float a = 1.0 / (1.0 + u_para.z);
+					float b = -u_para.x * u_para.y * a;
+					u_ortho1 = vec3(1.0 - u_para.x * u_para.x * a, b, -u_para.x);
+					u_ortho2 = vec3(b, 1.0 - u_para.y * u_para.y * a, -u_para.y);
+				}
+				new_speed = (dot(playerSpeed, u_para) * u_para - e.event_speed) / (1 - dot(e.event_speed, playerSpeed) / (c * c)) + (dot(u_ortho1, playerSpeed) * u_ortho1 + dot(u_ortho2, playerSpeed) * u_ortho2) / (gamma * (1 - dot(e.event_speed, playerSpeed) / (c * c)));
+			}
+			
+
+			
+			beta = norm(new_speed) / c;
+			gamma = 1 / sqrt(1 - beta * beta);
+			uve = (norm(new_speed) < 0.00001) ? vec3{ 0,0,0 } : (new_speed) / norm(new_speed);
 			posEff = e.event_pos + ((1 / gamma) - 1) * dot(e.event_pos, uve) * uve;
 			d = norm(posEff - playerPos);
 			float delta_t = timer.t - e.creation_date;
@@ -149,18 +175,19 @@ void car::initialize(cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& 
 void car::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 	current_pos = e_position;
 	current_speed = e_speed;
-	std::cout << current_pos << std::endl;
-	std::cout << current_speed << std::endl;
 	
 }
 
 cgp::mesh_drawable car::get_mesh() {
 	timer.update();
 	key_timer.update();
+	
 	float t = key_timer.t;
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
 	int idx = find_index_of_interval(t, keyframes.key_times);
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
+
+	//std::cout << norm(speed) << std::endl;
 	push_event(0, p, speed);
 	body.transform.translation = current_pos;
 	return body;
