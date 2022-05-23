@@ -39,11 +39,11 @@ void main()
 	speed4 = view * speed4;
 
 	//Calcul relativiste
-	float b = length(speed)/c;
-	float gamma = 1/sqrt(1-b*b);
+
 	if (length(speed) > 0.00000001){
 		
-
+		float b = length(speed)/c;
+		float gamma = 1/sqrt(1-b*b);
 		
 		vec3 uve = speed4.xyz / length(speed4);
 		p.xyz += ((1/gamma) - 1) * dot(p.xyz, uve) * uve;
@@ -79,6 +79,10 @@ void main()
 	vec4 p_proj = projection * p;
 
 	//Compute the composition of player and object speed
+
+	float b = length(obj_speed)/c;
+	float gamma = 1/sqrt(1-b*b);
+
 	vec3 u_para = (obj_speed + player_speed ) / length(obj_speed + player_speed);
 	vec3 u_ortho1;
 	vec3 u_ortho2;
