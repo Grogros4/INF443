@@ -106,6 +106,7 @@ void lamp::initialize(vec3 p, std::string light_name, float per) {
 
 void lamp::update(scene_environment_camera_head env, cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 {
+	timer.update();
 	clock.update(playerSpeed, c);
 	if (clock.t > period) {
 		clock.t -= period;
