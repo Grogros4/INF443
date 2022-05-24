@@ -46,20 +46,36 @@ void scene_structure::initialize()
 
 
 	// Initialize HUD texture
-	quad.initialize(mesh_primitive_disc(0.1, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
+
+	//Intizalizing clock
+	quad.initialize(mesh_primitive_disc(0.2, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
 	quad.texture = opengl_load_texture_image("assets/clock/empty_clock.png");
 	//quad.anisotropic_scale.y = 2;
-	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.08,0 }, { 0.001,0.08,0 }, { 0.001,0,0 }), "Second");
+	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Second");
 	//second.anisotropic_scale.y = 2;
 	second.transform.translation = { -1.6,-0.6, 0 };
 	second.shading.color = { 1,0,0 };
+
+	//Initializing c_meter
+	meter.initialize(mesh_primitive_disc(0.2, { 1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Meter");
+	meter.texture = opengl_load_texture_image("assets/c bar/compteur.png");
+	meter_bar.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Meter_bar");
+	meter_bar.transform.translation = { 1.6,-0.6,0 };
+	meter_bar.shading.color = { 1,0,0 };
+
+
+	previous_time = 0;
 }
 
 
 void scene_structure::display()
 {	
+<<<<<<< HEAD
 	std::cout << norm(speed) << std::endl;
 
+=======
+	
+>>>>>>> 8167b4696d701afa6617b6b0403e2f2164738c26
 	// Updating world parameters
 	environment.light = vec3{0, 0, 50};
 	environment.speed = speed;
@@ -85,6 +101,21 @@ void scene_structure::display()
 	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
 	draw(second, environment_hud);
 
+	//Updating and displaying c_meter HUD
+	draw(meter, environment_hud);
+	meter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, (5 - (norm(speed) / c) * 10  ) * Pi / 6);
+	draw(meter_bar, environment_hud);
+
 	// Updating and displaying car
 	car1.update(pos, speed, c);
+
+	//Send coordinates to the console
+	if (previous_time < clock_timer.t - 1) {
+		std::cout << "Current position" << std::endl;
+		std::cout << "x : ";
+		std::cout << pos.x << std::endl;
+		std::cout << "y :";
+		std::cout << pos.y << std::endl;
+		previous_time = clock_timer.t;
+	}
 }

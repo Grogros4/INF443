@@ -41,6 +41,9 @@ struct scene_structure {
 	cgp::mesh_drawable second;
 	rel_timer clock_timer;
 
+	cgp::mesh_drawable meter;
+	cgp::mesh_drawable meter_bar;
+
 	// Terrain (including trees)
 	Terrain terrain;
 	int chunk_size = 100;
@@ -66,6 +69,9 @@ struct scene_structure {
 	cgp::vec3 speed;
 	cgp::vec3 pos;
 	
+
+	// Display coordinates
+	float previous_time;
 
 	void initialize();
 	void display();
