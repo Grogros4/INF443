@@ -14,7 +14,7 @@ void scene_structure::initialize()
 	terrain.initialize(&environment, 100, chunk_size);
 
 	// Initializing demilunes
-	demi_lunes.initialize(&environment);
+	demi_lunes.initialize(&environment, &terrain);
 
 	// Initializing lamp grid
     l1.initialize(&environment, vec3{ -5, 0, terrain.evaluate_hills_height(-5,0) + 0.1}, "lamp1", 0.5f);
@@ -69,13 +69,8 @@ void scene_structure::initialize()
 
 
 void scene_structure::display()
-{	
-<<<<<<< HEAD
-	std::cout << norm(speed) << std::endl;
+{
 
-=======
-	
->>>>>>> 8167b4696d701afa6617b6b0403e2f2164738c26
 	// Updating world parameters
 	environment.light = vec3{0, 0, 50};
 	environment.speed = speed;

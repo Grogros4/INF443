@@ -22,7 +22,6 @@ struct Terrain {
 
 	int chunk_size;
 
-	float evaluate_terrain_height(float x, float y);
 	float evaluate_hills_height(float x, float y);
 	cgp::mesh create_terrain_mesh(int N, float scalex, float scaley);
 	int get_matrix_coordinate(float x);

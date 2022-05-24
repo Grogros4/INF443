@@ -188,7 +188,7 @@ void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
 	push_event(0, p, speed);
 	body.transform.translation = current_pos;
-	(*environment).obj_speed = current_speed;
+	environment->obj_speed = current_speed;
 	draw(body, *environment);
-	(*environment).obj_speed = { 0,0,0 };
+	environment->obj_speed = { 0,0,0 };
 }
