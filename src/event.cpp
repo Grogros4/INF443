@@ -11,8 +11,7 @@ float rel_timer::update(vec3 speed, float c) {
 	float beta = norm(speed) / c;
 	gamma = 1 / sqrt(1 - beta * beta);
 	float dt = c_timer.update();
-	t += gamma * dt;
-	c_timer.t = t;
+	t += gamma *dt;
 	return gamma * dt;
 }
 
@@ -134,6 +133,7 @@ void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 	timer.update();
 	clock.update(playerSpeed, c);
 	if (clock.t > period) {
+		
 		clock.t -= period;
 		if (status)
 			push_event(0);

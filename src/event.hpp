@@ -10,7 +10,7 @@
 
 struct rel_timer {
 	float gamma;
-	float t;
+	float t = 0;
 	cgp::timer_basic c_timer;
 
 	float update(cgp::vec3 speed, float c);

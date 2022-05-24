@@ -10,9 +10,9 @@
 #include <iostream>
 #include "demilunes.hpp"
 #include "sky.hpp"
+#include <list>
 
-
-
+typedef std::list<lamp> LAMPS;
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
@@ -55,8 +55,8 @@ struct scene_structure {
 	Demilunes demi_lunes;
 	
 	// Lamps
-	lamp l1;
-	lamp l2;
+	LAMPS lamp_list;
+
 
 	// Car
 	car car1;

@@ -17,17 +17,41 @@ void scene_structure::initialize()
 	demi_lunes.initialize(&environment);
 
 	// Initializing lamp grid
-    l1.initialize(&environment, vec3{ -5, 0, terrain.evaluate_hills_height(-5,0) + 0.1}, "lamp1", 0.5f);
-	l2.initialize(&environment, vec3{ 5, 0, terrain.evaluate_hills_height(5,0) + 0.1 }, "lamp2", 0.5f);
+	buffer<vec2> lamp_positions = { {3.76,-3.38},{3.7,4.8},{25.9,9.5},{11.2,27.4},{-0.3,28.5},{25.5,54},{56.2,43.3}, {93.3, 13.0}, {108.5,52 }, {30, -69},{64,-18},  {190.4, 50} ,{190.4, 40}, {190.4, 30}, {190, 20}, {191, 10}, {191, 0}, {190, -10}, {189, -20}, {188, -30}, {188, -40}, {188, -50}, };
+	int i = 0;
+	float t = 0; //Ensures that all lights are synchronized
+	for (vec2 v : lamp_positions)
+	{
+		lamp l;
+		l.initialize(&environment, vec3{ v.x, v.y, terrain.evaluate_hills_height(v.x,v.y) + 0.1 }, "lamp" + std::to_string(i), 0.5f);
+		l.clock.t = t;
+		lamp_list.push_back(l);
+		lamp_list.front().clock.update({ 0,0,0 }, 40);
+		t = lamp_list.front().clock.t;
+		i += 1;
+	}
+
+
 
 	// Initializing sky
 	sky.initialize(&environment, 400, 1000, 0.5);
 
 	// Initializing the car
 	// Key 3D positions
-	buffer<vec3> key_positions = { {-10,0,10}, {-10,0,10}, {10,0,10}, {10,0,10}};
+
+	buffer<vec3> key_positions = { {164.5,-140.9,10}, {164.5,-140.9,10}, {180.68,-48,10}, {185.79,15.1,10}, {181.95,90.7,10}, {173.1,199,10}, {164.2,252,10},{164.2,252,10} };
 	// Key times (time at which the position must pass in the corresponding position)
-	buffer<float> key_times = { 0.0f, 1.0f, 2.0f, 3.0f};
+	float wanted_speed = 15.0f;
+	t = 1.0f;
+	vec3 prev_v = { 164.5,0,-140.9 };
+	buffer<float> key_times = {};
+	for (vec3 v : key_positions) {
+		t += norm(v - prev_v) / wanted_speed + 0.001f;
+		key_times.push_back(t);
+		prev_v = v;
+	}
+
+	std::cout << key_times << std::endl;
 	// car mesh
 	mesh_drawable sphere;
 	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere");
@@ -70,12 +94,6 @@ void scene_structure::initialize()
 
 void scene_structure::display()
 {	
-<<<<<<< HEAD
-	std::cout << norm(speed) << std::endl;
-
-=======
-	
->>>>>>> 8167b4696d701afa6617b6b0403e2f2164738c26
 	// Updating world parameters
 	environment.light = vec3{0, 0, 50};
 	environment.speed = speed;
@@ -92,8 +110,10 @@ void scene_structure::display()
 	demi_lunes.display();
 
 	// Updating and displaying lamps
-	l1.update(pos, speed, c);
-	l2.update(pos, speed, c);
+	for (lamp& l : lamp_list)
+	{
+		l.update(pos, speed, c);
+	}
 
 	// Updating and displaying clock HUD
 	clock_timer.update(speed, c);
