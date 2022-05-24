@@ -58,6 +58,8 @@ void scene_structure::initialize()
 
 void scene_structure::display()
 {	
+	std::cout << norm(speed) << std::endl;
+
 	// Updating world parameters
 	environment.light = vec3{0, 0, 50};
 	environment.speed = speed;

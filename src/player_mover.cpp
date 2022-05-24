@@ -19,11 +19,11 @@ void player_mover::update_c(double o)
 {
 	if (o > offset)
 	{
-		scene->c += (scene->c - speed_max - 0.1) * 0.1;
+		scene->c += (scene->c - speed_max) * 0.1;
 	}
 	else
 	{
-		scene->c -= (scene->c - speed_max - 0.1) * 0.1;
+		scene->c -= (0.97 * scene->c - speed_max) * 0.1;
 	}
 }
 
@@ -69,6 +69,8 @@ void player_mover::update_camera()
 	// Jump management
 	if (grounded && isJumping)
 		speed.z = 5.0f;
+	if (grounded && !isJumping)
+		speed.z = 0;
 
 	// Updating speed and position
 	speed += acc * dt - f * vec3{ speed.xy(), 0} *dt + g_eff * vec3{0, 0, -1} *dt;
@@ -109,7 +111,8 @@ void player_mover::update_camera()
 
 	scene->environment.camera = camera;
 	scene->pos = pos;
-	scene->speed = (pos - old_pos) /dt;
+	//scene->speed = (pos - old_pos) / dt;
+	scene->speed = speed;
 }
 
 bool player_mover::isGrounded()

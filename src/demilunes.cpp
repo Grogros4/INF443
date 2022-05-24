@@ -51,6 +51,12 @@ void Demilunes::initialize(scene_environment_camera_head* env)
 	demilune.add(demilune_blanc, "demilune_base");
 	demilune.add(demilune_glass, "demilune_base");
 	demilune.add(demilune_bandes, "demilune_base");
+
+	path.initialize(mesh_load_file_obj("assets/objects/path.obj"), "path");
+	path.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
+	path.transform.translation += vec3{ 0, 0, 1 };
+	quaternion rot = path.transform.rotation.data;
+	path.transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, 0 * Pi / 180) * rot;
 }
 
 void Demilunes::display()
@@ -71,8 +77,10 @@ void Demilunes::display()
 	demilune.update_local_to_global_coordinates();
 	draw(demilune, *environment);
 	demilune["demilune_base"].transform.translation = vec3{ 55.8745, 92.1845, 0 };
-	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -373 * Pi / 180) * rot;
+	demilune["demilune_base"].transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, -313 * Pi / 180) * rot;
 	demilune.update_local_to_global_coordinates();
 	draw(demilune, *environment);
+
+	draw(path, *environment);
 
 }
