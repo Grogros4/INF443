@@ -9,6 +9,7 @@
 #include "environment_camera_head.hpp"
 #include <iostream>
 #include "demilunes.hpp"
+#include "sky.hpp"
 
 
 
@@ -26,16 +27,16 @@ struct scene_environment_hud : public cgp::scene_environment_basic {
 // The structure of the custom scene
 struct scene_structure {
 	
-	// ****************************** //
-	// Elements and shapes of the scene
-	// ****************************** //
+	 // The specific scene environment that contains a "head camera"
+	scene_environment_camera_head environment;
 
-	scene_environment_camera_head environment; // The specific scene environment that contains a "head camera" (*)
-	scene_environment_camera_head environment_hud; // Specific environment to draw HUD elements
+	// Specific environment to draw HUD elements
+	scene_environment_camera_head environment_hud;
 	
-	cgp::mesh_drawable global_frame;    // The standard global frame
-	cgp::skybox_drawable skybox;
+	// The standard global frame
+	cgp::mesh_drawable global_frame;
 
+	// HUD elements
 	cgp::mesh_drawable quad;
 	cgp::mesh_drawable second;
 	rel_timer clock_timer;
@@ -43,39 +44,34 @@ struct scene_structure {
 	cgp::mesh_drawable meter;
 	cgp::mesh_drawable meter_bar;
 
+	// Terrain (including trees)
 	Terrain terrain;
+	int chunk_size = 100;
+
+	// Sky (including stars)
+	Sky sky;
+
+	// 4 demilunes buildings
 	Demilunes demi_lunes;
-
-
-	cgp::mesh_drawable lampadaire;
+	
+	// Lamps
 	lamp l1;
 	lamp l2;
 
+	// Car
 	car car1;
 
-	cgp::mesh_drawable sky;
+	// Storage for inputs status (mouse, keyboard, window dimension)
+	cgp::inputs_interaction_parameters inputs;
 
-
-	cgp::timer_basic timer; // A basic timer for the camera animation
-
-	cgp::inputs_interaction_parameters inputs; // Storage for inputs status (mouse, keyboard, window dimension)
-
+	// Phisical variables required for relativity
 	float c = 40.0f;
 	cgp::vec3 speed;
 	cgp::vec3 pos;
-
-	int chunk_size = 100;
-
 	
-	// ****************************** //
-	// Functions
-	// ****************************** //
-	
-	// Function to call in the animation loop in main (*)
-	//   This function replace the standard trackball behavior that must also be removed in the main (from mouse_move_callback)
 
-	void initialize();  // Standard initialization to be called before the animation loop
-	void display();     // The frame display to be called within the animation loop
+	void initialize();
+	void display();
 };
 
 

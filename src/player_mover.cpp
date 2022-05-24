@@ -42,13 +42,10 @@ void player_mover::update_camera()
 	float yaw_angle = - yaw * mouse_pos.x;
 
 	// Orientation of the camera depending on cursor position
-	camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 	camera.orientation_camera = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, yaw_angle);
 	if ( !(camera.front().z < -0.99 && pitch_angle < 0) && !(camera.front().z > 0.99 && pitch_angle > 0) )
 		camera.manipulator_rotate_roll_pitch_yaw(0, pitch_angle, 0);
-	quaternion rot = camera.orientation_camera.data;
-	camera.orientation_camera = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, yaw_angle) * rot;
-
+	
 	// Player acceleration
 	vec3 acc = vec3{ 0.0f, 0.0f, 0.0f };
 

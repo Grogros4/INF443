@@ -215,11 +215,6 @@ void Terrain::display() {
     std::vector<cgp::vec3> pos;
     for (int i = 0; i < N; i++)
     {
-        cgp::vec2 p[4] = { cgp::vec2(-10,-10),cgp::vec2(5,5),cgp::vec2(-3,4),cgp::vec2(6,4) };
-        float h[4] = { 3,-1.5,1,2 };
-        float sigma[4] = { 10,3,4,4 };
-        int L = 4;
-
         float x;
         float y;
         bool test = true;
