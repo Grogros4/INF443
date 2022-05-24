@@ -70,6 +70,9 @@ struct scene_structure {
 	cgp::vec3 pos;
 	
 
+	// Display coordinates
+	float previous_time;
+
 	void initialize();
 	void display();
 };

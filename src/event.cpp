@@ -143,8 +143,6 @@ void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 	}
 
 	events::update(playerPos, playerSpeed, c);
-	std::cout << status << std::endl;
-
 	draw(lampadaire, *environment);
 	draw(sphere, *environment);
 }
@@ -187,7 +185,6 @@ void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
 	int idx = find_index_of_interval(t, keyframes.key_times);
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
-	//std::cout << norm(speed) << std::endl;
 	push_event(0, p, speed);
 	body.transform.translation = current_pos;
 	(*environment).obj_speed = current_speed;

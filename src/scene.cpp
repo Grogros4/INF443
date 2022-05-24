@@ -63,6 +63,8 @@ void scene_structure::initialize()
 	meter_bar.transform.translation = { 1.6,-0.6,0 };
 	meter_bar.shading.color = { 1,0,0 };
 
+
+	previous_time = 0;
 }
 
 
@@ -96,10 +98,19 @@ void scene_structure::display()
 
 	//Updating and displaying c_meter HUD
 	draw(meter, environment_hud);
-	std::cout << (7 + (norm(speed) / c) * 10) * Pi / 6 << std::endl;
 	meter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, (5 - (norm(speed) / c) * 10  ) * Pi / 6);
 	draw(meter_bar, environment_hud);
 
 	// Updating and displaying car
 	car1.update(pos, speed, c);
+
+	//Send coordinates to the console
+	if (previous_time < clock_timer.t - 1) {
+		std::cout << "Current position" << std::endl;
+		std::cout << "x : ";
+		std::cout << pos.x << std::endl;
+		std::cout << "y :";
+		std::cout << pos.y << std::endl;
+		previous_time = clock_timer.t;
+	}
 }
