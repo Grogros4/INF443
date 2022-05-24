@@ -40,6 +40,9 @@ struct scene_structure {
 	cgp::mesh_drawable second;
 	rel_timer clock_timer;
 
+	cgp::mesh_drawable meter;
+	cgp::mesh_drawable meter_bar;
+
 	Terrain terrain;
 	Demilunes demi_lunes;
 
