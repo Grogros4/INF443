@@ -29,6 +29,8 @@ void player_mover::update_c(double o)
 
 void player_mover::update_camera()
 {
+	
+
 	camera_head& camera = scene->environment.camera;
 
 	vec3 old_pos = camera.position_camera;
@@ -76,35 +78,11 @@ void player_mover::update_camera()
 	speed += acc * dt - f * vec3{ speed.xy(), 0} *dt + g_eff * vec3{0, 0, -1} *dt;
 	camera.position_camera += speed * dt;
 
-	int scalex;
-	int scaley;
-	mat3 situation = scene->terrain.get_mirroring(pos.x, pos.y);
-
-	if (situation[0][0] == 0) {
-		scalex = 1;
-		scaley = 1;
-	}
-	if (situation[0][0] == 1) {
-		scalex = 1;
-		scaley = -1;
-	}
-	if (situation[0][0] == 2) {
-		scalex = -1;
-		scaley = 1;
-	}
-	if (situation[0][0] == 3) {
-		scalex = -1;
-		scaley = -1;
-	}
-	float u = pos.x - scene->terrain.get_matrix_coordinate(pos.x) * scene->chunk_size;
-	float v = pos.y - scene->terrain.get_matrix_coordinate(pos.y) * scene->chunk_size;
-	u = scalex * u;
-	v = scaley * v;
 	//if (camera.position_camera.z < evaluate_hills_height(u, v, scene->chunk_size) + 1.5)
 	//	camera.position_camera.z = evaluate_hills_height(u, v, scene->chunk_size) + 1.5;
 
 	if (grounded && !isJumping)
-		camera.position_camera.z = camera.position_camera.z = scene->terrain.evaluate_hills_height(u, v) + 1.5;
+		camera.position_camera.z = camera.position_camera.z = scene->terrain.evaluate_hills_height(pos.x, pos.y) + 1.5;
 
 
 	pos = camera.position();
@@ -117,30 +95,7 @@ void player_mover::update_camera()
 
 bool player_mover::isGrounded()
 {
-	int scalex;
-	int scaley;
-	mat3 situation = scene->terrain.get_mirroring(pos.x, pos.y);
-
-	if (situation[0][0] == 0) {
-		scalex = 1;
-		scaley = 1;
-	}
-	if (situation[0][0] == 1) {
-		scalex = 1;
-		scaley = -1;
-	}
-	if (situation[0][0] == 2) {
-		scalex = -1;
-		scaley = 1;
-	}
-	if (situation[0][0] == 3) {
-		scalex = -1;
-		scaley = -1;
-	}
-	
-	float u = pos.x - scene->terrain.get_matrix_coordinate(pos.x) * scene->chunk_size;
-	float v = pos.y - scene->terrain.get_matrix_coordinate(pos.y) * scene->chunk_size;
-	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(scalex*u, scaley*v) < 0.5)
+	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y) < 0.5)
 	{
 		return true;
 	}

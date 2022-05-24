@@ -6,9 +6,11 @@
 using namespace cgp;
 
 
-void Demilunes::initialize(scene_environment_camera_head* env)
+void Demilunes::initialize(scene_environment_camera_head* env, Terrain* t)
 {
+
 	environment = env;
+	terrain = t;
 
 	mesh_drawable demilune_base;
 	mesh_drawable demilune_saumon;
@@ -51,10 +53,20 @@ void Demilunes::initialize(scene_environment_camera_head* env)
 	demilune.add(demilune_blanc, "demilune_base");
 	demilune.add(demilune_glass, "demilune_base");
 	demilune.add(demilune_bandes, "demilune_base");
+	
+	mesh path_mesh = mesh_load_file_obj("assets/objects/path.obj");
+	buffer<vec3> path_pos = path_mesh.position;
+	for (int i = 0; i < path_pos.size(); i++)
+	{
+		vec3 p = path_pos[i];
+		p.y += t->evaluate_hills_height(p.x, - p.z) + 0.1;
+		path_pos[i] = p;
+	}
+	path_mesh.position = path_pos;
 
-	path.initialize(mesh_load_file_obj("assets/objects/path.obj"), "path");
+	path.initialize(path_mesh, "path");
 	path.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
-	path.transform.translation += vec3{ 0, 0, 1 };
+	path.transform.translation += vec3{ 0, 0, 0 };
 	quaternion rot = path.transform.rotation.data;
 	path.transform.rotation = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, 0 * Pi / 180) * rot;
 }

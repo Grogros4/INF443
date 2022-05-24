@@ -14,7 +14,7 @@ void scene_structure::initialize()
 	terrain.initialize(&environment, 100, chunk_size);
 
 	// Initializing demilunes
-	demi_lunes.initialize(&environment);
+	demi_lunes.initialize(&environment, &terrain);
 
 	// Initializing lamp grid
 	buffer<vec2> lamp_positions = { {3.76,-3.38},{3.7,4.8},{25.9,9.5},{11.2,27.4},{-0.3,28.5},{25.5,54},{56.2,43.3}, {93.3, 13.0}, {108.5,52 }, {30, -69},{64,-18},  {190.4, 50} ,{190.4, 40}, {190.4, 30}, {190, 20}, {191, 10}, {191, 0}, {190, -10}, {189, -20}, {188, -30}, {188, -40}, {188, -50}, };

@@ -5,24 +5,37 @@
 using namespace cgp;
 
 // Evaluate 3D position of the terrain for any (u,v) \in [0,1]
-float Terrain::evaluate_terrain_height(float x, float y)
-{
-    float u = x + 0.5*chunk_size;
-    float v = y + 0.5*chunk_size;
-
-    float hills = noise_perlin(0.05 * vec2{ u, v }, 1);
-    float noise = 0.1 * noise_perlin({u, v}, 6, 0.35, 2);
-    float z = hills + noise;
-
-    return z;
-}
-
 float Terrain::evaluate_hills_height(float x, float y)
 {
-    float u = x + 0.5 * chunk_size;
-    float v = y + 0.5 * chunk_size;
+    int scalex;
+    int scaley;
+    mat3 situation = get_mirroring(x, y);
 
-    float hills = noise_perlin(0.05 * vec2{ u, v }, 1);
+    if (situation[0][0] == 0) {
+        scalex = 1;
+        scaley = 1;
+    }
+    if (situation[0][0] == 1) {
+        scalex = 1;
+        scaley = -1;
+    }
+    if (situation[0][0] == 2) {
+        scalex = -1;
+        scaley = 1;
+    }
+    if (situation[0][0] == 3) {
+        scalex = -1;
+        scaley = -1;
+    }
+    float u = x - get_matrix_coordinate(x) * chunk_size;
+    float v = y - get_matrix_coordinate(y) * chunk_size;
+    u = scalex * u;
+    v = scaley * v;
+
+    u = u + 0.5 * chunk_size;
+    v = v + 0.5 * chunk_size;
+
+    float hills = 10 * noise_perlin(0.05 * vec2{ u, v }, 1);
 
     return hills;
 }
@@ -52,7 +65,7 @@ cgp::mesh Terrain::create_terrain_mesh(int N, float scalex, float scaley)
             float h[4] = { 3,-1.5,1,2 };
             float sigma[4] = { 10,3,4,4 };
             int L = 4;
-            float z = evaluate_terrain_height(scalex * x, scaley * y);
+            float z = evaluate_hills_height(scalex * x, scaley * y);
 
             // Store vertex coordinates
             terrain_mesh.position[kv+N*ku] = {x,y,z};
