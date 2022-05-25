@@ -165,28 +165,28 @@ void car::initialize(scene_environment_camera_head* env, cgp::mesh_drawable car_
 	environment = env;
 	keyframes.initialize(key_positions, key_times);
 	body = car_body;
+	body.transform.translation = key_positions[0];
 	int N = key_times.size();
 	key_timer.t_min = key_times[1];
 	key_timer.t_max = key_times[N - 2];
-	key_timer.t = key_timer.t_min;
+	key_timer.t = key_times[1];
 	
 }
 
 void car::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 	current_pos = e_position;
 	current_speed = e_speed;
-	
 }
 
 
 void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
-	events::update(playerPos, playerSpeed, c);
 	key_timer.update();
 	float t = key_timer.t;
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
 	int idx = find_index_of_interval(t, keyframes.key_times);
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
 	push_event(0, p, speed);
+	events::update(playerPos, playerSpeed, c);
 	body.transform.translation = current_pos;
 	environment->obj_speed = current_speed;
 	draw(body, *environment);

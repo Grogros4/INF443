@@ -50,6 +50,7 @@ void scene_structure::initialize()
 		key_times.push_back(t);
 		prev_v = v;
 	}
+	std::cout << key_positions << std::endl;
 
 	std::cout << key_times << std::endl;
 	// car mesh
