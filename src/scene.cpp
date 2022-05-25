@@ -74,20 +74,26 @@ void scene_structure::initialize()
 
 	//Intizalizing clock
 	quad.initialize(mesh_primitive_disc(0.2, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
-	quad.texture = opengl_load_texture_image("assets/clock/empty_clock.png");
+	quad.texture = opengl_load_texture_image("assets/clock/clock.png");
 	//quad.anisotropic_scale.y = 2;
 	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Second");
 	//second.anisotropic_scale.y = 2;
 	second.transform.translation = { -1.6,-0.6, 0 };
 	second.shading.color = { 1,0,0 };
 
-	//Initializing c_meter
+	//Initializing speed_meter
 	meter.initialize(mesh_primitive_disc(0.2, { 1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Meter");
 	meter.texture = opengl_load_texture_image("assets/c bar/compteur.png");
 	meter_bar.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Meter_bar");
 	meter_bar.transform.translation = { 1.6,-0.6,0 };
 	meter_bar.shading.color = { 1,0,0 };
 
+	//Intializing c_meter
+	cmeter.initialize(mesh_primitive_disc(0.2, { -1.1,-0.6,-0.01f }, { 0,0,1 }, 100), "Meter");
+	cmeter.texture = opengl_load_texture_image("assets/c bar/c_compteur.png");
+	cmeter_bar.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Meter_bar");
+	cmeter_bar.transform.translation = { -1.1,-0.6,0 };
+	cmeter_bar.shading.color = { 1,0,0 };
 
 	previous_time = 0;
 }
@@ -122,10 +128,20 @@ void scene_structure::display()
 	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
 	draw(second, environment_hud);
 
-	//Updating and displaying c_meter HUD
+	//Updating and displaying speed_meter HUD
 	draw(meter, environment_hud);
 	meter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, (5 - (norm(speed) / c) * 10  ) * Pi / 6);
 	draw(meter_bar, environment_hud);
+
+	//Updating and displaying speed_meter HUD
+	draw(cmeter, environment_hud);
+	std::cout << c << std::endl;
+	if (log(10) - log(c) <= - 10 * Pi / 6) {
+		std::cout << "Max c reached" << std::endl;
+		c = exp(10 * Pi / 6)*10;
+	}
+	cmeter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, log(10) - log(c) + 5 * Pi / 6);
+	draw(cmeter_bar, environment_hud);
 
 	// Updating and displaying car
 	car1.update(pos, speed, c);
