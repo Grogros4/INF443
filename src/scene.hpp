@@ -44,6 +44,9 @@ struct scene_structure {
 	cgp::mesh_drawable meter;
 	cgp::mesh_drawable meter_bar;
 
+	cgp::mesh_drawable cmeter;
+	cgp::mesh_drawable cmeter_bar;
+
 	// Terrain (including trees)
 	Terrain terrain;
 	int chunk_size = 100;

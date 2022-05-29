@@ -4,6 +4,7 @@
 #include "key_positions_structure.hpp"
 #include "interpolation.hpp"
 #include "environment_camera_head.hpp"
+#include "terrain.hpp"
 
 
 
@@ -70,5 +71,5 @@ struct car : public virtual events {
 
 	void initialize(scene_environment_camera_head* env, cgp::mesh_drawable car_body, cgp::buffer<cgp::vec3> const& key_positions, cgp::buffer<float> const& key_times);
 	void activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed);
-	void update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c);
+	void update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c, Terrain terrain);
 };

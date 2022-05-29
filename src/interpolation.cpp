@@ -34,8 +34,8 @@ vec3 interpolation(float t, buffer<vec3> const& key_positions, buffer<float> con
     vec3 const& p3 = key_positions[idx + 2]; // = p_{i+2}
 	
     // Call the interpolation
-	vec3 p = cardinal_spline_interpolation(t, t0, t1,t2, t3, p0, p1,p2,p3,0.5);
-
+	vec3 p = linear_interpolation(t, t1, t2, p1,p2);
+    
     return p;
 }
 
