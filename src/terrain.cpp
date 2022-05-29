@@ -35,7 +35,7 @@ float Terrain::evaluate_hills_height(float x, float y)
     u = u + 0.5 * chunk_size;
     v = v + 0.5 * chunk_size;
 
-    float hills = 10 * noise_perlin(0.05 * vec2{ u, v }, 1);
+    float hills = noise_perlin(0.05 * vec2{ u, v }, 1);
 
     return hills;
 }

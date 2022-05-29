@@ -58,7 +58,7 @@ void scene_structure::initialize()
 	car1.initialize(&environment, sphere, key_positions, key_times);
 
 	// Initial placement of the camera
-	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
+	environment.camera.position_camera = { 182.0f, 90.0f, 2.0f };
 	environment.camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 
 	//Initializing the ortho camera
@@ -136,6 +136,8 @@ void scene_structure::display()
 		std::cout << pos.x << std::endl;
 		std::cout << "y :";
 		std::cout << pos.y << std::endl;
+		std::cout << "z :";
+		std::cout << pos.z << std::endl;
 		previous_time = clock_timer.t;
 	}
 }

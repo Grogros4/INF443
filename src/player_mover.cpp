@@ -37,10 +37,13 @@ void player_mover::update_camera()
 
 	float const dt = timer.update();
 
+	float beta = norm(scene->speed) / scene->c;
+	float gamma = 1 / sqrt(1 - beta * beta);
+
 	float const pitch = 0.001f; // speed of the pitch
 	float const yaw = 0.001f; // speed of the yaw
 
-	float pitch_angle = - pitch * mouse_pos.y;
+	float pitch_angle = - pitch * mouse_pos.y + Pi / 2;
 	float yaw_angle = - yaw * mouse_pos.x;
 
 	// Orientation of the camera depending on cursor position
@@ -64,28 +67,52 @@ void player_mover::update_camera()
 		acc = (walk_acc / norm(acc)) * acc;
 
 	bool grounded = isGrounded();
+	bool nearGround = isNearGround();
 
 	// Gravity effects
 	float g_eff = grounded ? 0 : g;
 
 	// Jump management
-	if (grounded && isJumping)
-		speed.z = 5.0f;
-	if (grounded && !isJumping)
+	if (nearGround && isJumping && allowJump)
+		g_eff = - jump_acc;
+	if (nearGround && !allowJump && timer.t < t_f)
+		g_eff = - jumpDrain;
+	if ((grounded) && nearGround && !isJumping)
+	{
 		speed.z = 0;
+		//allowJump = true;
+		g_eff = 0;
+		pos.z = scene->terrain.evaluate_hills_height(pos.x, pos.y) + 1.5;
+	}
 
-	// Updating speed and position
-	speed += acc * dt - f * vec3{ speed.xy(), 0} *dt + g_eff * vec3{0, 0, -1} *dt;
-	camera.position_camera += speed * dt;
+	// Acceleration in the referenrial of the player
+	acc += -f * vec3{ speed.xy(), 0 } + g_eff * vec3{ 0, 0, -1 };
 
-	//if (camera.position_camera.z < evaluate_hills_height(u, v, scene->chunk_size) + 1.5)
-	//	camera.position_camera.z = evaluate_hills_height(u, v, scene->chunk_size) + 1.5;
+	// Acceleration in the referential of the world
+	acc = acc / (gamma * gamma * gamma);
 
-	if (grounded && !isJumping)
-		camera.position_camera.z = camera.position_camera.z = scene->terrain.evaluate_hills_height(pos.x, pos.y) + 1.5;
+	// Updating speed and position in the referential of the world, according to the time of the player
+	speed += acc * dt * gamma;
+	pos += speed * dt * gamma;
 
+	//if (grounded && !isJumping)
+	//	pos.z = scene->terrain.evaluate_hills_height(pos.x, pos.y) + 1.5;
 
-	pos = camera.position();
+	if (isGrounded() && !allowJump)
+		speed.z = 0;
+	if (isGrounded())
+		allowJump = true;
+	if (nearGround && !isNearGround())
+		allowJump = false;
+	if (!nearGround && isNearGround())
+	{
+		float h = pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y);
+		h += 0.5;
+		jumpDrain = speed.z * speed.z / h;
+		t_f = timer.t - h / speed.z;
+	}
+
+	camera.position_camera = pos;
 
 	scene->environment.camera = camera;
 	scene->pos = pos;
@@ -94,6 +121,15 @@ void player_mover::update_camera()
 }
 
 bool player_mover::isGrounded()
+{
+	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y) < 0.01)
+	{
+		return true;
+	}
+	return false;
+}
+
+bool player_mover::isNearGround()
 {
 	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y) < 0.5)
 	{
