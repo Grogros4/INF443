@@ -39,7 +39,7 @@ void scene_structure::initialize()
 	// Initializing the car
 	// Key 3D positions
 
-	buffer<vec3> key_positions = { {164.5,-140.9,10}, {164.5,-140.9,10}, {180.68,-48,10}, {185.79,15.1,10}, {181.95,90.7,10}, {173.1,199,10}, {164.2,252,10},{164.2,252,10} };
+	buffer<vec3> key_positions = { {164.5,-140.9,1}, {164.5,-140.90,1}, {180.68,-48,1}, {185.79,15.1,1}, {181.95,90.7,1}, {173.1,199,1}, {164.2,252,1},{164.2,252,1} };
 	// Key times (time at which the position must pass in the corresponding position)
 	float wanted_speed = 15.0f;
 	t = 1.0f;
@@ -54,16 +54,19 @@ void scene_structure::initialize()
 
 	std::cout << key_times << std::endl;
 	// car mesh
-	mesh_drawable sphere;
-	sphere.initialize(mesh_primitive_sphere(0.7f), "sphere");
-	car1.initialize(&environment, sphere, key_positions, key_times);
+	mesh_drawable car;
+	car.initialize(mesh_load_file_obj("assets/car/car.obj"));
+	car.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi/2);
+	//car.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, Pi);
+	car.shading.color = { 0,0,1 };
+	car1.initialize(&environment, car, key_positions, key_times);
 
 	// Initial placement of the camera
 	environment.camera.position_camera = { 0.0f, 0.0f, 2.0f };
 	environment.camera.manipulator_rotate_roll_pitch_yaw(0, Pi / 2.0f, 0);
 
 	//Initializing the ortho camera
-	environment_hud.projection = camera_projection::orthographic(-2, 2, -1, 1, -1, 1);
+	environment_hud.projection = camera_projection::orthographic(-1, 1, -1, 1, -1, 1);
 	environment_hud.light = { 0,0,1 };
 	environment_hud.light_speed = 30000000.0f;
 	environment_hud.speed = { 0,0,0 };
@@ -135,7 +138,6 @@ void scene_structure::display()
 
 	//Updating and displaying speed_meter HUD
 	draw(cmeter, environment_hud);
-	std::cout << c << std::endl;
 	if (log(10) - log(c) <= - 10 * Pi / 6) {
 		std::cout << "Max c reached" << std::endl;
 		c = exp(10 * Pi / 6)*10;
@@ -144,7 +146,7 @@ void scene_structure::display()
 	draw(cmeter_bar, environment_hud);
 
 	// Updating and displaying car
-	car1.update(pos, speed, c);
+	car1.update(pos, speed, c, terrain);
 
 	//Send coordinates to the console
 	if (previous_time < clock_timer.t - 1) {

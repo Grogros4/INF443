@@ -1,7 +1,6 @@
 
 #include "event.hpp"
 
-
 using namespace cgp;
 
 
@@ -179,7 +178,7 @@ void car::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 }
 
 
-void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
+void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c, Terrain terrain) {
 	key_timer.update();
 	float t = key_timer.t;
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
@@ -187,7 +186,7 @@ void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c) {
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
 	push_event(0, p, speed);
 	events::update(playerPos, playerSpeed, c);
-	body.transform.translation = current_pos;
+	body.transform.translation = vec3(current_pos.x,current_pos.y, terrain.evaluate_hills_height(current_pos.x, current_pos.y)+0.2);
 	environment->obj_speed = current_speed;
 	draw(body, *environment);
 	environment->obj_speed = { 0,0,0 };
