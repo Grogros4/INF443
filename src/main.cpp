@@ -17,7 +17,7 @@ cgp::helper_common_scene helper_common;
 
 // The custom structure of the current scene defined in "scene.hpp"
 scene_structure scene;
-player_mover playerMover(&scene);
+player_mover playerMover;
 
 
 
@@ -42,7 +42,8 @@ int main(int, char* argv[])
 
 	// Custom scene initialization
 	std::cout << "Initialize data of the scene ..." << std::endl;
-	scene.initialize();                                              
+	scene.initialize();
+	playerMover.initialize(&scene);
 	std::cout << "Initialization success" << std::endl;
 	
 

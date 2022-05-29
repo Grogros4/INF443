@@ -49,7 +49,7 @@ struct player_mover {
 	float jumpDrain = 0;
 	float t_f = 0;
 
-	player_mover(scene_structure* s);
+	void initialize(scene_structure* s);
 	void update_mouse(float xpos, float ypos);
 	void update_camera();
 	void update_c(double o);

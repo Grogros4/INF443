@@ -4,9 +4,11 @@
 using namespace cgp;
 
 
-player_mover::player_mover(scene_structure* s)
+void player_mover::initialize(scene_structure* s)
 {
 	scene = s;
+	//pos = scene->environment.camera.position_camera;
+	pos = vec3{ 182.0f, 90.0f, 0.0f };
 }
 
 void player_mover::update_mouse(float xpos, float ypos)
@@ -29,11 +31,8 @@ void player_mover::update_c(double o)
 
 void player_mover::update_camera()
 {
-	
 
 	camera_head& camera = scene->environment.camera;
-
-	vec3 old_pos = camera.position_camera;
 
 	float const dt = timer.update();
 
