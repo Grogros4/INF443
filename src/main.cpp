@@ -38,7 +38,7 @@ int main(int, char* argv[])
 	// ************************ //
 	
 	// Standard Initialization with dimension in pixels
-	GLFWwindow* window = standard_window_initialization(4096, 2048); 
+	GLFWwindow* window = standard_window_initialization(2048, 1096); 
 
 	// Custom scene initialization
 	std::cout << "Initialize data of the scene ..." << std::endl;
@@ -58,6 +58,7 @@ int main(int, char* argv[])
 		// Reset the screen for a new frame
 		helper_common.frame_begin(scene.environment.background_color, window, scene.inputs.window, scene.inputs.mouse.on_gui);
 		scene.environment.projection.update_aspect_ratio(scene.inputs.window.aspect_ratio());
+		scene.environment_hud.projection.update_aspect_ratio(scene.inputs.window.aspect_ratio());
 
 		// Update the camera position at every frame for a fly-mode
 
