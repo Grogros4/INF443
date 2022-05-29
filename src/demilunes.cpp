@@ -59,7 +59,7 @@ void Demilunes::initialize(scene_environment_camera_head* env, Terrain* t)
 	for (int i = 0; i < path_pos.size(); i++)
 	{
 		vec3 p = path_pos[i];
-		p.y += t->evaluate_hills_height(p.x, - p.z) + 0.1;
+		p.y += t->evaluate_hills_height(p.x, - p.z) + 0.05;
 		path_pos[i] = p;
 	}
 	path_mesh.position = path_pos;

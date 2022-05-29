@@ -20,7 +20,8 @@ struct player_mover {
 
 	scene_structure* scene;
 
-	cgp::timer_basic timer; // A basic timer for the camera animation
+	//cgp::timer_basic timer; // A basic timer for the camera animation
+	cgp::timer_basic timer;
 
 	cgp::vec2 mouse_pos;
 	double offset;
@@ -40,14 +41,20 @@ struct player_mover {
 	cgp::vec3 pos;
 	float speed_max = 10.0f;
 	float walk_acc = 40.0f;
+	float jump_acc = 40;
 	float f = walk_acc / speed_max;
 	float g = 10;
+
+	bool allowJump = true;
+	float jumpDrain = 0;
+	float t_f = 0;
 
 	player_mover(scene_structure* s);
 	void update_mouse(float xpos, float ypos);
 	void update_camera();
 	void update_c(double o);
 	bool isGrounded();
+	bool isNearGround();
 };
 
 
