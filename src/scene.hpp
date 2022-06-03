@@ -13,6 +13,7 @@
 #include <list>
 
 typedef std::list<lamp> LAMPS;
+typedef std::list<car> CARS;
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
@@ -62,7 +63,10 @@ struct scene_structure {
 
 
 	// Car
-	car car1;
+	CARS car_list;
+	cgp::buffer<cgp::vec3> key_positions;
+	cgp::buffer<float> key_times;
+	cgp::mesh_drawable car_mesh;
 
 	// Storage for inputs status (mouse, keyboard, window dimension)
 	cgp::inputs_interaction_parameters inputs;
@@ -78,6 +82,7 @@ struct scene_structure {
 
 	void initialize();
 	void display();
+	void add_car();
 };
 
 
