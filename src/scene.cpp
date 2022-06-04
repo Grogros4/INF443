@@ -1,5 +1,6 @@
 #include "scene.hpp"
 
+
 /** This file contains the custom implementation associated the scene 
 *  The (*) indicates elements that are specific to the use of the camera mode and that should be handled if you want to use this effect in another scene. */
 
@@ -39,12 +40,12 @@ void scene_structure::initialize()
 	// Initializing the car
 	// Key 3D positions
 
-	buffer<vec3> key_positions = { {164.5,-140.9,1}, {164.5,-140.90,1}, {180.68,-48,1}, {185.79,15.1,1}, {181.95,90.7,1}, {173.1,199,1}, {164.2,252,1},{164.2,252,1} };
+	key_positions = { {164.5,-140.9,1}, {164.5,-140.90,1}, {180.68,-48,1}, {185.79,15.1,1}, {181.95,90.7,1}, {173.1,199,1}, {164.2,252,1},{164.2,252,1} };
 	// Key times (time at which the position must pass in the corresponding position)
 	float wanted_speed = 15.0f;
 	t = 1.0f;
 	vec3 prev_v = { 164.5,0,-140.9 };
-	buffer<float> key_times = {};
+	key_times = {};
 	for (vec3 v : key_positions) {
 		t += norm(v - prev_v) / wanted_speed + 0.001f;
 		key_times.push_back(t);
@@ -53,13 +54,16 @@ void scene_structure::initialize()
 	std::cout << key_positions << std::endl;
 
 	std::cout << key_times << std::endl;
-	// car mesh
-	mesh_drawable car;
-	car.initialize(mesh_load_file_obj("assets/car/car.obj"));
-	car.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi/2);
-	//car.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, Pi);
-	car.shading.color = { 0,0,1 };
-	car1.initialize(&environment, car, key_positions, key_times);
+
+
+	car_mesh.initialize(mesh_load_file_obj("assets/car/car.obj"));
+	car_mesh.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi/2);
+	car_mesh.shading.color = { 0,0,1 };
+
+	car car0;
+	car0.initialize(&environment, car_mesh, key_positions, key_times);
+	car_list.push_back(car0);
+
 
 	// Initial placement of the camera
 	environment.camera.position_camera = { 182.0f, 90.0f, 2.0f };
@@ -104,6 +108,7 @@ void scene_structure::initialize()
 
 void scene_structure::display()
 {	
+
 	// Updating world parameters
 	environment.light = vec3{0, 0, 50};
 	environment.speed = speed;
@@ -146,7 +151,31 @@ void scene_structure::display()
 	draw(cmeter_bar, environment_hud);
 
 	// Updating and displaying car
-	car1.update(pos, speed, c, terrain);
+	
+	if ( (clock_timer.c_timer.t > 15) && (car_list.size() == 1)) {
+		add_car();
+	}	
+
+	if ((clock_timer.c_timer.t > 30) && (car_list.size() == 2)) {
+		add_car();
+	}
+
+	if ((clock_timer.c_timer.t > 45) && (car_list.size() == 3)) {
+		add_car();
+	}
+
+	if ((clock_timer.c_timer.t > 65) && (car_list.size() == 4)) {
+		add_car();
+	}
+
+	if ((clock_timer.c_timer.t > 75) && (car_list.size() == 5)) {
+		add_car();
+	}
+	
+	for (car& car : car_list)
+	{
+		car.update(pos, speed, c, terrain);
+	}
 
 	//Send coordinates to the console
 	if (previous_time < clock_timer.t - 1) {
@@ -159,4 +188,11 @@ void scene_structure::display()
 		std::cout << pos.z << std::endl;
 		previous_time = clock_timer.t;
 	}
+}
+
+void scene_structure::add_car() {
+	car car0;
+	car0.initialize(&environment, car_mesh, key_positions, key_times);
+	car_list.push_back(car0);
+	std::cout << "done" << std::endl;
 }
