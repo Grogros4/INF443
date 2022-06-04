@@ -4,20 +4,21 @@
 using namespace cgp;
 
 
-void player_mover::initialize(scene_structure* s)
+void PlayerMover::initialize(scene_structure* s)
 {
 	scene = s;
 	//pos = scene->environment.camera.position_camera;
 	pos = vec3{ 182.0f, 90.0f, 0.0f };
 }
 
-void player_mover::update_mouse(float xpos, float ypos)
+void PlayerMover::update_mouse(float xpos, float ypos)
 {
 	vec2 new_pos = vec2{xpos, ypos};
+	mouse_delta = new_pos - mouse_pos;
 	mouse_pos = new_pos;
 }
 
-void player_mover::update_c(double o)
+void PlayerMover::update_c(double o)
 {
 	if (o > offset)
 	{
@@ -29,7 +30,7 @@ void player_mover::update_c(double o)
 	}
 }
 
-void player_mover::update_camera()
+void PlayerMover::update_camera()
 {
 
 	camera_head& camera = scene->environment.camera;
@@ -39,16 +40,18 @@ void player_mover::update_camera()
 	float beta = norm(scene->speed) / scene->c;
 	float gamma = 1 / sqrt(1 - beta * beta);
 
-	float const pitch = 0.001f; // speed of the pitch
-	float const yaw = 0.001f; // speed of the yaw
+	float const pitch = 0.00001f; // speed of the pitch
+	float const yaw = 0.00001f; // speed of the yaw
 
-	float pitch_angle = - pitch * mouse_pos.y + Pi / 2;
-	float yaw_angle = - yaw * mouse_pos.x;
+	float pitch_angle = - pitch * mouse_delta.y / dt;
+	float yaw_angle = - yaw * mouse_delta.x / dt;
+	mouse_delta = vec2{ 0, 0 };
 
 	// Orientation of the camera depending on cursor position
-	camera.orientation_camera = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, yaw_angle);
-	if ( !(camera.front().z < -0.99 && pitch_angle < 0) && !(camera.front().z > 0.99 && pitch_angle > 0) )
+	if (!(camera.front().z < -0.99 && pitch_angle < 0) && !(camera.front().z > 0.99 && pitch_angle > 0))
 		camera.manipulator_rotate_roll_pitch_yaw(0, pitch_angle, 0);
+	quaternion rot = camera.orientation_camera.data;
+	camera.orientation_camera = rotation_transform::convert_axis_angle_to_quaternion({ 0,0,1 }, yaw_angle) * rot;
 	
 	// Player acceleration
 	vec3 acc = vec3{ 0.0f, 0.0f, 0.0f };
@@ -107,7 +110,7 @@ void player_mover::update_camera()
 	{
 		float h = pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y);
 		h += 0.5;
-		jumpDrain = speed.z * speed.z / h;
+		jumpDrain = gamma * speed.z * speed.z / h;
 		t_f = timer.t - h / speed.z;
 	}
 
@@ -119,7 +122,7 @@ void player_mover::update_camera()
 	scene->speed = speed;
 }
 
-bool player_mover::isGrounded()
+bool PlayerMover::isGrounded()
 {
 	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y) < 0.01)
 	{
@@ -128,7 +131,7 @@ bool player_mover::isGrounded()
 	return false;
 }
 
-bool player_mover::isNearGround()
+bool PlayerMover::isNearGround()
 {
 	if (pos.z - 1.5 - scene->terrain.evaluate_hills_height(pos.x, pos.y) < 0.5)
 	{

@@ -16,7 +16,7 @@
 // The element of the GUI that are not already stored in other structures
 
 // The structure of the custom scene
-struct player_mover {
+struct PlayerMover {
 
 	scene_structure* scene;
 
@@ -24,6 +24,7 @@ struct player_mover {
 	cgp::timer_basic timer;
 
 	cgp::vec2 mouse_pos;
+	cgp::vec2 mouse_delta;
 	double offset;
 
 	// Movement state variables

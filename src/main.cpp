@@ -17,7 +17,7 @@ cgp::helper_common_scene helper_common;
 
 // The custom structure of the current scene defined in "scene.hpp"
 scene_structure scene;
-player_mover playerMover;
+PlayerMover playerMover;
 
 
 
@@ -149,20 +149,6 @@ void keyboard_callback(GLFWwindow* /*window*/, int key, int , int action, int /*
 			playerMover.isMovingLeftward = true;
 		else if (action == GLFW_RELEASE)
 			playerMover.isMovingLeftward = false;
-	}
-	if (key == GLFW_KEY_D)
-	{
-		if (action == GLFW_PRESS)
-			playerMover.isMovingRightward = true;
-		else if (action == GLFW_RELEASE)
-			playerMover.isMovingRightward = false;
-	}
-	if (key == GLFW_KEY_D)
-	{
-		if (action == GLFW_PRESS)
-			playerMover.isMovingRightward = true;
-		else if (action == GLFW_RELEASE)
-			playerMover.isMovingRightward = false;
 	}
 	if (key == GLFW_KEY_D)
 	{
