@@ -81,14 +81,14 @@ void scene_structure::initialize()
 	quad.initialize(mesh_primitive_disc(0.2, { 1.6,-0.6,-0.01f } , { 0,0,1 }, 100), "Quad");
 	quad.texture = opengl_load_texture_image("assets/clock/clock.png");
 	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Second");
-	second.transform.translation = { -1.6,-0.6, 0 };
+	second.transform.translation = { 1.6,-0.6,-0.01f };
 	second.shading.color = { 1,0,0 };
 
 	//Initializing speed_meter
 	meter.initialize(mesh_primitive_disc(0.2, { -1.6, -0.6, -0.01f }, { 0,0,1 }, 100), "Meter");
 	meter.texture = opengl_load_texture_image("assets/c bar/compteur.png");
 	meter_bar.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Meter_bar");
-	meter_bar.transform.translation = { 1.6,-0.6,0 };
+	meter_bar.transform.translation = { -1.6, -0.6, -0.01f };
 	meter_bar.shading.color = { 1,0,0 };
 
 	//Intializing c_meter
@@ -96,7 +96,7 @@ void scene_structure::initialize()
 	cmeter.texture = opengl_load_texture_image("assets/c bar/c_compteur.png");
 	cmeter_bar.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Meter_bar");
 	cmeter_bar.transform.translation = { -1.1,-0.6,0 };
-	cmeter_bar.shading.color = { 1,0,0 };
+	cmeter_bar.shading.color = { 0,1,0 };
 
 	//Used to output coordinates to the console every second
 	previous_time = 0;
