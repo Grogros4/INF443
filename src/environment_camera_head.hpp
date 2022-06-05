@@ -14,6 +14,10 @@ struct scene_environment_camera_head {
 	cgp::vec3 obj_speed;
 	float light_speed;
 
+	bool stellar_aberration;
+	bool doppler_effect;
+	bool relativistic_brightness;
+
 	// Change the standard rotating camera to a "head camera" more appropriate to model free-flight (*)
 	cgp::camera_head camera;
 

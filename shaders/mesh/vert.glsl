@@ -26,6 +26,7 @@ uniform mat4 projection; // Projection (perspective or orthogonal) matrix of the
 uniform vec3 player_speed;      // Player speed
 uniform float c;   		 // Speed of light
 uniform vec3 obj_speed;  // Speed of the object
+uniform bool stellar_aberration;
 
 void main()
 {
@@ -40,7 +41,7 @@ void main()
 
 	//Calcul relativiste
 
-	if (length(speed) > 0.00000001){
+	if (length(speed) > 0.00000001 && stellar_aberration){
 		
 		float b = length(speed)/c;
 		float gamma = 1/sqrt(1-b*b);

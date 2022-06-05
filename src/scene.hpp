@@ -17,7 +17,9 @@ typedef std::list<car> CARS;
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
-	bool display_frame = false;
+	bool stellar_aberration;
+	bool doppler_effect;
+	bool relativistic_brightness;
 };
 
 struct scene_environment_hud : public cgp::scene_environment_basic {
@@ -36,6 +38,9 @@ struct scene_structure {
 	
 	// The standard global frame
 	cgp::mesh_drawable global_frame;
+
+	// The standard GUI element storage
+	gui_parameters gui;
 
 	// HUD elements
 	cgp::mesh_drawable quad;
@@ -82,6 +87,7 @@ struct scene_structure {
 
 	void initialize();
 	void display();
+	void display_gui();
 	void add_car();
 };
 

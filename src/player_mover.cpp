@@ -4,11 +4,20 @@
 using namespace cgp;
 
 
-void PlayerMover::initialize(scene_structure* s)
+void PlayerMover::initialize(scene_structure* s, GLFWwindow** w)
 {
 	scene = s;
-	//pos = scene->environment.camera.position_camera;
+	window = w;
 	pos = vec3{ 182.0f, 90.0f, 0.0f };
+}
+
+void PlayerMover::swapMenu()
+{
+	display_menu = !display_menu;
+	if (display_menu)
+		glfwSetInputMode(*window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	else
+		glfwSetInputMode(*window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void PlayerMover::update_mouse(float xpos, float ypos)
@@ -40,11 +49,13 @@ void PlayerMover::update_camera()
 	float beta = norm(scene->speed) / scene->c;
 	float gamma = 1 / sqrt(1 - beta * beta);
 
+	if (display_menu) isJumping = false;
+
 	float const pitch = 0.00001f; // speed of the pitch
 	float const yaw = 0.00001f; // speed of the yaw
 
-	float pitch_angle = - pitch * mouse_delta.y / dt;
-	float yaw_angle = - yaw * mouse_delta.x / dt;
+	float pitch_angle = display_menu ? 0 : - pitch * mouse_delta.y / dt;
+	float yaw_angle = display_menu ? 0 :- yaw * mouse_delta.x / dt;
 	mouse_delta = vec2{ 0, 0 };
 
 	// Orientation of the camera depending on cursor position
@@ -61,10 +72,10 @@ void PlayerMover::update_camera()
 	front /= norm(front);
 
 	// Calculating acceleration depending on keyboard inputs
-	if (isMovingForward) acc += front;
-	if (isMovingBackward) acc += - front;
-	if (isMovingRightward) acc += camera.right();
-	if (isMovingLeftward) acc += - camera.right();
+	if (isMovingForward && !display_menu) acc += front;
+	if (isMovingBackward && !display_menu) acc += - front;
+	if (isMovingRightward && !display_menu) acc += camera.right();
+	if (isMovingLeftward && !display_menu) acc += - camera.right();
 	if (norm(acc) > 0.01)
 		acc = (walk_acc / norm(acc)) * acc;
 

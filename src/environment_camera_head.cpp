@@ -18,4 +18,7 @@ void opengl_uniform(GLuint shader, scene_environment_camera_head const& environm
 	opengl_uniform(shader, "player_speed", environment.speed);
 	opengl_uniform(shader, "c", environment.light_speed);
 	opengl_uniform(shader, "obj_speed", environment.obj_speed);
+	opengl_uniform(shader, "stellar_aberration", environment.stellar_aberration);
+	opengl_uniform(shader, "doppler_effect", environment.doppler_effect);
+	opengl_uniform(shader, "relativistic_brightness", environment.relativistic_brightness);
 }
