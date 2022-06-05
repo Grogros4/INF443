@@ -133,25 +133,28 @@ void scene_structure::display()
 		l.update(pos, speed, c);
 	}
 
-	// Updating and displaying clock HUD
-	clock_timer.update(speed, c);
-	draw(quad, environment_hud);
-	second.transform.rotation = rotation_transform::from_axis_angle({0,0,1}, -(int(clock_timer.t) % 60) * Pi / 30);
-	draw(second, environment_hud);
+	if (gui.hud)
+	{
+		// Updating and displaying clock HUD
+		clock_timer.update(speed, c);
+		draw(quad, environment_hud);
+		second.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, -(int(clock_timer.t) % 60) * Pi / 30);
+		draw(second, environment_hud);
 
-	//Updating and displaying speed_meter HUD
-	draw(meter, environment_hud);
-	meter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, (5 - (norm(speed) / c) * 10  ) * Pi / 6);
-	draw(meter_bar, environment_hud);
+		//Updating and displaying speed_meter HUD
+		draw(meter, environment_hud);
+		meter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, (5 - (norm(speed) / c) * 10) * Pi / 6);
+		draw(meter_bar, environment_hud);
 
-	//Updating and displaying speed_meter HUD
-	draw(cmeter, environment_hud);
-	if (log(10) - log(c) <= - 10 * Pi / 6) {
-		std::cout << "Max c reached" << std::endl;
-		c = exp(10 * Pi / 6)*10;
+		//Updating and displaying speed_meter HUD
+		draw(cmeter, environment_hud);
+		if (log(10) - log(c) <= -10 * Pi / 6) {
+			std::cout << "Max c reached" << std::endl;
+			c = exp(10 * Pi / 6) * 10;
+		}
+		cmeter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, log(10) - log(c) + 5 * Pi / 6);
+		draw(cmeter_bar, environment_hud);
 	}
-	cmeter_bar.transform.rotation = rotation_transform::from_axis_angle({ 0,0,1 }, log(10) - log(c) + 5 * Pi / 6);
-	draw(cmeter_bar, environment_hud);
 
 	// Updating and displaying car
 	
@@ -200,6 +203,7 @@ void scene_structure::display_gui()
 	ImGui::Checkbox("Stellar Aberration", &gui.stellar_aberration);
 	ImGui::Checkbox("Doppler Effect", &gui.doppler_effect);
 	ImGui::Checkbox("Relativistic Brightness", &gui.relativistic_brightness);
+	ImGui::Checkbox("HUD", &gui.hud);
 }
 
 void scene_structure::add_car() {

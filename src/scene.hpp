@@ -17,9 +17,10 @@ typedef std::list<car> CARS;
 
 // The element of the GUI that are not already stored in other structures
 struct gui_parameters {
-	bool stellar_aberration;
-	bool doppler_effect;
-	bool relativistic_brightness;
+	bool stellar_aberration = true;
+	bool doppler_effect = true;
+	bool relativistic_brightness = true;
+	bool hud = true;
 };
 
 struct scene_environment_hud : public cgp::scene_environment_basic {
