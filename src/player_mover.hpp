@@ -43,7 +43,7 @@ struct PlayerMover {
 	cgp::vec3 pos;
 	float speed_max = 10.0f;
 	float walk_acc = 40.0f;
-	float jump_acc = 40;
+	float jump_acc = 40 * 20;
 	float f = walk_acc / speed_max;
 	float g = 10;
 
