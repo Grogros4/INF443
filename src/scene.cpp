@@ -38,11 +38,13 @@ void scene_structure::initialize()
 	sky.initialize(&environment, 400, 1000, 0.5);
 
 	// Initializing the car
+	 
 	// Key 3D positions
 
 	key_positions = { {164.5,-140.9,1}, {164.5,-140.90,1}, {180.68,-48,1}, {185.79,15.1,1}, {181.95,90.7,1}, {173.1,199,1}, {164.2,252,1},{164.2,252,1} };
-	// Key times (time at which the position must pass in the corresponding position)
-	float wanted_speed = 15.0f;
+	
+	//This part computes automaticaaly the key_times based on the wanted speed (here 9.0 because c > 10)
+	float wanted_speed = 9.0f;
 	t = 1.0f;
 	vec3 prev_v = { 164.5,0,-140.9 };
 	key_times = {};
@@ -51,18 +53,14 @@ void scene_structure::initialize()
 		key_times.push_back(t);
 		prev_v = v;
 	}
-	std::cout << key_positions << std::endl;
 
-	std::cout << key_times << std::endl;
-
-
+	//This part initialize the car mesh drawable
 	car_mesh.initialize(mesh_load_file_obj("assets/car/car.obj"));
-	car_mesh.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi/2);
+	rotation_transform rot;
+	rot = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2);
+	rot = rot * rotation_transform::from_axis_angle({ 0,1,0 }, Pi);
+	car_mesh.transform.rotation = rot;
 	car_mesh.shading.color = { 0,0,1 };
-
-	car car0;
-	car0.initialize(&environment, car_mesh, key_positions, key_times);
-	car_list.push_back(car0);
 
 
 	// Initial placement of the camera
@@ -80,19 +78,17 @@ void scene_structure::initialize()
 	// Initialize HUD texture
 
 	//Intizalizing clock
-	quad.initialize(mesh_primitive_disc(0.2, { -1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Quad");
+	quad.initialize(mesh_primitive_disc(0.2, { 1.6,-0.6,-0.01f } , { 0,0,1 }, 100), "Quad");
 	quad.texture = opengl_load_texture_image("assets/clock/clock.png");
-	//quad.anisotropic_scale.y = 2;
 	second.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Second");
-	//second.anisotropic_scale.y = 2;
-	second.transform.translation = { -1.6,-0.6, 0 };
+	second.transform.translation = { 1.6,-0.6,0 };
 	second.shading.color = { 1,0,0 };
 
 	//Initializing speed_meter
-	meter.initialize(mesh_primitive_disc(0.2, { 1.6,-0.6,-0.01f }, { 0,0,1 }, 100), "Meter");
+	meter.initialize(mesh_primitive_disc(0.2, { -1.6, -0.6, -0.01f }, { 0,0,1 }, 100), "Meter");
 	meter.texture = opengl_load_texture_image("assets/c bar/compteur.png");
 	meter_bar.initialize(mesh_primitive_quadrangle({ -0.001,0,0 }, { -0.001,0.16,0 }, { 0.001,0.16,0 }, { 0.001,0,0 }), "Meter_bar");
-	meter_bar.transform.translation = { 1.6,-0.6,0 };
+	meter_bar.transform.translation = { -1.6, -0.6, 0 };
 	meter_bar.shading.color = { 1,0,0 };
 
 	//Intializing c_meter
@@ -102,6 +98,7 @@ void scene_structure::initialize()
 	cmeter_bar.transform.translation = { -1.1,-0.6,0 };
 	cmeter_bar.shading.color = { 1,0,0 };
 
+	//Used to output coordinates to the console every second
 	previous_time = 0;
 }
 
@@ -158,26 +155,28 @@ void scene_structure::display()
 
 	// Updating and displaying car
 	
-	if ( (clock_timer.c_timer.t > 15) && (car_list.size() == 1)) {
+	//Adding car sequentially
+	if ( (clock_timer.c_timer.t > 15) && (car_list.size() == 0)) {
 		add_car();
 	}	
 
-	if ((clock_timer.c_timer.t > 30) && (car_list.size() == 2)) {
+	if ((clock_timer.c_timer.t > 30) && (car_list.size() == 1)) {
 		add_car();
 	}
 
-	if ((clock_timer.c_timer.t > 45) && (car_list.size() == 3)) {
+	if ((clock_timer.c_timer.t > 45) && (car_list.size() == 2)) {
 		add_car();
 	}
 
-	if ((clock_timer.c_timer.t > 65) && (car_list.size() == 4)) {
+	if ((clock_timer.c_timer.t > 65) && (car_list.size() == 3)) {
 		add_car();
 	}
 
-	if ((clock_timer.c_timer.t > 75) && (car_list.size() == 5)) {
+	if ((clock_timer.c_timer.t > 75) && (car_list.size() == 4)) {
 		add_car();
 	}
 	
+	//Updating cars
 	for (car& car : car_list)
 	{
 		car.update(pos, speed, c, terrain);

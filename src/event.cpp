@@ -57,11 +57,15 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 		if (!event_queue.empty()) {
 			vec3 new_speed = playerSpeed;
 			event e = event_queue.front();
+
+			//Renormalize event_speed norm if needed
 			if (norm(e.event_speed) > 0.999999f*c) {
 				e.event_speed = (e.event_speed / norm(e.event_speed)) * 0.999999f * c;
 			}
 			beta = norm(e.event_speed) / c;
 			gamma = 1 / sqrt(1 - beta * beta);
+
+			//Computing the speed vector composition if needed
 			if (norm(e.event_speed + playerSpeed) > 0.00001) {
 				vec3 u_para = (e.event_speed + playerSpeed) / norm(e.event_speed + playerSpeed);
 				vec3 u_ortho1;
@@ -78,15 +82,16 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 				}
 				new_speed = (dot(playerSpeed, u_para) * u_para - e.event_speed) / (1 - dot(e.event_speed, playerSpeed) / (c * c)) + (dot(u_ortho1, playerSpeed) * u_ortho1 + dot(u_ortho2, playerSpeed) * u_ortho2) / (gamma * (1 - dot(e.event_speed, playerSpeed) / (c * c)));
 			}
-			
 
-			
+			//Computing the distance to the player
 			beta = norm(new_speed) / c;
 			gamma = 1 / sqrt(1 - beta * beta);
 			uve = (norm(new_speed) < 0.00001) ? vec3{ 0,0,0 } : (new_speed) / norm(new_speed);
 			posEff = e.event_pos + ((1 / gamma) - 1) * dot(e.event_pos, uve) * uve;
 			d = norm(posEff - playerPos);
 			float delta_t = timer.t - e.creation_date;
+
+			//Activating the event if it has reached the player
 			if (delta_t * c > d)
 			{
 				activate(e.id, e.event_pos, e.event_speed);
@@ -114,7 +119,7 @@ void lamp::initialize(scene_environment_camera_head* env, vec3 p, std::string li
 	status = false;
 	offset = 0.0f;
 
-	//Creation of the lamp structure
+	//Creation of the lamp structure : a body and a sphere (the ligth)
 	lampadaire.initialize(mesh_load_file_obj("assets/objects/lampadaire.obj"), "base_" + name);
 	lampadaire.transform.scaling = 0.5f;
 	lampadaire.shading.color = { 0,0,0 };
@@ -129,6 +134,7 @@ void lamp::initialize(scene_environment_camera_head* env, vec3 p, std::string li
 
 void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 {
+	//Pushing current lamp status in its referential to event
 	timer.update();
 	clock.update(playerSpeed, c);
 	if (clock.t > period) {
@@ -141,8 +147,8 @@ void lamp::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c)
 		status = !status;
 	}
 
+	//Updating the lamp based on the event seen by the player
 	events::update(playerPos, playerSpeed, c);
-
 	draw(lampadaire, *environment);
 	draw(sphere, *environment);
 }
@@ -179,12 +185,16 @@ void car::activate(int id, cgp::vec3 e_position, cgp::vec3 e_speed) {
 
 
 void car::update(cgp::vec3 playerPos, cgp::vec3 playerSpeed, float c, Terrain terrain) {
+
+	//Computing car position in its referential and pushing it to the queue
 	key_timer.update();
 	float t = key_timer.t;
 	vec3 p = interpolation(t, keyframes.key_positions, keyframes.key_times);
 	int idx = find_index_of_interval(t, keyframes.key_times);
 	vec3 speed = (keyframes.key_positions[idx + 1] - keyframes.key_positions[idx]) / (keyframes.key_times[idx + 1] - keyframes.key_times[idx]);
 	push_event(0, p, speed);
+
+	//Displaying the car according to the current event seen by the player
 	events::update(playerPos, playerSpeed, c);
 	body.transform.translation = vec3(current_pos.x,current_pos.y, terrain.evaluate_hills_height(current_pos.x, current_pos.y)+0.2);
 	environment->obj_speed = current_speed;

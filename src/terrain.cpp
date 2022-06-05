@@ -11,6 +11,7 @@ float Terrain::evaluate_hills_height(float x, float y)
     int scaley;
     mat3 situation = get_mirroring(x, y);
 
+    //Compute in which chunk type we are
     if (situation[0][0] == 0) {
         scalex = 1;
         scaley = 1;
@@ -27,11 +28,12 @@ float Terrain::evaluate_hills_height(float x, float y)
         scalex = -1;
         scaley = -1;
     }
+
+    //Evaluating height coordinates accordingly
     float u = x - get_matrix_coordinate(x) * chunk_size;
     float v = y - get_matrix_coordinate(y) * chunk_size;
     u = scalex * u;
     v = scaley * v;
-
     u = u + 0.5 * chunk_size;
     v = v + 0.5 * chunk_size;
 
@@ -100,6 +102,8 @@ void Terrain::initialize(scene_environment_camera_head* env, int N, float length
     environment = env;
     chunk_size = length;
 
+
+    //We have 4 terrains for the 4 basis chunks
     mesh terrain_mesh = create_terrain_mesh(100, 1, 1);
     mesh terrain_meshx = create_terrain_mesh(100, -1, 1);
     mesh terrain_meshy = create_terrain_mesh(100, 1, -1);
@@ -136,6 +140,8 @@ int Terrain::get_matrix_coordinate(float x) {
 }
 
 mat3 Terrain::get_mirroring(float x, float y) {
+
+    //Outputs a 3*3 matrix with the neighboring chunks type based on current player position
     mat3 m;
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
@@ -165,13 +171,14 @@ void Terrain::display() {
     float x = environment->camera.position_camera.x;
     float y = environment->camera.position_camera.y;
 
+
+    //Displays the chunks surrounding the player only (and trees if far enough from the center)
     mat3 situation = get_mirroring(x, y);
     int u;
     int v;
     mesh const tree_mesh = trees.create_tree();
     mesh_drawable tree;
     tree.initialize(tree_mesh, "tree");
-
     for (int i = 0; i < 3; i++) {
         for (int j = 0; j < 3; j++) {
             u = get_matrix_coordinate(x) + 1 - i;
