@@ -10,7 +10,7 @@ float rel_timer::update(vec3 speed, float c) {
 	float beta = norm(speed) / c;
 	gamma = 1 / sqrt(1 - beta * beta);
 	float dt = c_timer.update();
-	t += gamma *dt;
+	t += gamma * dt;
 	return gamma * dt;
 }
 

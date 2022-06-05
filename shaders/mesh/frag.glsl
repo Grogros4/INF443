@@ -10,7 +10,7 @@ in struct fragment_data
     vec3 color;    // current color on the fragment
     vec2 uv;       // current uv-texture on the fragment
 	vec3 speed;
-	} fragment;
+} fragment;
 
 // Output of the fragment shader - output color
 layout(location=0) out vec4 FragColor;
@@ -36,6 +36,9 @@ uniform mat4 view;       // View matrix (rigid transform) of the camera - to com
 
 uniform float c;
 
+uniform bool doppler_effect;
+uniform bool relativistic_brightness;
+
 vec3 camera_position;
 
 
@@ -51,98 +54,7 @@ float getFogFactor(vec3 pp)
 	return result;
 }
 
-
-vec3 wavelength2rgb(float Wavelength)
-{	
-	float Gamma = 0.8f;
-	float IntensityMax = 1.0f;
-	float Red, Green, Blue;
-	float factor;
-
-	if((Wavelength >= 380) && (Wavelength < 440)) {
-        Red = -(Wavelength - 440) / (440 - 380);
-        Green = 0.0;
-        Blue = 1.0;
-    } else if((Wavelength >= 440) && (Wavelength < 490)) {
-        Red = 0.0;
-        Green = (Wavelength - 440) / (490 - 440);
-        Blue = 1.0;
-    } else if((Wavelength >= 490) && (Wavelength < 510)) {
-        Red = 0.0;
-        Green = 1.0;
-        Blue = -(Wavelength - 510) / (510 - 490);
-    } else if((Wavelength >= 510) && (Wavelength < 580)) {
-        Red = (Wavelength - 510) / (580 - 510);
-        Green = 1.0;
-        Blue = 0.0;
-    } else if((Wavelength >= 580) && (Wavelength < 645)) {
-        Red = 1.0;
-        Green = -(Wavelength - 645) / (645 - 580);
-        Blue = 0.0;
-    } else if((Wavelength >= 645) && (Wavelength < 781)) {
-        Red = 1.0;
-        Green = 0.0;
-        Blue = 0.0;
-    } else {
-        Red = 0.0;
-        Green = 0.0;
-        Blue = 0.0;
-    }
-
-    // Let the intensity fall off near the vision limits
-
-    if((Wavelength >= 380) && (Wavelength < 420)) {
-        factor = 0.3 + 0.7 * (Wavelength - 380) / (420 - 380);
-    } else if((Wavelength >= 420) && (Wavelength < 701)) {
-        factor = 1.0;
-    } else if((Wavelength >= 701) && (Wavelength < 781)) {
-        factor = 0.3 + 0.7 * (780 - Wavelength) / (780 - 700);
-    } else {
-        factor = 0.0;
-    }
-
-    // Don't want 0^x = 1 for x <> 0
-    Red = ( (Red == 0.0) ? 0 : IntensityMax * pow(Red * factor, Gamma) );
-    Green = ( (Green == 0.0) ? 0 : IntensityMax * pow(Green * factor, Gamma) );
-    Blue = ( (Blue == 0.0) ? 0 : IntensityMax * pow(Blue * factor, Gamma) );
-
-
-	return vec3(Red, Green, Blue);
-}
-
 vec3 dopplerEffect(vec3 color)
-{
-	if (length(fragment.speed) > 0.0000001)
-	{
-		float ctheta = dot(fragment.speed, fragment.position)/(length(fragment.speed)*length(fragment.position));
-		float b = length(fragment.speed) / c;
-		float gamma = 1 / sqrt(1-b*b);
-		float k = gamma * (1 + b * ctheta);
-	
-		float waveR = k * 645;
-		float waveG = k * 510;
-		float waveB = k * 440;
-
-		vec3 colorR = color.x * wavelength2rgb(waveR);
-		vec3 colorG = color.y * wavelength2rgb(waveG);
-		vec3 colorB = color.z * wavelength2rgb(waveB);
-
-		vec3 newColor;
-
-		newColor.x = min(colorR.x + colorG.x + colorB.x, 1.0f);
-		newColor.y = min(colorR.y + colorG.y + colorB.y, 1.0f);
-		newColor.z = min(colorR.z + colorG.z + colorB.z, 1.0f);
-
-		return newColor;
-	}
-	else
-	{
-		return color;
-	}
-	
-}
-
-vec3 dopplerEffect_new(vec3 color)
 {
 	if (length(fragment.speed) > 0.0000001)
 	{
@@ -153,14 +65,20 @@ vec3 dopplerEffect_new(vec3 color)
 		float gamma = 1 / sqrt(1-b*b);
 		float dopp = b * gamma * ctheta;
 
-		color = (gamma + dopp) * color; // Relativistic brightness
+		// Relativistic brightness
+		if (relativistic_brightness)
+			color = (gamma + dopp) * color;
 
 		vec3 shift;
 		shift.r = 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.r + 2 * max(0, 0.5 - abs(dopp + 0.5)) * color.g + 2 * max(0, 0.5 - abs(dopp + 1.0)) * color.b;
 		shift.g = 2 * max(0, 0.5 - abs(dopp - 0.5)) * color.r + 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.g + 2 * max(0, 0.5 - abs(dopp + 0.5)) * color.b;
 		shift.b = 2 * max(0, 0.5 - abs(dopp - 1.0)) * color.r + 2 * max(0, 0.5 - abs(dopp - 0.5)) * color.g + 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.b;
 
-		return shift;
+		if (doppler_effect)
+			color = shift;
+
+		return color;
+
 	}
 	else
 	{
@@ -237,7 +155,7 @@ void main()
 	//FragColor.xyz = dopplerEffect_new(FragColor.xyz);
 	//fogColor.xyz = dopplerEffect_new(fogColor.xyz);
 	FragColor = mix(FragColor, fogColor, fogFactor);
-	FragColor.xyz = dopplerEffect_new(FragColor.xyz);
+	FragColor.xyz = dopplerEffect(FragColor.xyz);
 	//FragColor = vec4(color_shading, 1);
 
 }

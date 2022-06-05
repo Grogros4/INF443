@@ -113,6 +113,9 @@ void scene_structure::display()
 	environment.speed = speed;
 	environment.light_speed = c;
 	environment.obj_speed = { 0,0,0 };
+	environment.stellar_aberration = gui.stellar_aberration;
+	environment.doppler_effect = gui.doppler_effect;
+	environment.relativistic_brightness = gui.relativistic_brightness;
 
 	// Displaying terrain (and trees)
 	terrain.display();
@@ -177,6 +180,8 @@ void scene_structure::display()
 		car.update(pos, speed, c, terrain);
 	}
 
+	display_gui();
+
 	//Send coordinates to the console
 	if (previous_time < clock_timer.t - 1) {
 		std::cout << "Current position" << std::endl;
@@ -188,6 +193,13 @@ void scene_structure::display()
 		std::cout << pos.z << std::endl;
 		previous_time = clock_timer.t;
 	}
+}
+
+void scene_structure::display_gui()
+{
+	ImGui::Checkbox("Stellar Aberration", &gui.stellar_aberration);
+	ImGui::Checkbox("Doppler Effect", &gui.doppler_effect);
+	ImGui::Checkbox("Relativistic Brightness", &gui.relativistic_brightness);
 }
 
 void scene_structure::add_car() {

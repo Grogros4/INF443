@@ -65,6 +65,8 @@ void Demilunes::initialize(scene_environment_camera_head* env, Terrain* t)
 	path_mesh.position = path_pos;
 
 	path.initialize(path_mesh, "path");
+	path.shading.use_texture = false;
+	//path.shading.phong = shading_parameters_phong::phong_parameters{ 0.3, 0.6, 0, 64 };
 	path.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2.0f);
 	path.transform.translation += vec3{ 0, 0, 0 };
 	quaternion rot = path.transform.rotation.data;

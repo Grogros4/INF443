@@ -19,6 +19,7 @@
 struct PlayerMover {
 
 	scene_structure* scene;
+	GLFWwindow** window;
 
 	//cgp::timer_basic timer; // A basic timer for the camera animation
 	cgp::timer_basic timer;
@@ -50,7 +51,10 @@ struct PlayerMover {
 	float jumpDrain = 0;
 	float t_f = 0;
 
-	void initialize(scene_structure* s);
+	bool display_menu = false;
+
+	void initialize(scene_structure* s, GLFWwindow** w);
+	void swapMenu();
 	void update_mouse(float xpos, float ypos);
 	void update_camera();
 	void update_c(double o);

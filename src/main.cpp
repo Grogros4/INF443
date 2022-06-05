@@ -43,7 +43,7 @@ int main(int, char* argv[])
 	// Custom scene initialization
 	std::cout << "Initialize data of the scene ..." << std::endl;
 	scene.initialize();
-	playerMover.initialize(&scene);
+	playerMover.initialize(&scene, &window);
 	std::cout << "Initialization success" << std::endl;
 	
 
@@ -156,6 +156,13 @@ void keyboard_callback(GLFWwindow* /*window*/, int key, int , int action, int /*
 			playerMover.isMovingRightward = true;
 		else if (action == GLFW_RELEASE)
 			playerMover.isMovingRightward = false;
+	}
+	if (key == GLFW_KEY_ESCAPE)
+	{
+		if (action == GLFW_PRESS)
+		{
+			playerMover.swapMenu();
+		}
 	}
 }
 
