@@ -57,12 +57,11 @@ void scene_structure::initialize()
 
 
 	car_mesh.initialize(mesh_load_file_obj("assets/car/car.obj"));
-	car_mesh.transform.rotation = rotation_transform::from_axis_angle({ 1,0,0 }, Pi/2);
+	rotation_transform rot;
+	rot = rotation_transform::from_axis_angle({ 1,0,0 }, Pi / 2);
+	rot = rot * rotation_transform::from_axis_angle({ 0,1,0 }, Pi);
+	car_mesh.transform.rotation = rot;
 	car_mesh.shading.color = { 0,0,1 };
-
-	car car0;
-	car0.initialize(&environment, car_mesh, key_positions, key_times);
-	car_list.push_back(car0);
 
 
 	// Initial placement of the camera
@@ -152,23 +151,24 @@ void scene_structure::display()
 
 	// Updating and displaying car
 	
-	if ( (clock_timer.c_timer.t > 15) && (car_list.size() == 1)) {
+
+	if ( (clock_timer.c_timer.t > 15) && (car_list.size() == 0)) {
 		add_car();
 	}	
 
-	if ((clock_timer.c_timer.t > 30) && (car_list.size() == 2)) {
+	if ((clock_timer.c_timer.t > 30) && (car_list.size() == 1)) {
 		add_car();
 	}
 
-	if ((clock_timer.c_timer.t > 45) && (car_list.size() == 3)) {
+	if ((clock_timer.c_timer.t > 45) && (car_list.size() == 2)) {
 		add_car();
 	}
 
-	if ((clock_timer.c_timer.t > 65) && (car_list.size() == 4)) {
+	if ((clock_timer.c_timer.t > 65) && (car_list.size() == 3)) {
 		add_car();
 	}
 
-	if ((clock_timer.c_timer.t > 75) && (car_list.size() == 5)) {
+	if ((clock_timer.c_timer.t > 75) && (car_list.size() == 4)) {
 		add_car();
 	}
 	
