@@ -60,6 +60,7 @@ vec3 dopplerEffect(vec3 color)
 	{
 		vec3 pos = fragment.position - camera_position;
 
+		// Doppler effect formula
 		float ctheta = dot(fragment.speed, pos)/(length(fragment.speed)*length(pos));
 		float b = length(fragment.speed) / c;
 		float gamma = 1 / sqrt(1-b*b);
@@ -69,6 +70,7 @@ vec3 dopplerEffect(vec3 color)
 		if (relativistic_brightness)
 			color = (gamma + dopp) * color;
 
+		// Rectangle shift
 		vec3 shift;
 		shift.r = 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.r + 2 * max(0, 0.5 - abs(dopp + 0.5)) * color.g + 2 * max(0, 0.5 - abs(dopp + 1.0)) * color.b;
 		shift.g = 2 * max(0, 0.5 - abs(dopp - 0.5)) * color.r + 2 * max(0, 0.5 - abs(dopp + 0.0)) * color.g + 2 * max(0, 0.5 - abs(dopp + 0.5)) * color.b;
@@ -139,7 +141,6 @@ void main()
 	vec3 p = fragment.position; 
 	p -= camera_position;
 	float fogCoordinate = max(sqrt(p.x*p.x + p.y*p.y), 0);
-	//vec4 fogColor = mix(vec4(0,0,0.1,0), vec4(0,0,0,0), 1 - exp(-0.01*0*p.z));
 	vec4 fogColor = vec4(0,0,0.1,0);
 	float fogFactor = getFogFactor(p);
 
@@ -148,14 +149,10 @@ void main()
 
 	// Compute the final shaded color using Phong model
 	vec3 color_shading = (Ka + Kd * diffuse) * color_object + Ks * specular * vec3(1.0, 1.0, 1.0);
-	//color_shading = dopplerEffect_new(color_shading);
 
 	// Output color, with the alpha component
 	FragColor = vec4(color_shading, alpha * color_image_texture.a);
-	//FragColor.xyz = dopplerEffect_new(FragColor.xyz);
-	//fogColor.xyz = dopplerEffect_new(fogColor.xyz);
 	FragColor = mix(FragColor, fogColor, fogFactor);
 	FragColor.xyz = dopplerEffect(FragColor.xyz);
-	//FragColor = vec4(color_shading, 1);
 
 }
