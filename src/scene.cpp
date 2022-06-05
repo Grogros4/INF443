@@ -114,6 +114,8 @@ void scene_structure::display()
 	environment.stellar_aberration = gui.stellar_aberration;
 	environment.doppler_effect = gui.doppler_effect;
 	environment.relativistic_brightness = gui.relativistic_brightness;
+	environment.hud = gui.hud;
+	environment.event_delay = gui.event_delay;
 
 	// Displaying terrain (and trees)
 	terrain.display();
@@ -203,6 +205,7 @@ void scene_structure::display_gui()
 	ImGui::Checkbox("Doppler Effect", &gui.doppler_effect);
 	ImGui::Checkbox("Relativistic Brightness", &gui.relativistic_brightness);
 	ImGui::Checkbox("HUD", &gui.hud);
+	ImGui::Checkbox("Event Delay", &gui.event_delay);
 }
 
 void scene_structure::add_car() {

@@ -17,6 +17,8 @@ struct scene_environment_camera_head {
 	bool stellar_aberration;
 	bool doppler_effect;
 	bool relativistic_brightness;
+	bool hud;
+	bool event_delay;
 
 	// Change the standard rotating camera to a "head camera" more appropriate to model free-flight (*)
 	cgp::camera_head camera;

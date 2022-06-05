@@ -21,6 +21,7 @@ struct gui_parameters {
 	bool doppler_effect = true;
 	bool relativistic_brightness = true;
 	bool hud = true;
+	bool event_delay = true;
 };
 
 struct scene_environment_hud : public cgp::scene_environment_basic {

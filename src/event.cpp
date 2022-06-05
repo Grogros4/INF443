@@ -92,7 +92,7 @@ void events::update(vec3 playerPos, vec3 playerSpeed, float c) {
 			float delta_t = timer.t - e.creation_date;
 
 			//Activating the event if it has reached the player
-			if (delta_t * c > d)
+			if (delta_t * c > d || !environment->event_delay)
 			{
 				activate(e.id, e.event_pos, e.event_speed);
 				cont = true;
