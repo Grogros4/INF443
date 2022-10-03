@@ -34,5 +34,5 @@ If you want to discuss with us about this project, please contact us via Github 
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+GPL-3[https://www.gnu.org/licenses/gpl-3.0.en.html]
 
